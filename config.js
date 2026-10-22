@@ -2,7 +2,7 @@
    静态站点配置（GitHub Pages）
    ------------------------------------------------------------
    把 API_BASE 改成你的后端 HTTPS 地址，例如 Cloudflare Tunnel：
-     window.CET4_CONFIG = { API_BASE: "https://github.com/wotongtong/yanqiandelinghun/settings/pages" };
+     window.CET4_CONFIG = { API_BASE: "https://abcd-1234.trycloudflare.com" };
    注意：
    1. 必须是 https（GitHub Pages 页面本身是 https，http 会被浏览器拦截）
    2. 末尾不要带 /
