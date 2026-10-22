@@ -9,5 +9,5 @@
    3. 修改并提交后，等待 GitHub Pages 重新发布（约 1 分钟）
    ============================================================ */
 window.CET4_CONFIG = {
-  API_BASE: "https://REPLACE-WITH-YOUR-TUNNEL.trycloudflare.com"
+  API_BASE: "https://github.com/wotongtong/yanqiandelinghun/settings/pages"
 };
