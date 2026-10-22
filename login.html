@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>登录 · 四级备考教练</title>
+<style>
+  *{box-sizing:border-box}
+  :root{--ink:#1f2937;--muted:#6b7280;--line:#e5e7eb;--bg:#f6f7f5;--card:#fff;--accent:#0f766e;--accent-d:#115e59;--warn:#b45309;--ok:#15803d}
+  html,body{height:100%}
+  body{margin:0;font-family:"PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;background:
+    radial-gradient(1200px 600px at 12% -10%, #e8f0ec 0%, transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, #eef1f6 0%, transparent 55%), var(--bg);
+    color:var(--ink);display:flex;align-items:center;justify-content:center;padding:24px}
+  .wrap{width:100%;max-width:400px}
+  .brand{display:flex;align-items:center;gap:10px;margin:0 0 18px 4px}
+  .logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#0f766e,#0ea5a4);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;letter-spacing:.5px}
+  .brand b{font-size:15px;letter-spacing:.3px}
+  .brand span{font-size:12px;color:var(--muted)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px 24px 22px;
+    box-shadow:0 10px 30px rgba(15,23,42,.06)}
+  h1{font-size:20px;margin:0 0 6px;letter-spacing:.3px}
+  .sub{font-size:13px;color:var(--muted);margin:0 0 20px;line-height:1.7}
+  label{display:block;font-size:12px;color:var(--muted);margin:14px 0 6px}
+  input{width:100%;padding:11px 12px;font-size:14px;border:1px solid var(--line);border-radius:10px;
+    background:#fbfbfa;color:var(--ink);outline:none;transition:border-color .15s,box-shadow .15s}
+  input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(15,118,110,.12);background:#fff}
+  button{width:100%;margin-top:20px;padding:11px 14px;font-size:14px;font-weight:600;color:#fff;
+    background:var(--accent);border:0;border-radius:10px;cursor:pointer;transition:background .15s}
+  button:hover{background:var(--accent-d)}
+  button:disabled{opacity:.6;cursor:not-allowed}
+  .msg{min-height:20px;font-size:12.5px;margin-top:12px;line-height:1.6}
+  .msg.err{color:#b91c1c}
+  .msg.ok{color:var(--ok)}
+  .msg.warn{color:var(--warn)}
+  .foot{margin-top:16px;display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted)}
+  .foot a{color:var(--accent);text-decoration:none}
+  .foot a:hover{text-decoration:underline}
+  .legal{margin:18px 4px 0;font-size:11.5px;color:#9ca3af;line-height:1.7;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">
+    <div class="logo">C4</div>
+    <div><b>四级备考教练</b><br><span>私人学习空间</span></div>
+  </div>
+
+  <div class="card">
+    <h1>登录</h1>
+    <p class="sub">本站仅对授权用户开放。请输入管理员发放的账号密码。</p>
+    <form id="f" autocomplete="on" novalidate>
+      <label for="u">用户名</label>
+      <input id="u" name="username" autocomplete="username" autocapitalize="off" spellcheck="false" required>
+      <label for="p">密码</label>
+      <input id="p" name="password" type="password" autocomplete="current-password" required>
+      <button id="btn" type="submit">登录</button>
+      <div class="msg" id="msg"></div>
+    </form>
+    <div class="foot">
+      <span>没有账号？</span>
+      <a href="register.html">用邀请码注册</a>
+    </div>
+  </div>
+  <p class="legal">密码经 bcrypt 加密存储，登录态使用 HttpOnly Cookie，脚本无法读取。</p>
+</div>
+
+<script src="./config.js"></script>
+<script>
+(function () {
+  "use strict";
+  var API_BASE = String((window.CET4_CONFIG || {}).API_BASE || "").trim().replace(/\/+$/, "");
+  var READY = !!API_BASE && !/REPLACE|YOUR-TUNNEL|example\.com/i.test(API_BASE);
+  var TOKEN_KEY = "cet4coach.token.v1";
+  var msg = document.getElementById("msg");
+  var btn = document.getElementById("btn");
+  var u = document.getElementById("u");
+  var p = document.getElementById("p");
+
+  function qs(k) {
+    var m = new RegExp("[?&]" + k + "=([^&]*)").exec(location.search || "");
+    return m ? decodeURIComponent(m[1].replace(/\+/g, " ")) : "";
+  }
+  // 只接受同源地址，防止开放重定向
+  function safeNext() {
+    var n = qs("next");
+    if (!n) return "./index.html";
+    try {
+      var u = new URL(n, location.href);
+      if (u.origin === location.origin) return u.pathname + u.search + u.hash;
+    } catch (e) { /* 非法地址按默认处理 */ }
+    return "./index.html";
+  }
+  function setMsg(text, kind) {
+    msg.className = "msg" + (kind ? " " + kind : "");
+    msg.textContent = text || "";
+  }
+  function authHeaders() {
+    var t = "";
+    try { t = localStorage.getItem(TOKEN_KEY) || ""; } catch (e) { t = ""; }
+    return t ? { "Authorization": "Bearer " + t } : {};
+  }
+
+  if (qs("changed") === "1") setMsg("密码已修改，请用新密码重新登录。", "ok");
+  if (qs("registered") === "1") {
+    setMsg("注册成功，请登录。", "ok");
+    u.value = qs("u") || "";
+    if (u.value) p.focus(); else u.focus();
+  } else if (qs("expired") === "1") {
+    setMsg("登录状态已过期，请重新登录。", "warn");
+  } else {
+    u.focus();
+  }
+
+  // 已登录则直接进入，避免重复登录
+  if (!READY) {
+    setMsg("尚未配置后端地址，请先编辑 config.js 中的 API_BASE。", "warn");
+    btn.disabled = true;
+  } else {
+    fetch(API_BASE + "/api/verify", { credentials: "include", headers: authHeaders() }).then(function (r) {
+      if (r.status === 200) location.replace(safeNext());
+    }).catch(function () {});
+  }
+
+  document.getElementById("f").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var username = u.value.trim();
+    var password = p.value;
+    if (!username || !password) { setMsg("请输入用户名和密码。", "err"); return; }
+    btn.disabled = true;
+    setMsg("正在登录…");
+    fetch(API_BASE + "/api/login", {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username: username, password: password })
+    }).then(function (res) {
+      return res.json().catch(function () { return null; }).then(function (data) {
+        if (res.status === 200) {
+          var tk = data && data.data && data.data.token;
+          if (tk) { try { localStorage.setItem(TOKEN_KEY, tk); } catch (e) { /* 忽略 */ } }
+          setMsg("登录成功，正在进入…", "ok");
+          location.replace(safeNext());
+          return;
+        }
+        btn.disabled = false;
+        if (res.status === 401) setMsg("用户名或密码错误。", "err");
+        else if (res.status === 403) setMsg((data && data.message) || "账号已被禁用，请联系管理员。", "err");
+        else if (res.status === 429) setMsg("尝试过于频繁，请稍后再试。", "warn");
+        else setMsg((data && data.message) || "登录失败（" + res.status + "），请稍后重试。", "err");
+      });
+    }).catch(function () {
+      btn.disabled = false;
+      setMsg("网络异常，请检查连接后重试。", "err");
+    });
+  });
+})();
+</script>
+</body>
+</html>

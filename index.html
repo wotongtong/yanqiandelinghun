@@ -1,0 +1,4075 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>四级备考领航教练 · CET-4 Coach</title>
+<style>
+/* ============ 设计系统：主题变量 ============ */
+:root{
+  /* —— 品牌 / 功能色：深青体系，去掉紫调与光晕 —— */
+  --brand:#0f766e;
+  --brand-2:#0d9488;
+  --brand-soft:#e8f5f3;
+  --accent:#b45309;
+  --accent-soft:#fdf6ec;
+  --ok:#15803d;
+  --ok-soft:#eef7f0;
+  --warn:#b45309;
+  --warn-soft:#fdf6ec;
+  --bad:#dc2626;
+  --bad-soft:#fdf2f2;
+  --info:#0369a1;
+  --info-soft:#eef6fb;
+
+  /* —— 中性基：Zinc 调，避免纯黑纯灰 —— */
+  --bg:#f6f7f8;
+  --bg-2:#ffffff;
+  --card:#ffffff;
+  --card-2:#fafbfb;
+  --text:#18181b;
+  --text-2:#52525b;
+  --text-3:#8b8f98;
+  --line:#e6e7ea;
+  --line-2:#f0f1f3;
+
+  /* —— 深度：默认靠 1px 描边，阴影只在需要抬升时用 —— */
+  --sh-1:0 1px 2px rgba(24,24,27,.05);
+  --sh-2:0 1px 3px rgba(24,24,27,.06),0 12px 28px -18px rgba(24,24,27,.2);
+  --shadow:var(--sh-2);
+  --shadow-sm:var(--sh-1);
+
+  /* —— 形状 —— */
+  --radius:12px;
+  --radius-sm:8px;
+  --radius-lg:16px;
+  --r-sm:8px;
+  --r:12px;
+  --r-lg:16px;
+
+  /* —— 间距标尺 —— */
+  --sp-1:4px;--sp-2:8px;--sp-3:12px;--sp-4:16px;
+  --sp-5:20px;--sp-6:24px;--sp-7:32px;--sp-8:40px;
+  --gap:16px;
+  --pad:18px;
+
+  /* —— 字号标尺 —— */
+  --fs-11:11px;--fs-12:12px;--fs-13:13px;--fs-14:14px;--fs-15:15px;
+  --fs-17:17px;--fs-20:20px;--fs-26:26px;--fs-34:34px;
+
+  --maxw:1240px;
+  --topbar-h:58px;
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
+  --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  --serif:"Songti SC","Noto Serif SC","Source Han Serif SC",Georgia,"Times New Roman",serif;
+}
+html[data-theme="dark"]{
+  --brand:#2dd4bf;
+  --brand-2:#14b8a6;
+  --brand-soft:#0f2b28;
+  --accent:#fbbf24;
+  --accent-soft:#2a2110;
+  --ok:#4ade80;
+  --ok-soft:#0f2a18;
+  --warn:#fbbf24;
+  --warn-soft:#2a2110;
+  --bad:#f87171;
+  --bad-soft:#2b1517;
+  --info:#38bdf8;
+  --info-soft:#0e2233;
+
+  --bg:#0c0e0f;
+  --bg-2:#141719;
+  --card:#16191b;
+  --card-2:#1b1f21;
+  --text:#eceef0;
+  --text-2:#a2a8ae;
+  --text-3:#767c83;
+  --line:#24282b;
+  --line-2:#1f2325;
+  --sh-1:0 1px 2px rgba(0,0,0,.35);
+  --sh-2:0 1px 3px rgba(0,0,0,.4),0 14px 30px -20px rgba(0,0,0,.8);
+  --shadow:var(--sh-2);
+  --shadow-sm:var(--sh-1);
+}
+
+/* ============ 基础重置 ============ */
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--font);
+  background:var(--bg);
+  color:var(--text);
+  font-size:15px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  transition:background .25s ease,color .25s ease;
+}
+h1,h2,h3,h4,p,ul,ol{margin:0}
+button{font-family:inherit}
+a{color:var(--brand);text-decoration:none}
+img{max-width:100%}
+input,textarea,select{font-family:inherit;font-size:inherit;color:inherit}
+::selection{background:var(--brand);color:#fff}
+
+/* ============ 顶部导航 ============ */
+.topbar{
+  position:sticky;top:0;z-index:60;
+  background:color-mix(in srgb,var(--bg-2) 88%,transparent);
+  backdrop-filter:saturate(180%) blur(14px);
+  -webkit-backdrop-filter:saturate(180%) blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.topbar-in{
+  max-width:var(--maxw);margin:0 auto;padding:10px 18px;
+  display:flex;align-items:center;gap:14px;
+}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px;letter-spacing:.2px;white-space:nowrap}
+.brand .logo{
+  width:32px;height:32px;border-radius:9px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--brand),var(--brand-2));
+  color:#fff;font-size:15px;font-weight:800;box-shadow:0 4px 12px -4px var(--brand);
+}
+.brand small{display:block;font-size:10.5px;font-weight:600;color:var(--text-3);letter-spacing:.6px}
+.nav{display:flex;gap:2px;margin-left:8px;flex:1;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav button{
+  border:0;background:transparent;color:var(--text-2);cursor:pointer;
+  padding:8px 13px;border-radius:999px;font-size:13.5px;font-weight:600;white-space:nowrap;
+  transition:.18s;
+}
+.nav button:hover{background:var(--brand-soft);color:var(--brand)}
+.nav button.on{background:var(--brand);color:#fff;box-shadow:0 4px 12px -4px var(--brand)}
+.top-acts{display:flex;gap:8px;align-items:center}
+
+/* ============ 通用控件 ============ */
+.btn{
+  border:1px solid var(--line);background:var(--bg-2);color:var(--text);
+  padding:9px 16px;border-radius:10px;cursor:pointer;font-size:14px;font-weight:600;
+  display:inline-flex;align-items:center;gap:7px;transition:.18s;box-shadow:var(--shadow-sm);
+}
+.btn:hover{transform:translateY(-1px);border-color:var(--brand)}
+.btn:active{transform:translateY(0)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));border-color:transparent;color:#fff;box-shadow:0 6px 18px -8px var(--brand)}
+.btn.primary:hover{filter:brightness(1.06)}
+.btn.ghost{background:transparent;box-shadow:none}
+.btn.ghost:hover{background:var(--brand-soft);border-color:transparent}
+.btn.sm{padding:6px 12px;font-size:13px;border-radius:8px}
+.btn.lg{padding:13px 26px;font-size:16px;border-radius:12px}
+.btn.xs{padding:4px 9px;font-size:12px;border-radius:7px}
+.btn.danger{color:var(--bad);border-color:var(--bad)}
+.btn.danger:hover{background:var(--bad-soft);border-color:var(--bad)}
+.btn.block{width:100%;justify-content:center}
+.iconbtn{
+  width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--bg-2);
+  cursor:pointer;display:grid;place-items:center;color:var(--text-2);transition:.18s;font-size:16px;
+}
+.iconbtn:hover{color:var(--brand);border-color:var(--brand);transform:translateY(-1px)}
+.iconbtn.danger:hover{color:#dc2626;border-color:#dc2626}
+
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:var(--pad);box-shadow:var(--sh-1);
+}
+.card.pad-lg{padding:calc(var(--pad) + 6px)}
+.card-title{font-size:var(--fs-15);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:var(--sp-3);letter-spacing:-.1px}
+.muted{color:var(--text-2)}
+.dim{color:var(--text-3)}
+.tiny{font-size:12px}
+.small{font-size:13px}
+.mono{font-family:var(--mono)}
+.center{text-align:center}
+.row{display:flex;gap:12px}
+.row.wrap{flex-wrap:wrap}
+.row.mid{align-items:center}
+.row.between{justify-content:space-between}
+.grow{flex:1}
+.mt{margin-top:14px}.mt-s{margin-top:8px}.mt-l{margin-top:24px}
+.mb{margin-bottom:14px}
+hr.sep{border:0;border-top:1px solid var(--line);margin:18px 0}
+
+.pill{
+  display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:999px;
+  font-size:11.5px;font-weight:700;background:var(--brand-soft);color:var(--brand);
+}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)}
+.pill.bad{background:var(--bad-soft);color:var(--bad)}
+.pill.info{background:var(--info-soft);color:var(--info)}
+.pill.plain{background:var(--card-2);color:var(--text-2)}
+
+.field{margin-bottom:14px}
+.field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px;color:var(--text-2)}
+.input,textarea.input,select.input{
+  width:100%;padding:10px 13px;border:1px solid var(--line);border-radius:10px;
+  background:var(--bg-2);outline:none;transition:.18s;font-size:14px;
+}
+.input:focus{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft)}
+textarea.input{resize:vertical;min-height:96px;line-height:1.7}
+.hint{font-size:12px;color:var(--text-3);margin-top:5px;line-height:1.6}
+
+/* ============ 布局：流体栅格 + 密度标尺 ============ */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:var(--sp-6) var(--sp-5) var(--sp-8)}
+.grid{display:grid;gap:var(--gap);grid-auto-rows:min-content}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+/* 自适应网格：按可用宽度自动定列，宽屏一屏承载更多内容 */
+.gauto{grid-template-columns:repeat(auto-fit,minmax(min(100%,var(--gmin,240px)),1fr))}
+.gauto-sm{--gmin:190px}
+.gauto-md{--gmin:330px}
+.view{display:none;animation:fade .32s ease}
+.view.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ============ 首页 Hero ============ */
+.hero{
+  background:linear-gradient(135deg,var(--brand) 0%,var(--brand-2) 55%,#8b5cf6 100%);
+  border-radius:var(--radius-lg);padding:44px 36px;color:#fff;position:relative;overflow:hidden;
+  box-shadow:0 24px 48px -24px var(--brand);
+}
+.hero:after{
+  content:"";position:absolute;right:-90px;top:-90px;width:320px;height:320px;border-radius:50%;
+  background:rgba(255,255,255,.12);
+}
+.hero:before{
+  content:"";position:absolute;right:60px;bottom:-120px;width:220px;height:220px;border-radius:50%;
+  background:rgba(255,255,255,.08);
+}
+.hero h1{font-size:clamp(24px,4vw,36px);font-weight:900;letter-spacing:-.5px;position:relative;z-index:1}
+.hero p{opacity:.94;margin-top:10px;max-width:620px;position:relative;z-index:1;font-size:15px}
+.hero .btns{margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;position:relative;z-index:1}
+.hero .btn{background:#fff;color:var(--brand);border-color:transparent;font-weight:800}
+.hero .btn.ghost{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.35)}
+.hero .btn.ghost:hover{background:rgba(255,255,255,.26)}
+
+.step-card{position:relative;padding-top:26px}
+.step-num{
+  position:absolute;top:-14px;left:20px;width:32px;height:32px;border-radius:10px;
+  background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;
+  display:grid;place-items:center;font-weight:800;font-size:14px;box-shadow:0 6px 14px -6px var(--brand);
+}
+
+/* ============ 诊断 ============ */
+.diag-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.progress{height:8px;border-radius:999px;background:var(--line);overflow:hidden;flex:1;min-width:140px}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--brand),var(--brand-2));transition:width .35s ease;border-radius:999px}
+.timer{
+  font-family:var(--mono);font-weight:800;font-size:15px;padding:6px 12px;border-radius:9px;
+  background:var(--card-2);border:1px solid var(--line);min-width:74px;text-align:center;
+}
+.timer.hot{color:var(--bad);border-color:var(--bad)}
+
+.qtext{font-size:16.5px;line-height:1.85;margin-bottom:6px}
+.qtext.en{font-size:16px;line-height:1.9}
+.opt{
+  display:flex;gap:11px;align-items:flex-start;padding:12px 15px;border:1.5px solid var(--line);
+  border-radius:12px;cursor:pointer;margin-bottom:9px;transition:.16s;background:var(--card);
+}
+.opt:hover{border-color:var(--brand);background:var(--brand-soft)}
+.opt.sel{border-color:var(--brand);background:var(--brand-soft);box-shadow:0 0 0 3px var(--brand-soft)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt .key{
+  flex:0 0 26px;height:26px;border-radius:8px;background:var(--card-2);border:1px solid var(--line);
+  display:grid;place-items:center;font-weight:800;font-size:13px;
+}
+.opt.sel .key{background:var(--brand);color:#fff;border-color:transparent}
+.opt.right .key{background:var(--ok);color:#fff;border-color:transparent}
+.opt.wrong .key{background:var(--bad);color:#fff;border-color:transparent}
+.opt .txt{flex:1;font-size:14.5px}
+
+.passage{
+  background:var(--card-2);border:1px solid var(--line);border-radius:12px;padding:16px 18px;
+  font-size:14.5px;line-height:1.95;max-height:340px;overflow:auto;
+}
+.blank{display:inline-block;min-width:74px;border-bottom:1.5px solid var(--brand);text-align:center;font-weight:800;color:var(--brand)}
+
+.audioplay{
+  display:flex;align-items:center;gap:12px;background:var(--card-2);border:1px dashed var(--line);
+  border-radius:12px;padding:14px 16px;
+}
+.wave{display:flex;gap:3px;align-items:flex-end;height:26px}
+.wave i{width:3px;background:var(--brand);border-radius:2px;opacity:.35}
+.wave.on i{animation:wv .9s ease-in-out infinite;opacity:1}
+.wave i:nth-child(1){height:30%}.wave i:nth-child(2){height:60%}.wave i:nth-child(3){height:100%}
+.wave i:nth-child(4){height:45%}.wave i:nth-child(5){height:75%}.wave i:nth-child(6){height:35%}
+@keyframes wv{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}
+
+.explain{
+  background:var(--info-soft);border-left:3px solid var(--info);border-radius:8px;
+  padding:12px 15px;font-size:13.5px;line-height:1.8;margin-top:12px;
+}
+.explain b{color:var(--info)}
+
+/* ============ 结果页 ============ */
+.score-hero{
+  display:flex;gap:30px;align-items:center;flex-wrap:wrap;
+  background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;
+  border-radius:var(--radius-lg);padding:30px 32px;box-shadow:0 24px 48px -24px var(--brand);
+}
+.big-score{font-size:64px;font-weight:900;line-height:1;letter-spacing:-2px}
+.big-score small{font-size:20px;font-weight:700;opacity:.8;margin-left:6px}
+.level-tag{
+  display:inline-block;padding:5px 14px;border-radius:999px;background:rgba(255,255,255,.2);
+  border:1px solid rgba(255,255,255,.4);font-weight:800;font-size:14px;backdrop-filter:blur(4px);
+}
+.stat{background:var(--card-2);border:1px solid var(--line);border-radius:12px;padding:13px 15px}
+.stat .k{font-size:12px;color:var(--text-3);font-weight:700}
+.stat .v{font-size:20px;font-weight:800;margin-top:2px}
+.bar{height:9px;border-radius:999px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:999px;transition:width .5s ease}
+
+/* ============ 计划 ============ */
+.stage{position:relative;padding-left:38px;padding-bottom:6px}
+.stage:before{content:"";position:absolute;left:11px;top:30px;bottom:-6px;width:2px;background:var(--line)}
+.stage:last-child:before{display:none}
+.stage .dot{
+  position:absolute;left:0;top:6px;width:24px;height:24px;border-radius:50%;
+  background:var(--bg);border:2.5px solid var(--brand);display:grid;place-items:center;
+  font-size:11px;font-weight:800;color:var(--brand);z-index:1;
+}
+.stage.done .dot{background:var(--ok);border-color:var(--ok);color:#fff}
+.task{
+  display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border-radius:9px;
+  cursor:pointer;transition:.15s;border:1px solid transparent;
+}
+.task:hover{background:var(--card-2);border-color:var(--line)}
+.task input{width:17px;height:17px;margin-top:3px;accent-color:var(--brand);cursor:pointer;flex:0 0 auto}
+.task .txt{font-size:14px;flex:1}
+.task.done .txt{text-decoration:line-through;color:var(--text-3)}
+
+/* ============ 练习 / 错题本 ============ */
+.chip{
+  display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;
+  border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:var(--fs-13);font-weight:600;transition:.16s;
+}
+.chip:hover{border-color:var(--brand);color:var(--brand)}
+.chip.on{background:var(--brand);color:#fff;border-color:transparent}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th{text-align:left;padding:9px 12px;color:var(--text-3);font-size:12px;border-bottom:1px solid var(--line);font-weight:700}
+.tbl td{padding:11px 12px;border-bottom:1px solid var(--line-2);vertical-align:top}
+.tbl tr:last-child td{border-bottom:0}
+.empty{padding:44px 20px;text-align:center;color:var(--text-3)}
+.empty .big{font-size:40px;margin-bottom:8px;opacity:.6}
+
+/* ============ AI 题库更新 ============ */
+.logitem{
+  margin-top:8px;padding:9px 12px;border-left:3px solid var(--line);border-radius:8px;
+  background:var(--card-2);font-size:13.5px;line-height:1.7;
+}
+.logitem.ok{border-left-color:var(--ok)}
+.logitem.bad{border-left-color:var(--bad);color:var(--bad)}
+details summary{cursor:pointer;padding:6px 2px;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--brand);font-weight:800}
+details[open] summary:before{content:"▾ "}
+
+/* ============ 工具箱 ============ */
+.tool-out{
+  background:var(--card-2);border:1px solid var(--line);border-radius:12px;padding:16px 18px;
+  font-size:14.5px;line-height:1.85;white-space:pre-wrap;word-break:break-word;min-height:60px;
+}
+.loader{display:inline-block;width:15px;height:15px;border:2px solid var(--line);border-top-color:var(--brand);border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px}
+@keyframes sp{to{transform:rotate(360deg)}}
+mark{background:var(--warn-soft);color:var(--warn);padding:0 3px;border-radius:3px;font-weight:700}
+
+/* ============ 提示条 / 模态 ============ */
+.toast{
+  position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(80px);
+  background:var(--text);color:var(--bg-2);padding:12px 22px;border-radius:12px;
+  font-size:14px;font-weight:600;box-shadow:var(--shadow);z-index:200;opacity:0;transition:.3s;
+  max-width:90vw;text-align:center;
+}
+.toast.on{transform:translateX(-50%) translateY(0);opacity:1}
+.modal{position:fixed;inset:0;background:rgba(10,14,25,.55);backdrop-filter:blur(3px);z-index:150;display:none;place-items:center;padding:20px}
+.modal.on{display:grid}
+.modal-box{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:26px;max-width:520px;width:100%;box-shadow:var(--shadow);max-height:88vh;overflow:auto;animation:fade .25s ease}
+
+/* ============ 页脚 ============ */
+.foot{text-align:center;color:var(--text-3);font-size:12.5px;padding:26px 18px;border-top:1px solid var(--line);margin-top:30px;line-height:1.9}
+
+/* ============ 改版 v2 · 全局导览：顶栏分组 / 底部标签栏 ============ */
+.topbar-in{padding:var(--sp-2) var(--sp-5);gap:var(--sp-3);min-height:var(--topbar-h)}
+.nav{margin-left:var(--sp-2)}
+.nav button{position:relative;padding:7px 12px;font-size:var(--fs-13)}
+.nav button[data-group]{margin-left:var(--sp-5)}
+.nav button[data-group]:before{
+  content:"";position:absolute;left:calc(var(--sp-5) / -2);top:50%;margin-top:-7px;
+  width:1px;height:14px;background:var(--line);border-radius:1px;
+}
+
+.tabbar{
+  display:none;position:fixed;left:0;right:0;bottom:0;z-index:70;
+  background:color-mix(in srgb,var(--bg-2) 92%,transparent);
+  backdrop-filter:saturate(180%) blur(14px);-webkit-backdrop-filter:saturate(180%) blur(14px);
+  border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);
+}
+.tabbar-in{display:flex;max-width:620px;margin:0 auto}
+.tabbar button{
+  flex:1;min-height:44px;border:0;background:transparent;cursor:pointer;color:var(--text-3);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  padding:7px 4px;font-size:var(--fs-11);font-weight:700;transition:.16s;
+}
+.tabbar button .ti{font-size:19px;line-height:1}
+.tabbar button.on{color:var(--brand)}
+.tabbar button.on .ti{transform:translateY(-1px)}
+
+/* ============ 改版 v2 · 页头（二级导航）============ */
+.page-head{margin-bottom:var(--sp-5)}
+.crumb{display:flex;align-items:center;gap:6px;font-size:var(--fs-12);color:var(--text-3);margin-bottom:var(--sp-2)}
+.crumb b{color:var(--brand);font-weight:700}
+.crumb i{font-style:normal;opacity:.45}
+.ph-row{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--sp-4);flex-wrap:wrap}
+.ph-title{font-size:clamp(19px,2vw,23px);font-weight:800;letter-spacing:-.4px;line-height:1.25}
+.ph-desc{font-size:var(--fs-13);color:var(--text-2);margin-top:5px;max-width:72ch;line-height:1.7}
+.ph-side{display:flex;align-items:center;gap:var(--sp-2);flex-wrap:wrap}
+.ph-kpi{
+  display:flex;align-items:baseline;gap:6px;padding:5px 11px;border-radius:999px;white-space:nowrap;
+  background:var(--card);border:1px solid var(--line);font-size:var(--fs-12);color:var(--text-2);
+}
+.ph-kpi b{font-family:var(--mono);font-size:var(--fs-15);font-weight:800;color:var(--text)}
+
+/* ============ 改版 v2 · 分段导航 ============ */
+.segmented{
+  display:flex;gap:4px;padding:4px;border-radius:var(--r);background:var(--card-2);
+  border:1px solid var(--line);overflow-x:auto;scrollbar-width:none;
+}
+.segmented::-webkit-scrollbar{display:none}
+.segmented button{
+  border:0;background:transparent;color:var(--text-2);cursor:pointer;white-space:nowrap;
+  padding:8px 14px;border-radius:9px;font-size:var(--fs-13);font-weight:700;transition:.18s;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.segmented button:hover{color:var(--brand)}
+.segmented button.on{background:var(--card);color:var(--brand);box-shadow:var(--sh-1)}
+html[data-theme="dark"] .segmented button.on{background:var(--brand-soft)}
+.seg-stick{position:sticky;top:var(--topbar-h);z-index:45;padding:var(--sp-3) 0;background:linear-gradient(var(--bg) 68%,transparent)}
+.seg-bar{display:flex;align-items:center;gap:var(--sp-3);justify-content:space-between}
+.seg-bar .segmented{flex:1;min-width:0}
+.seg-now{font-size:var(--fs-12);color:var(--text-3);white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+.seg-now b{color:var(--text-2);font-weight:700}
+@media(max-width:767px){.seg-now{display:none}}
+
+/* ============ 改版 v2 · KPI / 行式列表 / 磁贴 ============ */
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+.kpi .k{font-size:var(--fs-11);font-weight:800;color:var(--text-3);letter-spacing:.4px}
+.kpi .v{font-size:var(--fs-20);font-weight:800;font-family:var(--mono);letter-spacing:-.5px;margin-top:2px;line-height:1.15}
+.kpi .v small{font-size:var(--fs-12);font-weight:700;color:var(--text-3);margin-left:3px}
+.kpi .d{font-size:var(--fs-11);color:var(--text-3);margin-top:3px}
+
+.list{border:1px solid var(--line);border-radius:var(--r);background:var(--card);overflow:hidden}
+.list-row{display:flex;align-items:center;gap:var(--sp-3);padding:11px 14px;border-top:1px solid var(--line-2);transition:.16s}
+.list-row:first-child{border-top:0}
+.list-row:hover{background:var(--card-2)}
+.list-ico{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:var(--brand-soft);font-size:17px;flex:0 0 auto}
+.list-main{flex:1;min-width:0}
+.list-t{font-size:var(--fs-14);font-weight:700}
+.list-d{font-size:var(--fs-12);color:var(--text-3);margin-top:2px}
+.list-tail{display:flex;align-items:center;gap:var(--sp-2);flex:0 0 auto}
+
+.tile{display:flex;align-items:center;gap:12px;padding:13px 14px;border:1px solid var(--line);border-radius:var(--r);
+  background:var(--card);cursor:pointer;transition:.18s;text-align:left;width:100%;font-family:inherit}
+.tile:hover{border-color:var(--brand);transform:translateY(-1px);box-shadow:var(--sh-2)}
+.tile .ti{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:var(--brand-soft);font-size:19px;flex:0 0 auto}
+.tile .tt{font-size:var(--fs-14);font-weight:700;color:var(--text)}
+.tile .td{font-size:var(--fs-12);color:var(--text-3);margin-top:1px}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+/* ============ 改版 v2 · 仪表盘 Hero / 分数条 ============ */
+.dash-hero{
+  display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:var(--sp-6);align-items:center;
+  background:linear-gradient(150deg,var(--brand) 0%,var(--brand-2) 100%);color:#fff;border-radius:var(--r-lg);
+  padding:var(--sp-6);box-shadow:0 18px 44px -30px var(--brand);position:relative;overflow:hidden;
+}
+.dash-hero:after{content:"";position:absolute;right:-70px;top:-70px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.1)}
+.dash-hero>*{position:relative;z-index:1}
+.dash-hero h1{font-size:clamp(21px,2.3vw,29px);font-weight:800;letter-spacing:-.7px;line-height:1.22}
+.dash-hero p{font-size:var(--fs-14);opacity:.93;margin-top:8px;max-width:50ch;line-height:1.7}
+.dash-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:var(--sp-5)}
+.dash-hero .btn{background:#fff;color:var(--brand);border-color:transparent;font-weight:800}
+.dash-hero .btn.ghost{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.34)}
+.dash-hero .btn.ghost:hover{background:rgba(255,255,255,.24)}
+.dash-kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.dash-kpi{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.2);border-radius:var(--r);padding:10px 12px}
+.dash-kpi .k{font-size:var(--fs-11);opacity:.85;font-weight:700}
+.dash-kpi .v{font-size:var(--fs-20);font-weight:800;font-family:var(--mono);letter-spacing:-.5px;margin-top:2px}
+.dash-kpi .d{font-size:var(--fs-11);opacity:.8;margin-top:1px}
+.dash-kpi .v small{font-size:var(--fs-11);font-weight:600;opacity:.78;margin-left:2px}
+
+.score-hero{
+  display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr);gap:var(--sp-6);align-items:center;
+  background:linear-gradient(140deg,var(--brand) 0%,var(--brand-2) 100%);color:#fff;
+  border-radius:var(--r-lg);padding:var(--sp-6);box-shadow:0 18px 44px -30px var(--brand);
+}
+.big-score{font-size:clamp(40px,5vw,54px);font-weight:800;line-height:1;letter-spacing:-2px;font-family:var(--mono)}
+.hero{
+  background:linear-gradient(140deg,var(--brand) 0%,var(--brand-2) 100%);border-radius:var(--r-lg);
+  padding:var(--sp-6);color:#fff;position:relative;overflow:hidden;box-shadow:0 18px 44px -30px var(--brand);
+}
+.hero h1{font-size:clamp(22px,2.6vw,30px);font-weight:800;letter-spacing:-.6px;position:relative;z-index:1}
+.hero p{opacity:.93;margin-top:8px;max-width:60ch;position:relative;z-index:1;font-size:var(--fs-14)}
+.hero .btns{margin-top:var(--sp-5);display:flex;gap:10px;flex-wrap:wrap;position:relative;z-index:1}
+
+/* ============ 改版 v2 · 会话双栏 / 答题卡 / 锚点导航 ============ */
+.session{display:grid;grid-template-columns:minmax(0,1fr) 248px;gap:var(--sp-5);align-items:start}
+.sheet{position:sticky;top:calc(var(--topbar-h) + 16px);background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:var(--sp-4)}
+.sheet-h{font-size:var(--fs-11);font-weight:800;color:var(--text-3);letter-spacing:.4px;margin-bottom:10px;display:flex;justify-content:space-between;gap:8px}
+.sheet-g{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.sheet-g b{height:28px;border-radius:7px;display:grid;place-items:center;font-size:var(--fs-12);font-weight:700;
+  background:var(--card-2);border:1px solid var(--line);color:var(--text-3)}
+.sheet-g b.done{background:var(--brand-soft);border-color:transparent;color:var(--brand)}
+.sheet-g b.cur{background:var(--brand);border-color:transparent;color:#fff}
+.sheet-legend{display:flex;gap:12px;margin-top:10px;font-size:var(--fs-11);color:var(--text-3);flex-wrap:wrap}
+.sheet-legend i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+
+.stage-nav{display:flex;gap:8px;flex-wrap:wrap}
+.stage-nav a{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;
+  border:1px solid var(--line);background:var(--card);font-size:var(--fs-12);font-weight:700;color:var(--text-2);cursor:pointer}
+.stage-nav a:hover{border-color:var(--brand);color:var(--brand)}
+.set-grid{display:grid;grid-template-columns:196px minmax(0,1fr);gap:var(--sp-5);align-items:start}
+.set-nav{position:sticky;top:calc(var(--topbar-h) + 16px);display:flex;flex-direction:column;gap:2px}
+.set-nav a{padding:8px 12px;border-radius:9px;font-size:var(--fs-13);font-weight:600;color:var(--text-2);cursor:pointer}
+.set-nav a:hover{background:var(--card-2);color:var(--brand)}
+.set-nav a.on{background:var(--card-2);color:var(--brand);box-shadow:inset 0 0 0 1px var(--line)}
+.set-pane{display:none}
+.set-pane.on{display:block}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap)}
+/* —— 补充：折叠面板 / 磁贴按钮 / 答题卡交互 / 锚点定位 —— */
+.step-card{transition:transform .18s,border-color .18s,box-shadow .18s}
+.step-card:hover{border-color:var(--brand);transform:translateY(-2px);box-shadow:var(--sh-2)}
+.tile{text-align:left;background:var(--card);color:var(--text);font:inherit;cursor:pointer}
+.tile .tile-txt{display:flex;flex-direction:column;min-width:0}
+.fold{border-top:1px solid var(--line-2)}
+.fold:first-child{border-top:0}
+.fold summary{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;
+  padding:12px 2px;cursor:pointer;list-style:none}
+.fold summary::-webkit-details-marker{display:none}
+.fold summary:after{content:"＋";color:var(--text-3);font-weight:700;margin-left:auto}
+.fold[open] summary:after{content:"－"}
+.fold-t{font-weight:700;font-size:var(--fs-14)}
+.fold-tag{font-size:var(--fs-12);color:var(--text-3);font-family:var(--mono)}
+.fold-b{padding:2px 2px 14px}
+.inline-fold summary{list-style:none;cursor:pointer;display:inline-flex}
+.inline-fold summary::-webkit-details-marker{display:none}
+.sheet-g b{cursor:pointer}
+.sheet-g b.part{border-color:var(--brand);color:var(--brand)}
+.stage{scroll-margin-top:calc(var(--topbar-h) + 12px)}
+.set-main{min-width:0}
+
+/* ============ 响应式：5 档（xl / lg / md / sm / xs）============ */
+@media(min-width:1440px){
+  :root{--maxw:1360px;--gap:18px;--pad:20px}
+}
+@media(max-width:1023px){
+  .nav{display:none}
+  .tabbar{display:block}
+  .wrap{padding-bottom:var(--sp-7)}
+  .foot{padding-bottom:calc(var(--sp-6) + 62px)}
+  .g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .session{grid-template-columns:minmax(0,1fr)}
+  .sheet{position:static}
+  .diag-side{order:-1}
+  .diag-side .sheet{padding:10px 12px}
+  .diag-side .sheet-legend{display:none}
+  .set-grid{grid-template-columns:minmax(0,1fr)}
+  .set-nav{position:static;flex-direction:row;flex-wrap:wrap}
+  .dash-hero{grid-template-columns:minmax(0,1fr);gap:var(--sp-5)}
+  .brand small{display:none}
+}
+@media(max-width:767px){
+  .g2,.g3{grid-template-columns:minmax(0,1fr)}
+  .g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .steps{grid-template-columns:minmax(0,1fr)}
+  .score-hero{grid-template-columns:minmax(0,1fr);gap:var(--sp-4)}
+  .list-row{padding:10px 12px}
+  .seg-stick{top:0}
+}
+@media(max-width:560px){
+  :root{--gap:12px;--pad:14px;--topbar-h:54px}
+  .wrap{padding:var(--sp-4) var(--sp-3) var(--sp-6)}
+  .foot{padding-bottom:calc(var(--sp-5) + 62px)}
+  .brand span{display:none}
+  .topbar-in{padding:var(--sp-2) var(--sp-3);gap:var(--sp-2)}
+  .btn{padding:9px 14px}
+  .btn.lg{padding:12px 20px;font-size:var(--fs-15)}
+  .card-title{font-size:var(--fs-14)}
+  .segmented button{padding:8px 12px}
+  .dash-hero{padding:var(--sp-5) var(--sp-4);border-radius:var(--r)}
+  .score-hero{padding:var(--sp-5) var(--sp-4)}
+  .ph-title{font-size:var(--fs-17)}
+  .ph-row{align-items:flex-start}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+}
+
+/* =====================================================================
+   视觉风格（Skin）：三套语言，可一键切换
+   scholar 纸感学术 / blueprint 蓝图 / editorial 暖调杂志
+   —— 皮肤层放在样式表末尾，以 html[data-skin] 覆盖基础令牌 ——
+   ===================================================================== */
+html[data-skin="scholar"]{
+  --brand:#0f766e;--brand-2:#0d9488;--brand-soft:#e8f5f3;
+  --bg:#f6f7f8;--bg-2:#ffffff;--card:#ffffff;--card-2:#fafbfb;
+  --text:#18181b;--text-2:#52525b;--text-3:#8b8f98;
+  --line:#e6e7ea;--line-2:#f0f1f3;
+  --r-sm:8px;--r:12px;--r-lg:16px;--radius-sm:8px;--radius:12px;--radius-lg:16px;
+  --sh-1:0 1px 2px rgba(24,24,27,.05);
+  --sh-2:0 1px 3px rgba(24,24,27,.06),0 12px 28px -18px rgba(24,24,27,.2);
+}
+
+/* —— 2) 蓝图：冷蓝灰浅色、白卡 + 蓝色强调、高对比正文，长时间阅读清晰 —— */
+html[data-skin="blueprint"]{
+  --brand:#1d4ed8;--brand-2:#2563eb;--brand-soft:#e8effd;
+  --accent:#b45309;--accent-soft:#fdf4e6;
+  --ok:#15803d;--ok-soft:#e9f6ed;--warn:#b45309;--warn-soft:#fdf4e6;
+  --bad:#b91c1c;--bad-soft:#fdeceb;--info:#0369a1;--info-soft:#e7f2fb;
+  --bg:#eef2f8;--bg-2:#ffffff;--card:#ffffff;--card-2:#f6f9fd;
+  --text:#0f172a;--text-2:#3f4c60;--text-3:#55627a;
+  --line:#dbe3ee;--line-2:#eaf0f8;
+  --r-sm:8px;--r:10px;--r-lg:14px;--radius-sm:8px;--radius:10px;--radius-lg:14px;
+  --sh-1:0 1px 2px rgba(15,23,42,.06);
+  --sh-2:0 2px 4px rgba(15,23,42,.05),0 16px 32px -24px rgba(15,23,42,.3);
+  --mono:"JetBrains Mono","Cascadia Mono",Consolas,"SFMono-Regular",Menlo,monospace;
+}
+html[data-skin="blueprint"] body{
+  background-image:
+    linear-gradient(rgba(29,78,216,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(29,78,216,.04) 1px,transparent 1px);
+  background-size:32px 32px;
+  background-attachment:fixed;
+}
+html[data-skin="blueprint"] .topbar{background:rgba(255,255,255,.95);border-bottom:1px solid var(--line);box-shadow:0 1px 0 rgba(15,23,42,.04)}
+html[data-skin="blueprint"] .logo{background:var(--brand);color:#fff;border-color:var(--brand);border-radius:9px;box-shadow:0 8px 18px -10px var(--brand)}
+html[data-skin="blueprint"] .nav button{color:var(--text-2);border-radius:8px}
+html[data-skin="blueprint"] .nav button.on{background:var(--brand-soft);color:var(--brand);box-shadow:inset 0 0 0 1px #c9dbfa}
+html[data-skin="blueprint"] .page-head{padding-bottom:12px;border-bottom:1px solid var(--line)}
+html[data-skin="blueprint"] .crumb b{color:var(--brand)}
+html[data-skin="blueprint"] .ph-kpi{background:#fff;border:1px solid var(--line);border-radius:9px;color:var(--text-2)}
+html[data-skin="blueprint"] .ph-kpi b{color:var(--brand)}
+html[data-skin="blueprint"] .card{border:1px solid var(--line);background:#fff;box-shadow:var(--sh-1)}
+html[data-skin="blueprint"] .kpi,
+html[data-skin="blueprint"] .list,
+html[data-skin="blueprint"] .tile,
+html[data-skin="blueprint"] .sheet{border-color:var(--line);box-shadow:none}
+html[data-skin="blueprint"] .card-title{color:#13203a}
+html[data-skin="blueprint"] .segmented{background:#e9eff7;border-color:#dde5f0;border-radius:10px}
+html[data-skin="blueprint"] .segmented button{border-radius:8px;color:var(--text-2)}
+html[data-skin="blueprint"] .segmented button.on{background:#fff;color:var(--brand);box-shadow:0 1px 3px rgba(15,23,42,.14)}
+html[data-skin="blueprint"] .btn{background:#fff;border-color:#cdd8e7;color:var(--text)}
+html[data-skin="blueprint"] .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff;box-shadow:0 8px 18px -12px var(--brand)}
+html[data-skin="blueprint"] .btn.primary:hover{background:#1e40af}
+html[data-skin="blueprint"] .dash-hero,
+html[data-skin="blueprint"] .score-hero,
+html[data-skin="blueprint"] .hero{background:linear-gradient(135deg,#1e3a8a,#1d4ed8 52%,#2563eb);border:1px solid #1e40af;box-shadow:0 22px 44px -32px #1e3a8a}
+html[data-skin="blueprint"] .dash-kpi{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.36);border-radius:9px}
+html[data-skin="blueprint"] .kpi .v,
+html[data-skin="blueprint"] .big-score{font-variant-numeric:tabular-nums;color:var(--brand)}
+html[data-skin="blueprint"] .dash-hero .dash-kpi .v,
+html[data-skin="blueprint"] .dash-hero .dash-kpi .k,
+html[data-skin="blueprint"] .dash-hero .dash-kpi .d{color:#fff;opacity:1}
+html[data-skin="blueprint"] .dash-hero p{opacity:1;color:rgba(255,255,255,.95)}
+html[data-skin="blueprint"] .dash-hero .dash-kpi{background:rgba(255,255,255,.18)}
+html[data-skin="blueprint"] .score-hero .big-score,
+html[data-skin="blueprint"] .hero .big-score{color:#fff}
+html[data-skin="blueprint"] .sheet-g b{border-radius:6px}
+html[data-skin="blueprint"] .list-ico,
+html[data-skin="blueprint"] .tile .ti{border-radius:8px;background:var(--brand-soft)}
+html[data-skin="blueprint"] .tabbar{background:rgba(255,255,255,.97);border-top:1px solid var(--line)}
+html[data-skin="blueprint"] ::selection{background:#cfe0ff;color:#0f172a}
+html[data-skin="blueprint"] .dash-hero .btn{background:#fff;color:var(--brand)}
+html[data-skin="blueprint"] .dash-hero .btn.ghost{background:rgba(255,255,255,.16);color:#fff;border-color:rgba(255,255,255,.48)}
+html[data-skin="blueprint"] .foot{border-top:1px solid var(--line)}
+
+/* —— 3) 暖调杂志：米白纸感、衬线标题、砖红、直角、双线分隔 —— */
+html[data-skin="editorial"]{
+  --brand:#9a3412;--brand-2:#b45309;--brand-soft:#f7ebdd;
+  --accent:#1f3a5f;--accent-soft:#eef1f6;
+  --ok:#3f6212;--ok-soft:#eff4e5;--warn:#9a3412;--warn-soft:#f7ebdd;
+  --bad:#9f1239;--bad-soft:#fbeef1;--info:#1e40af;--info-soft:#eef2fb;
+  --bg:#f6f1e7;--bg-2:#fffdf7;--card:#fffdf7;--card-2:#f8f2e6;
+  --text:#211c16;--text-2:#5b5147;--text-3:#8b7f70;
+  --line:#ded2c0;--line-2:#ece3d3;
+  --r-sm:2px;--r:2px;--r-lg:3px;--radius-sm:2px;--radius:2px;--radius-lg:3px;
+  --sh-1:none;--sh-2:none;--shadow:none;--shadow-sm:none;
+}
+html[data-skin="editorial"] body{background-image:radial-gradient(rgba(120,90,50,.055) 1px,transparent 1px);background-size:18px 18px}
+html[data-skin="editorial"] .topbar{background:rgba(255,253,247,.94);border-bottom:2px solid var(--text)}
+html[data-skin="editorial"] .logo{background:var(--text);border-radius:0;font-family:var(--serif)}
+html[data-skin="editorial"] .nav button{border-radius:0;font-weight:600}
+html[data-skin="editorial"] .nav button.on{background:transparent;color:var(--brand);box-shadow:inset 0 -2px 0 var(--brand)}
+html[data-skin="editorial"] .ph-title,
+html[data-skin="editorial"] .card-title,
+html[data-skin="editorial"] .dash-hero h1,
+html[data-skin="editorial"] .big-score{font-family:var(--serif);font-weight:600;letter-spacing:0}
+html[data-skin="editorial"] .crumb b{color:var(--brand);letter-spacing:.5px}
+html[data-skin="editorial"] .card{border-top:2px solid var(--text);border-radius:0}
+html[data-skin="editorial"] .card-title{font-size:var(--fs-15)}
+html[data-skin="editorial"] .kpi{border-top:2px solid var(--text);border-radius:0;background:transparent}
+html[data-skin="editorial"] .list{border-radius:0}
+html[data-skin="editorial"] .list-row{border-top-style:dotted}
+html[data-skin="editorial"] .tile{border-radius:0;background:transparent}
+html[data-skin="editorial"] .segmented{border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent;padding:0;gap:20px}
+html[data-skin="editorial"] .segmented button{border-radius:0;padding:8px 1px;font-weight:600}
+html[data-skin="editorial"] .segmented button.on{background:transparent;box-shadow:inset 0 -2px 0 var(--brand);color:var(--brand)}
+html[data-skin="editorial"] .btn{border-radius:0;box-shadow:none;background:transparent}
+html[data-skin="editorial"] .btn.primary{background:var(--text);border-color:var(--text);color:var(--bg-2)}
+html[data-skin="editorial"] .btn.primary:hover{background:var(--brand);border-color:var(--brand);filter:none}
+html[data-skin="editorial"] .dash-hero,
+html[data-skin="editorial"] .score-hero,
+html[data-skin="editorial"] .hero{background:linear-gradient(155deg,#26221c,#3b342a);border-radius:0;box-shadow:none}
+html[data-skin="editorial"] .dash-kpi{background:transparent;border-color:rgba(255,255,255,.34);border-radius:0}
+html[data-skin="editorial"] .dash-hero .btn{background:var(--bg-2);color:var(--text);border-radius:0}
+html[data-skin="editorial"] .ph-kpi{border-radius:0;background:transparent;border-color:var(--line)}
+html[data-skin="editorial"] .foot{border-top:3px double var(--line)}
+html[data-skin="editorial"] .tabbar{border-top:3px double var(--line)}
+html[data-skin="editorial"] .sheet,
+html[data-skin="editorial"] .sheet-g b{border-radius:0}
+html[data-skin="editorial"] .sheet-g b,
+html[data-skin="editorial"] .list-ico,
+html[data-skin="editorial"] .tile .ti{border-radius:0}
+
+/* —— 风格切换器（顶栏） —— */
+.skin-switch{display:flex;align-items:center;gap:5px;padding:3px 4px;border:1px solid var(--line);border-radius:999px;background:var(--card)}
+.skin-dot{width:16px;height:16px;border-radius:50%;border:1px solid var(--line);padding:0;cursor:pointer;transition:.18s}
+.skin-dot:hover{transform:scale(1.12)}
+.skin-dot.on{box-shadow:0 0 0 2px var(--bg-2),0 0 0 3px var(--brand)}
+.skin-dot[data-skin-pick="scholar"]{background:linear-gradient(135deg,#0f766e 0 55%,#f6f7f8 55% 100%)}
+.skin-dot[data-skin-pick="blueprint"]{background:linear-gradient(135deg,#1d4ed8 0 55%,#eef2f8 55% 100%)}
+.skin-dot[data-skin-pick="editorial"]{background:linear-gradient(135deg,#9a3412 0 55%,#f6f1e7 55% 100%)}
+#themeBtn{position:relative}
+#themeBtn:after{content:"";position:absolute;right:5px;bottom:5px;width:6px;height:6px;border-radius:50%;background:var(--brand)}
+
+/* —— 设置页：风格选择卡 —— */
+.skin-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:6px}
+.skin-card{border:1px solid var(--line);background:var(--card-2);border-radius:var(--r);padding:0;cursor:pointer;overflow:hidden;text-align:left;color:var(--text);transition:.18s}
+.skin-card:hover{border-color:var(--brand);transform:translateY(-1px)}
+.skin-card[aria-pressed="true"]{border-color:var(--brand);box-shadow:0 0 0 1px var(--brand)}
+.skin-preview{height:54px;display:flex;align-items:flex-end;gap:4px;padding:8px;border-bottom:1px solid var(--line)}
+.skin-preview i{display:block;height:8px;border-radius:2px;background:var(--line);flex:1}
+.skin-preview i:first-child{height:22px;flex:0 0 26%}
+.skin-preview i:nth-child(2){height:14px}
+.skin-preview i:nth-child(3){height:10px;flex:1.6}
+.sp-scholar{background:linear-gradient(135deg,#f6f7f8,#fff);border-left:4px solid #0f766e}
+.sp-scholar i{background:#cfe3e0}
+.sp-blueprint{background:linear-gradient(135deg,#eef2f8,#fff);border-left:4px solid #1d4ed8}
+.sp-blueprint i{background:#c9dbfa}
+.sp-editorial{background:#f6f1e7;border-left:4px solid #9a3412}
+.sp-editorial i{background:#e0d3bd}
+.skin-card .sc-b{display:block;padding:8px 10px 10px}
+.skin-card b{display:block;font-size:var(--fs-13)}
+.skin-card span{display:block;font-size:var(--fs-11);color:var(--text-3);margin-top:2px;line-height:1.4}
+@media(max-width:560px){.skin-grid{grid-template-columns:1fr}}
+
+/* —— 矮屏（笔记本 768/800 高）压缩，单屏容纳更多 —— */
+@media(min-width:1024px) and (max-height:900px){
+  .page-head{margin-bottom:14px}
+  .crumb{margin-bottom:4px}
+  .ph-desc{margin-top:4px;line-height:1.55}
+  .seg-stick{padding:8px 0}
+  .segmented button{padding:6px 12px}
+  .session{gap:14px}
+  .card{padding:14px}
+  .steps{gap:12px}
+  .foot{margin-top:var(--sp-5);padding-top:var(--sp-4)}
+}
+@media(max-width:1279px){.skin-switch{display:none}}
+
+/* —— 桌面首屏密度：首页/模考在 1440×800 内尽量不滚动 —— */
+@media(min-width:1024px){
+  #v-home .dash-hero{padding:18px 22px;gap:18px}
+  #v-home .dash-hero h1{font-size:clamp(20px,1.85vw,25px)}
+  #v-home .dash-hero p{font-size:var(--fs-13);line-height:1.6;margin-top:6px;max-width:58ch}
+  #v-home .dash-cta{margin-top:13px;gap:8px}
+  #v-home .dash-cta .btn{padding:9px 18px;font-size:var(--fs-14);border-radius:9px}
+  #v-home .dash-kpi{padding:7px 10px;border-radius:9px}
+  #v-home .dash-kpi .v{font-size:var(--fs-17);margin-top:1px}
+  #v-home .dash-kpi .k,#v-home .dash-kpi .d{font-size:10.5px}
+  #v-home .dash-kpi .d{margin-top:0}
+  #v-home .steps{margin-top:14px;gap:12px}
+  #v-home .step-card{padding:10px 14px 11px;padding-top:20px}
+  #v-home .step-card .card-title{font-size:var(--fs-13);margin:0}
+  #v-home .step-card p{font-size:var(--fs-11);line-height:1.5;margin-top:2px}
+  #v-home .step-num{width:26px;height:26px;top:-11px;border-radius:8px;font-size:12px}
+  #v-home .mt-l{margin-top:14px}
+  #v-home .card{padding:12px 14px}
+  #v-home .list-row{padding:6px 10px}
+  #v-home .list-ico{width:28px;height:28px;font-size:15px}
+  #v-home .tile{padding:8px 10px;gap:9px}
+  #v-home .tile .ti{width:28px;height:28px;font-size:15px;border-radius:8px}
+  #v-home .tile .tt{font-size:var(--fs-13)}
+  #v-home .tile .td{font-size:10.5px;line-height:1.4}
+  #v-home .grid.gauto-sm{gap:8px}
+  #v-home .fold summary{padding:9px 2px}
+  #v-home .dash-hero{padding:12px 20px}
+  #v-home .steps{margin-top:10px}
+  #v-home .mt-l{margin-top:12px}
+  #wGrid{grid-template-columns:repeat(auto-fill,minmax(228px,1fr));gap:10px}
+  #wGrid .card{padding:12px 13px}
+  #v-practice .page-head{margin-bottom:14px}
+}
+
+/* —— 更矮屏（1366×768 等）：砍次要文案，保证首屏一屏放下 —— */
+@media(min-width:1024px) and (max-height:800px){
+  #v-home .dash-hero p{display:none}
+  #v-home .step-card p{display:none}
+  #v-home .grid.gauto-sm{--gmin:0;grid-template-columns:repeat(4,minmax(0,1fr))}
+  #v-home .tile .td{display:none}
+  #v-home .list>*:nth-child(n+3){display:none}
+  #v-home .dash-hero .btn{padding:7px 14px}
+  #wGrid{grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+  #wGrid .card{padding:10px 12px}
+  #v-practice .page-head{margin-bottom:12px}
+  #v-practice .page-head,#v-tools .page-head{padding-bottom:8px;margin-bottom:9px}
+  #wGrid .card{padding:8px 11px}
+  #wGrid .card>div:first-child b{font-size:15px}
+  #v-practice .card>p{display:none}
+  #v-practice .grid.gauto-sm{--gmin:0;grid-template-columns:repeat(4,minmax(0,1fr))}
+  #v-practice .btn.lg{padding:9px 18px;font-size:var(--fs-14)}
+  #v-practice .explain{padding:8px 10px;font-size:var(--fs-12)}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <div class="brand">
+      <div class="logo">C4</div>
+      <div><span>四级备考领航教练</span><small>CET-4 COACH</small></div>
+    </div>
+    <nav class="nav" id="nav"></nav>
+    <div class="top-acts">
+      <div class="skin-switch" id="skinDots" role="group" aria-label="界面风格"></div>
+      <button class="iconbtn" id="themeBtn" title="切换界面风格" aria-label="切换界面风格">◐</button>
+      <button class="iconbtn" id="setBtn" title="设置" aria-label="设置">⚙️</button>
+      <button class="iconbtn danger" id="logoutBtn" title="退出登录" aria-label="退出登录">⏻</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="view" id="v-home"></section>
+  <section class="view" id="v-diag"></section>
+  <section class="view" id="v-result"></section>
+  <section class="view" id="v-plan"></section>
+  <section class="view" id="v-practice"></section>
+  <section class="view" id="v-tools"></section>
+  <section class="view" id="v-settings"></section>
+</main>
+
+<nav class="tabbar" id="tabbar" aria-label="移动端主导航"><div class="tabbar-in"></div></nav>
+
+<div class="foot">
+  四级备考领航教练 · 数据本机与云端双重保存<br>
+  词汇/题目为备考模拟素材，分数为估算参考值，不构成官方成绩
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="modal" id="modal"><div class="modal-box" id="modalBox"></div></div>
+
+<!-- 部署配置：后端 API 地址（GitHub Pages 与后端不同源） -->
+<script src="./config.js"></script>
+<script>
+"use strict";
+/* =====================================================================
+   四级备考领航教练 · CET-4 Coach
+   单文件离线应用：诊断 → 能力画像 → 分阶段备考计划 → 练习 → 工具箱
+   ===================================================================== */
+
+/* ---------------------------------------------------------------
+   1. 常量与存储层
+   --------------------------------------------------------------- */
+const STORE_KEY = "cet4coach.v1";
+const BANK_CACHE_KEY = "cet4coach.bank.v1";
+
+/* ---------------------------------------------------------------
+   静态部署配置（GitHub Pages 与后端不同源）
+   后端地址在 config.js 中配置，例如：
+   window.CET4_CONFIG = { API_BASE: "https://xxx.trycloudflare.com" };
+   --------------------------------------------------------------- */
+const APP_CONFIG = window.CET4_CONFIG || {};
+const API_BASE = String(APP_CONFIG.API_BASE || "").trim().replace(/\/+$/, "");
+const CROSS_ORIGIN = /^https?:\/\//i.test(API_BASE);
+const CONFIG_READY = !!API_BASE && !/REPLACE|YOUR-TUNNEL|example\.com/i.test(API_BASE);
+const TOKEN_KEY = "cet4coach.token.v1";
+
+function getToken() {
+  try { return localStorage.getItem(TOKEN_KEY) || ""; } catch (e) { return ""; }
+}
+function setToken(t) {
+  try { t ? localStorage.setItem(TOKEN_KEY, t) : localStorage.removeItem(TOKEN_KEY); } catch (e) { /* 忽略 */ }
+}
+
+const $ = (sel, root) => (root || document).querySelector(sel);
+const $$ = (sel, root) => Array.from((root || document).querySelectorAll(sel));
+
+/* ---------------------------------------------------------------
+   0. 云端账号 / 同步层
+   --------------------------------------------------------------- */
+const CLOUD = {
+  me: null,          // 当前登录用户
+  version: 0,        // 服务端快照版本号（乐观锁）
+  timer: null,
+  lost: false,       // 会话过期
+  conflict: null,    // 待用户裁决的冲突快照
+  busy: false
+};
+
+function api(path, opts) {
+  const o = Object.assign({ method: "GET", credentials: CROSS_ORIGIN ? "include" : "same-origin", headers: {} }, opts || {});
+  const token = getToken();
+  if (token) o.headers["Authorization"] = "Bearer " + token;
+  if (o.body !== undefined && typeof o.body !== "string") {
+    o.headers["Content-Type"] = "application/json";
+    o.body = JSON.stringify(o.body);
+  }
+  return fetch(API_BASE + path, o).then(res => res.json().catch(() => null).then(data => ({ status: res.status, data: data })));
+}
+
+function gotoLogin() {
+  setToken("");
+  const next = encodeURIComponent(location.pathname + location.search + location.hash);
+  location.replace("login.html?next=" + next);
+}
+
+let _badge = null;
+function setSyncBadge(kind, msg) {
+  if (!_badge) {
+    _badge = document.createElement("div");
+    _badge.id = "cloudBadge";
+    document.body.appendChild(_badge);
+  }
+  const map = {
+    saved: ["已同步", "#10b981"],
+    saving: ["同步中…", "#94a3b8"],
+    error: ["同步失败", "#ef4444"],
+    lost: ["登录已过期", "#f59e0b"]
+  };
+  const it = map[kind] || map.saved;
+  _badge.textContent = msg || it[0];
+  _badge.style.cssText = "position:fixed;left:14px;bottom:14px;z-index:60;font-size:12px;padding:4px 10px;" +
+    "border-radius:999px;background:" + it[1] + ";color:#fff;opacity:.86;pointer-events:none;" +
+    "font-family:system-ui,-apple-system,sans-serif;transition:opacity .3s";
+  if (kind === "saved") setTimeout(() => { if (_badge) _badge.style.opacity = "0"; }, 1600);
+  if (_badge) _badge.style.opacity = ".86";
+}
+
+// 上传前剔除只应留在本机的敏感配置
+function stateForCloud() {
+  const c = clone(S);
+  delete c.__hasLocal;
+  if (c.settings) c.settings = Object.assign({}, c.settings, { apiKey: "" });
+  return c;
+}
+
+function cloudPush(immediate) {
+  if (!CLOUD.me) return;
+  clearTimeout(CLOUD.timer);
+  CLOUD.timer = setTimeout(doPush, immediate ? 0 : 900);
+}
+
+function doPush() {
+  if (!CLOUD.me || CLOUD.busy || CLOUD.conflict) return;
+  CLOUD.busy = true;
+  setSyncBadge("saving");
+  api("/api/state", { method: "PUT", body: { version: CLOUD.version, payload: stateForCloud() } })
+    .then(r => {
+      CLOUD.busy = false;
+      if (r.status === 200 && r.data && r.data.data) {
+        CLOUD.version = r.data.data.version;
+        CLOUD.lost = false;
+        setSyncBadge("saved");
+      } else if (r.status === 409) {
+        CLOUD.conflict = (r.data && r.data.data) || {};
+        askConflict();
+      } else if (r.status === 401) {
+        CLOUD.lost = true;
+        setSyncBadge("lost", "登录已过期，数据已存在本机");
+      } else {
+        setSyncBadge("error");
+      }
+    })
+    .catch(() => { CLOUD.busy = false; setSyncBadge("error"); });
+}
+
+function askConflict() {
+  const c = CLOUD.conflict || {};
+  openModal(
+    '<div class="card-title">检测到云端数据已更新</div>' +
+    '<p class="small muted">同一账号在其他设备/标签页修改过学习记录（云端版本 v' + (c.version || "?") +
+    '）。请选择保留哪一份，未保留的一方会被覆盖。</p>' +
+    '<div class="row wrap mt"><button class="btn primary" id="cfLocal">保留本机数据并覆盖云端</button>' +
+    '<button class="btn" id="cfServer">使用云端数据</button></div>'
+  );
+  $("#cfLocal").addEventListener("click", () => {
+    CLOUD.version = c.version || CLOUD.version;
+    CLOUD.conflict = null;
+    closeModal();
+    cloudPush(true);
+  });
+  $("#cfServer").addEventListener("click", () => {
+    const keepKey = (S.settings || {}).apiKey || "";
+    S = normalizeState(c.payload || {});
+    if (!S.settings.apiKey) S.settings.apiKey = keepKey;
+    CLOUD.version = c.version || CLOUD.version;
+    CLOUD.conflict = null;
+    closeModal();
+    saveLocal();
+    applySkin();
+    go((location.hash || "").replace("#", "") || "home");
+    toast("已使用云端数据");
+  });
+}
+
+// 从服务端快照还原为完整状态对象
+function normalizeState(p) {
+  p = p || {};
+  return Object.assign(clone(DEFAULT_STATE), p, {
+    settings: Object.assign(clone(DEFAULT_STATE.settings), p.settings || {}),
+    stats: Object.assign(clone(DEFAULT_STATE.stats), p.stats || {}),
+    wrong: Array.isArray(p.wrong) ? p.wrong : [],
+    history: Array.isArray(p.history) ? p.history : [],
+    aiBank: normAIBank(p.aiBank),
+    aiNotes: normAINotes(p.aiNotes),
+    aiUpdates: Array.isArray(p.aiUpdates) ? p.aiUpdates : []
+  });
+}
+
+const DEFAULT_STATE = {
+  version: 1,
+  theme: "light",
+  skin: "scholar",
+  wordPage: 0,
+  settings: { baseUrl: "", apiKey: "", model: "", targetScore: null, examDate: "" },
+  diagnostic: null,
+  plan: null,
+  wrong: [],
+  stats: { sessions: 0, answered: 0, correct: 0, minutes: 0 },
+  history: [],
+  aiBank: { listening: [], reading: [], vocabulary: [], writing: [], translation: [] },
+  aiNotes: {},
+  aiUpdates: []
+};
+
+let S = null;
+
+function clone(o) { return JSON.parse(JSON.stringify(o)); }
+
+// 把任意来源的 aiBank / aiNotes / aiUpdates 归一化成合法结构
+function normAIBank(src) {
+  const out = clone(DEFAULT_STATE.aiBank);
+  Object.keys(out).forEach(k => {
+    const v = src && src[k];
+    out[k] = Array.isArray(v) ? v.filter(x => x && typeof x === "object") : [];
+  });
+  return out;
+}
+function normAINotes(src) {
+  const out = {};
+  if (src && typeof src === "object") {
+    Object.keys(src).forEach(k => {
+      const v = src[k];
+      if (typeof v === "string" && v.trim()) out[k] = v.trim();
+    });
+  }
+  return out;
+}
+
+function loadState() {
+  let raw = null;
+  try { raw = localStorage.getItem(STORE_KEY); } catch (e) { raw = null; }
+  if (!raw) return clone(DEFAULT_STATE);
+  try {
+    const par = JSON.parse(raw);
+    const st = normalizeState(par);
+    st.__hasLocal = true;
+    st.savedAt = par.savedAt || 0;
+    return st;
+  } catch (e) {
+    return clone(DEFAULT_STATE);
+  }
+}
+
+// 仅写本机（用于服务端数据落盘，不触发上传）
+function saveLocal() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(S)); } catch (e) { /* 忽略容量问题 */ }
+}
+
+function save() {
+  S.savedAt = Date.now();
+  try {
+    localStorage.setItem(STORE_KEY, JSON.stringify(S));
+  } catch (e) {
+    toast("本地存储写入失败（可能空间不足）");
+  }
+  if (CLOUD.lost) setSyncBadge("lost", "登录已过期，数据已存在本机");
+  else cloudPush();
+}
+
+/* ---------------------------------------------------------------
+   2. 通用工具
+   --------------------------------------------------------------- */
+function esc(s) {
+  return String(s == null ? "" : s)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+function nl2br(s) { return esc(s).replace(/\n/g, "<br>"); }
+function fmtSec(sec) {
+  sec = Math.max(0, Math.floor(sec));
+  const m = String(Math.floor(sec / 60)).padStart(2, "0");
+  const s = String(sec % 60).padStart(2, "0");
+  return m + ":" + s;
+}
+function today() {
+  const d = new Date();
+  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+}
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+function round1(v) { return Math.round(v * 10) / 10; }
+
+let toastTimer = null;
+function toast(msg, ms) {
+  const t = $("#toast");
+  t.textContent = msg;
+  t.classList.add("on");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("on"), ms || 2600);
+}
+
+function openModal(html) {
+  $("#modalBox").innerHTML = html;
+  $("#modal").classList.add("on");
+}
+function closeModal() { $("#modal").classList.remove("on"); }
+
+/* ---------------------------------------------------------------
+   3. 主题
+   --------------------------------------------------------------- */
+/* ---------------------------------------------------------------
+   3. 视觉风格（三套皮肤，一键切换）
+   --------------------------------------------------------------- */
+const SKINS = [
+  { id: "scholar", name: "纸感学术", short: "纸感", theme: "light", icon: "◐", desc: "细描边 + 深青，克制清晰" },
+  { id: "blueprint", name: "冷蓝蓝图", short: "蓝图", theme: "light", icon: "◈", desc: "冷灰底 + 白卡蓝字，对比强、久读不累" },
+  { id: "editorial", name: "暖调杂志", short: "杂志", theme: "light", icon: "▤", desc: "米白纸感 + 衬线标题，沉稳叙事" }
+];
+function skinOf(id) { return SKINS.find(s => s.id === id) || SKINS[0]; }
+function skinDotsHTML() {
+  return SKINS.map(s => '<button class="skin-dot" data-skin-pick="' + s.id + '" aria-label="' + s.name + '风格"></button>').join("");
+}
+function applySkin() {
+  const sk = skinOf(S.skin);
+  S.theme = sk.theme;
+  document.documentElement.setAttribute("data-skin", sk.id);
+  document.documentElement.setAttribute("data-theme", sk.theme);
+  const b = $("#themeBtn");
+  if (b) {
+    b.textContent = sk.icon;
+    b.title = "当前风格：" + sk.name + " · 点击切换（Alt+1/2/3 直选）";
+    b.setAttribute("aria-label", b.title);
+  }
+  $$("[data-skin-pick]").forEach(el => {
+    const on = el.dataset.skinPick === sk.id;
+    el.classList.toggle("on", on);
+    el.setAttribute("aria-pressed", on ? "true" : "false");
+    el.title = "切换到「" + skinOf(el.dataset.skinPick).name + "」";
+  });
+}
+/* 兼容旧调用点（数据清空后重绘主题） */
+const applyTheme = applySkin;
+
+function setSkin(id) {
+  if (!SKINS.some(s => s.id === id) || S.skin === id) return;
+  S.skin = id;
+  applySkin();
+  save();
+  toast("已切换为「" + skinOf(id).name + "」风格");
+}
+function cycleSkin() {
+  const i = Math.max(0, SKINS.findIndex(s => s.id === S.skin));
+  setSkin(SKINS[(i + 1) % SKINS.length].id);
+}
+function normalizeSkin(st) {
+  if (SKINS.some(s => s.id === st.skin)) return st.skin;
+  if (st.skin === "console") return "blueprint";
+  return st.theme === "dark" ? "blueprint" : "scholar";
+}
+
+/* ---------------------------------------------------------------
+   4. 路由（视图切换）
+   --------------------------------------------------------------- */
+const ROUTES = [
+  { id: "home", label: "首页", icon: "🏠" },
+  { id: "diag", label: "水平诊断", icon: "🎯" },
+  { id: "result", label: "能力画像", icon: "📊" },
+  { id: "plan", label: "备考计划", icon: "🗺️" },
+  { id: "practice", label: "练习中心", icon: "🏋️" },
+  { id: "tools", label: "工具箱", icon: "🧰" },
+  { id: "settings", label: "设置", icon: "⚙️" }
+];
+/* 全局一级导航分组：起步 / 执行 / 辅助（顶栏按组显示分隔线） */
+const NAV_GROUPS = [
+  { name: "起步", ids: ["home", "diag", "result"] },
+  { name: "执行", ids: ["plan", "practice"] },
+  { name: "辅助", ids: ["tools", "settings"] }
+];
+/* 移动端底部标签栏：只保留最高频的 5 个入口 */
+const TABBAR = [
+  { id: "home", label: "首页", icon: "🏠" },
+  { id: "diag", label: "诊断", icon: "🎯" },
+  { id: "plan", label: "计划", icon: "🗺️" },
+  { id: "practice", label: "练习", icon: "🏋️" },
+  { id: "tools", label: "工具", icon: "🧰" }
+];
+const TAB_ALIAS = { result: "diag" };
+const GROUP_OF = {};
+NAV_GROUPS.forEach(g => g.ids.forEach(id => { GROUP_OF[id] = g.name; }));
+let current = "home";
+
+function buildNav() {
+  const firstOfGroup = {};
+  NAV_GROUPS.forEach(g => { firstOfGroup[g.ids[0]] = g.name; });
+  $("#nav").innerHTML = ROUTES.map(r =>
+    '<button data-route="' + r.id + '"' +
+    (firstOfGroup[r.id] ? ' data-group="' + r.id + '"' : "") +
+    ' title="' + (GROUP_OF[r.id] || "") + " · " + r.label + '">' + r.label + "</button>"
+  ).join("");
+  $$("#nav button").forEach(b => b.addEventListener("click", () => go(b.dataset.route)));
+  const dots = $("#skinDots");
+  if (dots) {
+    dots.innerHTML = skinDotsHTML();
+    $$("[data-skin-pick]", dots).forEach(b => b.addEventListener("click", () => setSkin(b.dataset.skinPick)));
+  }
+  /* 用 onclick 覆盖，避免重复调用 buildNav 时叠加监听 */
+  $("#themeBtn").onclick = cycleSkin;
+  $("#setBtn").onclick = () => go("settings");
+  $("#logoutBtn").onclick = () => {
+    if (confirm("确认退出登录？本机学习记录会保留，下次登录可继续。")) doLogout();
+  };
+  buildTabbar();
+}
+
+function buildTabbar() {
+  const box = $("#tabbar .tabbar-in");
+  if (!box) return;
+  box.innerHTML = TABBAR.map(t =>
+    '<button data-tab="' + t.id + '"><span class="ti">' + t.icon + "</span>" + t.label + "</button>"
+  ).join("");
+  $$("#tabbar button").forEach(b => b.addEventListener("click", () => go(b.dataset.tab)));
+}
+
+function syncNav(id) {
+  const tab = TAB_ALIAS[id] || id;
+  $$("#nav button").forEach(b => b.classList.toggle("on", b.dataset.route === id));
+  $$("#tabbar button").forEach(b => b.classList.toggle("on", b.dataset.tab === tab));
+  const r = ROUTES.find(x => x.id === id);
+  document.title = (r ? r.label + " · " : "") + "四级备考领航教练";
+}
+
+/* 路由支持二级路径：#practice/words、#tools/dict */
+function parseRoute(raw) {
+  const parts = String(raw || "home").replace(/^#/, "").split("/");
+  return { id: parts[0] || "home", sub: parts[1] || "" };
+}
+function hashOf(id, sub) { return "#" + id + (sub ? "/" + sub : ""); }
+function setRouteHash(id, sub) {
+  const h = hashOf(id, sub);
+  if (location.hash !== h) history.replaceState(null, "", h);
+}
+
+function go(target, opts) {
+  const { id: rawId, sub } = parseRoute(target);
+  const id = ROUTES.some(r => r.id === rawId) ? rawId : "home";
+  if (id === "practice") {
+    if (sub && PRACTICE_TABS.some(t => t.id === sub)) PTab = sub;
+    else if (!sub) PTab = "train";
+  }
+  if (id === "tools") {
+    if (sub && TOOL_TABS.some(t => t.id === sub)) TT = sub;
+    else if (!sub) TT = "dict";
+  }
+  if (id === "settings") SET_TAB = sub || "setSkin";
+  current = id;
+  $$(".view").forEach(v => v.classList.toggle("on", v.id === "v-" + id));
+  syncNav(id);
+  const fn = RENDER[id];
+  if (typeof fn === "function") fn(opts || {});
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  setRouteHash(id, id === "practice" ? (PTab === "train" ? "" : PTab) : id === "tools" ? TT : id === "settings" ? (SET_TAB === "setSkin" ? "" : SET_TAB) : "");
+}
+
+/* ---------------------------------------------------------------
+   5. 网络能力：AI（OpenAI 兼容）+ 词典（dictionaryapi.dev）
+   --------------------------------------------------------------- */
+function hasAI() { return !!(S.settings && S.settings.apiKey); }
+
+function aiEndpoint() {
+  const base = (S.settings.baseUrl || "https://api.openai.com/v1").trim().replace(/\/+$/, "");
+  return base + "/chat/completions";
+}
+
+async function callAI(messages, opts) {
+  opts = opts || {};
+  if (!hasAI()) throw new Error("尚未配置 API Key，请到「设置」中填写。");
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), opts.timeout || 60000);
+  try {
+    const res = await fetch(aiEndpoint(), {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + S.settings.apiKey
+      },
+      body: JSON.stringify({
+        model: S.settings.model || "gpt-4o-mini",
+        messages: messages,
+        temperature: opts.temperature == null ? 0.5 : opts.temperature
+      }),
+      signal: ctrl.signal
+    });
+    if (!res.ok) {
+      const txt = await res.text().catch(() => "");
+      throw new Error("接口返回 " + res.status + " " + txt.slice(0, 180));
+    }
+    const data = await res.json();
+    const c = data && data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
+    if (!c) throw new Error("接口未返回内容");
+    return c.trim();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+async function lookupDict(word) {
+  const res = await fetch("https://api.dictionaryapi.dev/api/v2/entries/en/" + encodeURIComponent(word));
+  if (!res.ok) throw new Error("词典中未找到该词");
+  return await res.json();
+}
+
+/* ---------------------------------------------------------------
+   6. 内置题库 —— 诊断卷（听力 / 阅读 / 写作 / 翻译）
+   --------------------------------------------------------------- */
+/* 题库后置：登录后从 /api/bank 拉取，成功后缓存到本机供离线使用 */
+let DIAG = {};
+let WORDS = [];
+let BANK = {};
+
+const MODULES = ["listening", "reading", "writing", "translation"];
+const MOD_LABEL = { listening: "听力", reading: "阅读", writing: "写作", translation: "翻译" };
+const MOD_COLOR = { listening: "#6366f1", reading: "#0ea5e9", writing: "#10b981", translation: "#f59e0b" };
+
+function cefrOf(total) {
+  if (total >= 630) return { c: "C1", d: "接近英语专业水平，四六级高分区间" };
+  if (total >= 550) return { c: "B2+", d: "具备较强的学术英语能力，冲刺高分很有潜力" };
+  if (total >= 500) return { c: "B2", d: "中上水平，能应对多数学习与生活场景" };
+  if (total >= 425) return { c: "B1+", d: "已达标，满足四级基本要求，可向 500+ 迈进" };
+  if (total >= 350) return { c: "B1", d: "基础尚可，但听说读写仍需系统提升" };
+  if (total >= 250) return { c: "A2", d: "基础较薄弱，需从词汇与语法补起" };
+  return { c: "A1", d: "起步阶段，建议拉长备考周期、稳扎稳打" };
+}
+
+function suggestTarget(total) {
+  if (total >= 600) return 650;
+  return clamp(Math.round((total + 90) / 10) * 10, 425, 700);
+}
+
+// 主观题：本地规则估分（满分 15 档）
+const LINKERS = ["however", "therefore", "moreover", "furthermore", "in addition", "for example",
+  "in conclusion", "on the other hand", "as a result", "besides", "firstly", "secondly",
+  "finally", "in my view", "to begin with", "what is more", "in short", "in a word"];
+
+function textStats(text) {
+  const clean = text.trim();
+  const words = clean ? clean.split(/\s+/).filter(Boolean) : [];
+  const n = words.length;
+  const uniq = new Set(words.map(w => w.toLowerCase().replace(/[^a-z]/g, "")).filter(Boolean)).size;
+  const sentences = clean.split(/[.!?;]+/).filter(s => s.trim().length > 1).length || (n ? 1 : 0);
+  const low = clean.toLowerCase();
+  const linkers = LINKERS.filter(l => low.includes(l)).length;
+  return { n, uniq, ttr: n ? uniq / n : 0, sentences, avgLen: sentences ? n / sentences : 0, linkers };
+}
+
+function gradeStylePoints(st) {
+  let s = 0;
+  if (st.ttr >= 0.62) s += 4; else if (st.ttr >= 0.52) s += 3; else if (st.ttr >= 0.42) s += 2; else if (st.n) s += 1;
+  if (st.avgLen >= 16) s += 3; else if (st.avgLen >= 12) s += 2; else if (st.n) s += 1;
+  if (st.linkers >= 3) s += 3; else if (st.linkers >= 2) s += 2; else if (st.linkers >= 1) s += 1;
+  return s;
+}
+
+function gradeWritingRule(text, cfg) {
+  const st = textStats(text);
+  if (!st.n) return { score: 0, stats: st, notes: ["未检测到有效内容。"] };
+  let s = 0;
+  const notes = [];
+  if (st.n >= cfg.minWords && st.n <= cfg.maxWords) { s += 5; notes.push("字数 " + st.n + " 词，符合 " + cfg.minWords + "–" + cfg.maxWords + " 的要求。"); }
+  else if (st.n >= cfg.minWords * 0.85) { s += 4; notes.push("字数 " + st.n + " 词，略低于要求下限，建议补足。"); }
+  else if (st.n >= 80) { s += 3; notes.push("字数仅 " + st.n + " 词，明显不足，会被降档。"); }
+  else if (st.n >= 40) { s += 2; notes.push("篇幅过短（" + st.n + " 词），难以展开论证。"); }
+  else { s += 1; notes.push("篇幅严重不足，几乎无法评分。"); }
+  s += gradeStylePoints(st);
+  notes.push("词汇多样性 TTR≈" + round1(st.ttr) + "，平均句长≈" + round1(st.avgLen) + " 词，连接词命中 " + st.linkers + " 个。");
+  return { score: clamp(s, 0, 15), stats: st, notes: notes };
+}
+
+function gradeTranslationRule(text, cfg) {
+  const st = textStats(text);
+  if (!st.n) return { score: 0, stats: st, notes: ["未检测到有效内容。"] };
+  const refWords = cfg.reference.trim().split(/\s+/).length;
+  const ratio = st.n / refWords;
+  const notes = [];
+  let s = 0;
+  if (ratio >= 0.85 && ratio <= 1.35) { s += 6; notes.push("译文长度与参考译文接近，信息量较完整。"); }
+  else if (ratio >= 0.7) { s += 5; notes.push("译文略短，可能有信息遗漏。"); }
+  else if (ratio >= 0.5) { s += 3; notes.push("译文明显偏短，估计遗漏了部分信息点。"); }
+  else { s += 1; notes.push("译文过短，原文信息大量缺失。"); }
+  s += Math.min(gradeStylePoints(st), 9);
+  notes.push("词汇多样性 TTR≈" + round1(st.ttr) + "，平均句长≈" + round1(st.avgLen) + " 词。");
+  return { score: clamp(s, 0, 15), stats: st, notes: notes };
+}
+
+/* ---------------------------------------------------------------
+   10. 备考计划生成器（3 个月 / 4 阶段）
+   --------------------------------------------------------------- */
+function buildPlan(diag) {
+  const m = diag.modules;
+  const lower = k => MOD_LABEL[k];
+  // 找出相对弱项（得分率最低的两个）
+  const rates = MODULES.map(k => ({ k: k, r: m[k] / DIAG[k].weight }));
+  rates.sort((a, b) => a.r - b.r);
+  const weak = rates.slice(0, 2).map(x => x.k);
+
+  const base = [
+    { id: "b1", t: "每天背 30 个四级高频词，次日与周末各复习一遍" },
+    { id: "b2", t: "每天精听 1 段四级听力材料，先做题再逐句听写" },
+    { id: "b3", t: "系统复习基础语法：时态、三大从句、非谓语动词" },
+    { id: "b4", t: "每天朗读 1 篇短文，摘抄 3 个地道表达并造句" }
+  ];
+  const stage2 = [
+    { id: "c1", t: "听力专项：短篇新闻 + 长对话，总结转折/因果等信号词" },
+    { id: "c2", t: "阅读专项：选词填空与仔细阅读各 2 篇，单篇控制在 8 分钟内" },
+    { id: "c3", t: "写作专项：整理 3 套万能框架，每周写 1 篇并对照范文修改" },
+    { id: "c4", t: "翻译专项：每周完成 3 段汉译英，积累中国文化类高频词" }
+  ];
+  const stage3 = [
+    { id: "d1", t: "每周完整做 1 套真题，严格按考试时间与流程进行" },
+    { id: "d2", t: "整理错题本，按「词汇 / 逻辑 / 速度」三类分析错因" },
+    { id: "d3", t: "听力改用 1.25 倍速跟读，训练反应速度" },
+    { id: "d4", t: "写作与翻译各限时训练 2 次，控制在 30 分钟内完成" }
+  ];
+  const stage4 = [
+    { id: "e1", t: "每 2 天完成 1 套模考，保持做题手感与节奏" },
+    { id: "e2", t: "滚动复习错题本与高频词组" },
+    { id: "e3", t: "背诵写作模板与翻译高频句型，考前各默写一遍" },
+    { id: "e4", t: "调整作息，按考试时间段做模拟以适配生物钟" }
+  ];
+
+  const weakTask = k => ({
+    listening: { id: "w-l", t: "（弱项强化）每天额外精听精练 30 分钟，重点练数字与转折信号" },
+    reading: { id: "w-r", t: "（弱项强化）每天限时阅读 2 篇，训练「定位—比对—排除」三步法" },
+    writing: { id: "w-w", t: "（弱项强化）每周背 1 篇高分范文，仿写并请同伴或 AI 批改" },
+    translation: { id: "w-t", t: "（弱项强化）每天翻译 1 句长难句，积累对应的英文句式" }
+  }[k]);
+
+  const stages = [
+    { id: "s1", title: "第一阶段 · 基础夯实", weeks: "第 1–3 周", goal: "补齐词汇与语法短板，建立稳定的每日学习节奏", tasks: base },
+    { id: "s2", title: "第二阶段 · 专项强化", weeks: "第 4–6 周", goal: "吃透各题型解题技巧，弱项模块重点突破", tasks: stage2.concat([weakTask(weak[0])]) },
+    { id: "s3", title: "第三阶段 · 真题实战", weeks: "第 7–9 周", goal: "在真实考试节奏下暴露问题，形成错题闭环", tasks: stage3.concat([weakTask(weak[1])]) },
+    { id: "s4", title: "第四阶段 · 冲刺模考", weeks: "第 10–12 周", goal: "查漏补缺、保持手感，把状态调整到最佳", tasks: stage4 }
+  ];
+  stages.forEach(st => st.tasks.forEach(t => { t.done = false; }));
+
+  return {
+    createdAt: today(),
+    target: diag.target,
+    weak: weak,
+    stages: stages
+  };
+}
+
+function planProgress() {
+  if (!S.plan) return { done: 0, total: 0, pct: 0 };
+  let done = 0, total = 0;
+  S.plan.stages.forEach(st => st.tasks.forEach(t => { total++; if (t.done) done++; }));
+  return { done: done, total: total, pct: total ? Math.round(done / total * 100) : 0 };
+}
+
+/* ---------------------------------------------------------------
+   11. 视图渲染 · 首页
+   --------------------------------------------------------------- */
+function dashKpi(k, v, d) {
+  return '<div class="dash-kpi"><div class="k">' + esc(k) + '</div><div class="v">' + v + "</div>" +
+    (d ? '<div class="d">' + d + "</div>" : "") + "</div>";
+}
+function quickTile(icon, title, desc, target, sub) {
+  return '<button class="tile" data-quick="1" data-target="' + target + '"' +
+    (sub ? ' data-sub="' + sub + '"' : "") + '><span class="ti">' + icon + "</span>" +
+    '<span class="tile-txt"><span class="tt">' + esc(title) + '</span>' +
+    '<span class="td">' + esc(desc) + "</span></span></button>";
+}
+
+function renderHome() {
+  const v = $("#v-home");
+  const hasDiag = !!S.diagnostic;
+  const d = S.diagnostic;
+  const pp = planProgress();
+  const st = S.stats || {};
+
+  // —— 首屏：Hero + 关键指标（无需滚动即可看到「现状 + 下一步」）——
+  let html = '<div class="dash-hero"><div>' +
+    "<h1>" + (hasDiag ? "保持节奏，稳步冲线" : "先诊断，再出发") + "</h1>" +
+    "<p>" + (hasDiag
+      ? "能力画像与备考计划已就绪。按计划推进即可，完成情况会自动保存；想加练就到练习中心挑模块。"
+      : "用一套覆盖听力、阅读、写作、翻译的模拟诊断摸清当前水平，再据此生成可执行的分阶段备考计划。全程离线可用，数据只保存在你的浏览器里。") + "</p>" +
+    '<div class="dash-cta">' +
+    (hasDiag
+      ? '<button class="btn lg" data-go="plan">继续备考计划</button><button class="btn ghost lg" data-go="practice">去练习</button>'
+      : '<button class="btn lg" data-go="diag">开始水平诊断</button><button class="btn ghost lg" data-go="tools">先逛逛工具箱</button>') +
+    "</div></div>" +
+    '<div class="dash-kpis">' +
+    dashKpi("估算总分", hasDiag ? Math.round(d.total) + "<small>/710</small>" : "—", hasDiag ? "CEFR " + esc(d.level) : "尚未诊断") +
+    dashKpi("计划完成度", pp.pct + "%", pp.done + " / " + pp.total + " 项任务") +
+    dashKpi("累计练习", String(st.answered || 0), "共 " + (st.sessions || 0) + " 次") +
+    dashKpi("总体正确率", (st.answered ? Math.round(st.correct / st.answered * 100) : 0) + "%", "错题 " + S.wrong.length + " 道") +
+    "</div></div>";
+
+  // —— 三步主线 ——
+  html += '<div class="steps mt-l">' +
+    stepCard("1", "水平诊断", "四模块摸底，约 40–60 分钟，可中途保存", "diag") +
+    stepCard("2", "能力画像", "四维雷达图、估算总分与 CEFR 等级", "result") +
+    stepCard("3", "分阶段计划", "按弱项生成 3 个月四阶段计划，任务可勾选打卡", "plan") +
+    "</div>";
+
+  // —— 今日行动 + 快捷入口 ——
+  const todo = [];
+  if (S.plan) S.plan.stages.forEach(s => s.tasks.forEach(t => { if (!t.done) todo.push({ stage: s.title, t: t.t }); }));
+  html += '<div class="grid g2 mt-l">' +
+    '<div class="card"><div class="row mid between"><div class="card-title" style="margin:0">✅ 今日行动</div>' +
+    '<span class="pill plain">待办 ' + todo.length + "</span></div>" +
+    (todo.length
+      ? '<div class="list mt-s">' + todo.slice(0, 3).map(x => listRow("•", x.t, x.stage)).join("") + "</div>" +
+        '<div class="row mt"><button class="btn primary sm" data-go="plan">去计划页勾选</button></div>'
+      : '<p class="small muted mt-s">' + (S.plan
+        ? "所有任务都已完成，太棒了！可以到练习中心保持手感。"
+        : "完成水平诊断后，这里会显示今天的待办任务。") + "</p>" +
+        '<div class="row mt"><button class="btn primary sm" data-go="' + (S.plan ? "practice" : "diag") + '">' +
+        (S.plan ? "去练习" : "去诊断") + "</button></div>") +
+    "</div>" +
+    '<div class="card"><div class="card-title">⚡ 快捷入口</div><div class="grid gauto-sm">' +
+    quickTile("🎯", "水平诊断", hasDiag ? "重新测一次" : "约 40–60 分钟", "diag") +
+    quickTile("🏋️", "专项练习", "听力 / 阅读 / 词汇", "practice") +
+    quickTile("🤖", "AI 题库", "用 AI 扩充题目", "practice", "aibank") +
+    quickTile("🧰", "工具箱", "查词 / 句解 / 润色", "tools") +
+    "</div></div></div>";
+
+  // —— 关于与数据说明（默认折叠，不占用首屏）——
+  html += '<details class="card mt-l"><summary class="small"><b>⚙️ 关于这个应用与数据说明</b></summary>' +
+    '<p class="small muted mt-s">纯前端单文件应用，无需安装、无需服务器；听力由浏览器语音合成朗读，词典来自公开接口；' +
+    "AI 相关功能需在「设置」中配置你自己的 API Key。所有学习数据保存在本机浏览器，可通过「设置 → 数据管理」导出为 JSON 备份或迁移到其他设备。</p></details>";
+
+  v.innerHTML = html;
+  bindGo(v);
+  $$("[data-quick]", v).forEach(b => b.addEventListener("click", () => {
+    if (b.dataset.sub) PTab = b.dataset.sub;
+    go(b.dataset.target);
+  }));
+}
+
+function stepCard(n, title, desc, target) {
+  return '<div class="card step-card"' + (target ? ' data-go="' + target + '" style="cursor:pointer"' : "") + ">" +
+    '<div class="step-num">' + n + "</div>" +
+    '<div class="card-title">' + esc(title) + '</div><p class="small muted">' + esc(desc) + "</p></div>";
+}
+function statBox(k, v) {
+  return '<div class="stat"><div class="k">' + k + '</div><div class="v">' + v + "</div></div>";
+}
+function bindGo(root) {
+  $$("[data-go]", root).forEach(b => b.addEventListener("click", () => go(b.dataset.go)));
+}
+
+/* ---------- 改版通用骨架：页头 / KPI / 行式列表 / 分段导航 ---------- */
+function pageHead(opt) {
+  const r = ROUTES.find(x => x.id === opt.id) || {};
+  const group = GROUP_OF[opt.id] || "导航";
+  const kpis = (opt.kpis || []).map(k =>
+    '<span class="ph-kpi">' + esc(k.k) + " <b>" + k.v + "</b></span>").join("");
+  return '<div class="page-head">' +
+    '<div class="crumb"><b>' + esc(group) + "</b><i>›</i><span>" + esc(opt.title || r.label || "") + "</span></div>" +
+    '<div class="ph-row"><div>' +
+    '<div class="ph-title">' + esc(opt.title || r.label || "") + "</div>" +
+    (opt.desc ? '<p class="ph-desc">' + opt.desc + "</p>" : "") +
+    '</div><div class="ph-side">' + kpis + (opt.actions || "") + "</div></div>" +
+    "</div>";
+}
+function kpiCell(k, v, d) {
+  return '<div class="kpi"><div class="k">' + esc(k) + '</div><div class="v">' + v + "</div>" +
+    (d ? '<div class="d">' + d + "</div>" : "") + "</div>";
+}
+function listRow(icon, title, desc, tail, attrs) {
+  return '<div class="list-row"' + (attrs || "") + ">" +
+    '<div class="list-ico">' + icon + "</div>" +
+    '<div class="list-main"><div class="list-t">' + esc(title) + "</div>" +
+    (desc ? '<div class="list-d">' + desc + "</div>" : "") + "</div>" +
+    (tail ? '<div class="list-tail">' + tail + "</div>" : "") + "</div>";
+}
+function segmentedHTML(items, cur, attr) {
+  return '<div class="segmented">' + items.map(t =>
+    '<button class="' + (cur === t.id ? "on" : "") + '" data-' + attr + '="' + t.id + '">' +
+    (t.icon ? t.icon + " " : "") + esc(t.label) + "</button>").join("") + "</div>";
+}
+function bindStageNav(root) {
+  $$("[data-stage-go]", root).forEach(b => b.addEventListener("click", () => {
+    const t = $("#" + b.dataset.stageGo, root);
+    if (t) t.scrollIntoView({ behavior: "smooth", block: "start" });
+  }));
+}
+/* ---------------------------------------------------------------
+   12. 诊断模块 · 会话构建 / 语音朗读 / 作答
+   --------------------------------------------------------------- */
+let D = null;
+let voicesCache = [];
+let diagTimer = null;
+
+if ("speechSynthesis" in window) {
+  const refresh = () => { voicesCache = window.speechSynthesis.getVoices() || []; };
+  refresh();
+  window.speechSynthesis.onvoiceschanged = refresh;
+}
+function pickEnglishVoice() {
+  if (!voicesCache.length && "speechSynthesis" in window) voicesCache = window.speechSynthesis.getVoices() || [];
+  return voicesCache.find(v => /en[-_]US/i.test(v.lang)) || voicesCache.find(v => /^en/i.test(v.lang)) || null;
+}
+function ttsSupported() { return "speechSynthesis" in window; }
+function stopSpeak() {
+  if (ttsSupported()) { try { window.speechSynthesis.cancel(); } catch (e) {} }
+  D && (D.speaking = false);
+  const w = $("#wave"); if (w) w.classList.remove("on");
+}
+function speakParts(parts, onDone) {
+  if (!ttsSupported()) { toast("当前浏览器不支持语音合成，请直接阅读听力原文"); onDone && onDone(); return; }
+  try { window.speechSynthesis.cancel(); } catch (e) {}
+  D.speaking = true;
+  const w = $("#wave"); if (w) w.classList.add("on");
+  let i = 0;
+  const next = () => {
+    if (!D || !D.speaking) return;
+    if (i >= parts.length) { D.speaking = false; if (w) w.classList.remove("on"); onDone && onDone(); return; }
+    const u = new SpeechSynthesisUtterance(parts[i++]);
+    u.lang = "en-US"; u.rate = 0.95; u.pitch = 1;
+    const v = pickEnglishVoice(); if (v) u.voice = v;
+    u.onend = next; u.onerror = next;
+    window.speechSynthesis.speak(u);
+  };
+  next();
+}
+
+function buildSections() {
+  const secs = [];
+  DIAG.listening.groups.forEach((g, gi) => secs.push({ mod: "listening", gi: gi, kind: "audio", title: g.title, script: g.script, qs: g.questions }));
+  DIAG.reading.groups.forEach((g, gi) => secs.push({ mod: "reading", gi: gi, kind: "passage", title: g.title, passage: g.passage, qs: g.questions }));
+  secs.push({ mod: "writing", kind: "essay" });
+  secs.push({ mod: "translation", kind: "trans" });
+  return secs;
+}
+
+function startDiagnostic() {
+  D = { sections: buildSections(), idx: 0, answers: {}, essay: "", trans: "", t0: Date.now(), speaking: false };
+  renderDiag();
+}
+function tickDiagTimer() {
+  const el = $("#diagTimer");
+  if (!el || !D) return;
+  el.textContent = fmtSec((Date.now() - D.t0) / 1000);
+}
+
+function renderDiag() {
+  if (diagTimer) { clearInterval(diagTimer); diagTimer = null; }
+  stopSpeak();
+  if (!D) { renderDiagIntro(); return; }
+  renderDiagSection();
+  tickDiagTimer();
+  diagTimer = setInterval(tickDiagTimer, 1000);
+}
+
+function renderDiagIntro() {
+  const v = $("#v-diag");
+  const done = !!S.diagnostic;
+  const mods = [
+    ["🎧", "听力", "3 段材料 · 8 题", "浏览器语音朗读"],
+    ["📖", "阅读", "2 篇材料 · 10 题", "选词填空 + 仔细阅读"],
+    ["✍️", "写作", "1 篇短文", "120–180 词"],
+    ["🔄", "翻译", "1 段汉译英", "建议限时 30 分钟"]
+  ];
+  let html = pageHead({
+    id: "diag",
+    title: "水平诊断",
+    desc: "一次覆盖四级完整题型的摸底测试，用来估算当前水平并生成能力画像。",
+    kpis: [
+      { k: "时长", v: "40–60 分钟" },
+      { k: "客观题", v: "18 题" },
+      { k: "主观题", v: "2 篇" }
+    ],
+    actions: done ? '<button class="btn sm" data-go="result">查看已有画像</button>' : ""
+  });
+
+  html += '<div class="grid g2">' +
+    '<div class="card"><div class="card-title">📋 诊断构成</div><div class="list">' +
+    mods.map(m => listRow(m[0], m[1], m[2], '<span class="tiny dim">' + esc(m[3]) + "</span>")).join("") +
+    "</div></div>" +
+    '<div class="card"><div class="card-title">💡 开始前须知</div><div class="list">' +
+    listRow("1", "听力先播后答", "音频由浏览器合成，建议佩戴耳机、在安静环境作答。") +
+    listRow("2", "可随时中断", "当前作答会暂存，切到其他页面不会丢失。") +
+    listRow("3", "主观题评测", hasAI() ? "已配置 AI，写作与翻译将获得逐句点评。" : "未配置 AI 时使用本地规则评分，可稍后在设置中补充 Key。") +
+    "</div>" +
+    '<div class="row mt-l" style="flex-wrap:wrap">' +
+    '<button class="btn primary lg" id="startDiag">' + (done ? "重新诊断" : "开始诊断") + "</button>" +
+    '<button class="btn ghost lg" data-go="practice">先做专项练习</button></div>' +
+    (done ? '<p class="tiny dim mt-s">上次完成：' + esc(S.diagnostic.date) + " · 估算 " + S.diagnostic.total + " 分</p>" : "") +
+    "</div></div>";
+
+  v.innerHTML = html;
+  bindGo(v);
+  $("#startDiag").addEventListener("click", () => {
+    if (S.diagnostic) {
+      openModal('<h3 style="margin:0 0 10px">重新诊断？</h3><p class="small muted">重新诊断会覆盖当前的诊断结果与能力画像（备考计划进度不受影响）。</p>' +
+        '<div class="row mt-l"><button class="btn primary grow" id="mYes">确认重新诊断</button><button class="btn ghost grow" onclick="closeModal()">取消</button></div>');
+      $("#mYes").addEventListener("click", () => { closeModal(); startDiagnostic(); });
+    } else {
+      startDiagnostic();
+    }
+  });
+}
+
+/* 答题卡：按「部分」展示完成状态，可点击跳转 */
+function sectionState(sec) {
+  if (sec.kind === "audio" || sec.kind === "passage") {
+    const n = sec.qs.filter((q, qi) => D.answers[qKey(sec, qi)] !== undefined).length;
+    return n === 0 ? "todo" : n === sec.qs.length ? "done" : "part";
+  }
+  const txt = sec.kind === "essay" ? D.essay : D.trans;
+  return (txt || "").trim() ? "done" : "todo";
+}
+function diagSheet() {
+  const total = D.sections.length;
+  const done = D.sections.filter(s => sectionState(s) === "done").length;
+  return '<div class="sheet-h"><span>答题卡</span><span>' + done + " / " + total + "</span></div>" +
+    '<div class="sheet-g">' + D.sections.map((s, i) => {
+      const st = sectionState(s);
+      const cls = i === D.idx ? "cur" : st;
+      return '<b class="' + cls + '" data-sec="' + i + '" title="' + esc(MOD_LABEL[s.mod]) + " 第 " + (i + 1) + ' 部分">' + (i + 1) + "</b>";
+    }).join("") + "</div>" +
+    '<div class="sheet-legend"><span><i style="background:var(--brand)"></i>当前</span>' +
+    '<span><i style="background:var(--brand-soft)"></i>已完成</span>' +
+    '<span><i style="background:transparent;border:1px solid var(--line)"></i>未作答</span></div>';
+}
+
+function qKey(sec, qi) { return sec.mod + "-" + sec.gi + "-" + qi; }
+
+function renderDiagSection() {
+  const v = $("#v-diag");
+  const sec = D.sections[D.idx];
+  const total = D.sections.length;
+  const pct = Math.round((D.idx) / total * 100);
+
+  const ans = sec.qs ? sec.qs.filter((q, qi) => D.answers[qKey(sec, qi)] !== undefined).length : 0;
+
+  let head = '<div class="diag-head">' +
+    '<span class="pill info">' + esc(MOD_LABEL[sec.mod]) + '</span>' +
+    '<span class="small muted">第 ' + (D.idx + 1) + " / " + total + ' 部分' +
+    (sec.qs ? " · 已答 " + ans + "/" + sec.qs.length : "") + '</span>' +
+    '<div class="progress"><i style="width:' + pct + '%"></i></div>' +
+    '<div class="timer" id="diagTimer">00:00</div>' +
+    '</div>';
+
+  let body = "";
+  if (sec.kind === "audio") body = renderAudioSection(sec);
+  else if (sec.kind === "passage") body = renderPassageSection(sec);
+  else if (sec.kind === "essay") body = renderWriteSection();
+  else body = renderTransSection();
+
+  let foot = '<div class="row mt-l" style="flex-wrap:wrap">' +
+    (D.idx > 0 ? '<button class="btn" id="dPrev">← 上一部分</button>' : "") +
+    '<div class="grow"></div>' +
+    (D.idx < total - 1
+      ? '<button class="btn primary" id="dNext">下一部分 →</button>'
+      : '<button class="btn primary" id="dSubmit">提交并生成画像</button>') +
+    '</div>';
+
+  v.innerHTML = '<div class="session"><div class="session-main">' + head + body + foot + "</div>" +
+    '<aside class="session-side diag-side"><div class="sheet">' + diagSheet() + "</div>" +
+    '<p class="tiny dim" style="text-align:center;margin-top:8px">答题进度自动保存</p></aside></div>';
+
+  // 答题卡跳转
+  $$("[data-sec]", v).forEach(b => b.addEventListener("click", () => {
+    saveDraft(); D.idx = Number(b.dataset.sec); renderDiag();
+  }));
+
+  // 选项点击
+  $$(".opt", v).forEach(op => op.addEventListener("click", () => {
+    D.answers[op.dataset.k] = Number(op.dataset.oi);
+    $$(".opt[data-k='" + op.dataset.k + "']", v).forEach(x => x.classList.remove("sel"));
+    op.classList.add("sel");
+  }));
+
+  // 作文 / 翻译实时字数
+  const eTa = $("#diagEssay");
+  if (eTa) eTa.addEventListener("input", () => {
+    D.essay = eTa.value;
+    const c = $("#essayCount"); if (c) c.textContent = countHint(eTa.value, DIAG.writing, true);
+  });
+  const tTa = $("#diagTrans");
+  if (tTa) tTa.addEventListener("input", () => {
+    D.trans = tTa.value;
+    const c = $("#transCount"); if (c) c.textContent = countHint(tTa.value, DIAG.translation, false);
+  });
+
+  // 交互
+  const prev = $("#dPrev"); if (prev) prev.addEventListener("click", () => { saveDraft(); D.idx--; renderDiag(); });
+  const next = $("#dNext"); if (next) next.addEventListener("click", () => { saveDraft(); D.idx++; renderDiag(); });
+  const sub = $("#dSubmit"); if (sub) sub.addEventListener("click", () => { saveDraft(); submitDiagnostic(); });
+}
+
+function saveDraft() {
+  const ta = $("#diagEssay"); if (ta) D.essay = ta.value;
+  const tt = $("#diagTrans"); if (tt) D.trans = tt.value;
+}
+
+function optionList(sec, qi, q) {
+  const k = qKey(sec, qi);
+  const chosen = D.answers[k];
+  return q.opts.map((o, oi) =>
+    '<div class="opt' + (chosen === oi ? " sel" : "") + '" data-k="' + k + '" data-oi="' + oi + '">' +
+    '<span class="key">' + String.fromCharCode(65 + oi) + '</span><span class="txt">' + esc(o) + "</span></div>"
+  ).join("");
+}
+
+function renderAudioSection(sec) {
+  let h = '<div class="card pad-lg"><div class="card-title">🎧 ' + esc(sec.title) + "</div>";
+  h += '<div class="audioplay mb"><div class="wave" id="wave"><i></i><i></i><i></i><i></i><i></i><i></i></div>' +
+    '<button class="btn primary sm" id="playAll">▶ 播放音频（材料 + 题目）</button>' +
+    '<button class="btn sm" id="playScript">▶ 只播材料</button>' +
+    '<button class="btn ghost sm" id="stopPlay">停止</button>' +
+    '<span class="tiny dim">若无声音，请检查浏览器语音权限</span></div>';
+  h += '<div class="passage" id="listenScript">' + esc(sec.script) +
+    '<div class="tiny dim mt-s">↑ 听力原文（自测后如想再核对可参考）</div></div>';
+  h += '<div class="mt-l"></div>';
+  sec.qs.forEach((q, qi) => {
+    h += '<div class="mb"><div class="qtext en"><b>' + (qi + 1) + ".</b> " + esc(q.stem) + "</div>" + optionList(sec, qi, q) + "</div>";
+  });
+  h += "</div>";
+  setTimeout(() => {
+    const mk = (id, fn) => { const b = $(id); if (b) b.addEventListener("click", fn); };
+    mk("#playAll", () => {
+      const parts = [sec.script];
+      sec.qs.forEach((q, i) => {
+        parts.push("Question " + (i + 1) + ". " + q.stem);
+        q.opts.forEach((o, j) => parts.push(String.fromCharCode(65 + j) + ". " + o));
+      });
+      speakParts(parts);
+    });
+    mk("#playScript", () => speakParts([sec.script]));
+    mk("#stopPlay", stopSpeak);
+  }, 0);
+  return h;
+}
+
+function renderPassageSection(sec) {
+  let h = '<div class="card pad-lg"><div class="card-title">📖 ' + esc(sec.title) + "</div>";
+  h += '<div class="passage mb">' + nl2br(sec.passage) + "</div>";
+  sec.qs.forEach((q, qi) => {
+    h += '<div class="mb"><div class="qtext"><b>' + (qi + 1) + ".</b> " + esc(q.stem) + "</div>" + optionList(sec, qi, q) + "</div>";
+  });
+  h += "</div>";
+  return h;
+}
+
+function renderWriteSection() {
+  const cfg = DIAG.writing;
+  return '<div class="card pad-lg"><div class="card-title">✍️ 写作 · 限时 30 分钟（建议）</div>' +
+    '<div class="qtext">' + esc(cfg.prompt) + "</div>" +
+    '<p class="tiny dim">要求：' + cfg.minWords + "–" + cfg.maxWords + ' 词。</p>' +
+    '<textarea class="input" id="diagEssay" style="min-height:220px" placeholder="在此输入你的英文作文……">' + esc(D.essay) + "</textarea>" +
+    '<div class="hint" id="essayCount">' + countHint(D.essay, cfg, true) + "</div></div>";
+}
+
+function renderTransSection() {
+  const cfg = DIAG.translation;
+  return '<div class="card pad-lg"><div class="card-title">🔄 翻译 · 限时 30 分钟（建议）</div>' +
+    '<div class="qtext">请将下面这段话译成英文：</div>' +
+    '<div class="passage mb">' + esc(cfg.prompt) + "</div>" +
+    '<textarea class="input" id="diagTrans" style="min-height:180px" placeholder="在此输入你的英文译文……">' + esc(D.trans) + "</textarea>" +
+    '<div class="hint" id="transCount"></div></div>';
+}
+
+function countHint(text, cfg, isEssay) {
+  const n = (text || "").trim() ? text.trim().split(/\s+/).filter(Boolean).length : 0;
+  if (!isEssay) return "当前 " + n + " 词。参考译文约 " + cfg.reference.trim().split(/\s+/).length + " 词。";
+  const ok = n >= cfg.minWords && n <= cfg.maxWords;
+  return "当前 " + n + " 词" + (ok ? " ✓ 符合要求" : n < cfg.minWords ? "（还需 " + (cfg.minWords - n) + " 词）" : "（超出上限 " + (n - cfg.maxWords) + " 词）");
+}
+/* ---------------------------------------------------------------
+   13. 提交诊断 · 评分（AI 优先，规则兜底）
+   --------------------------------------------------------------- */
+function parseScoreJSON(txt) {
+  const m = String(txt).match(/\{[\s\S]*\}/);
+  if (m) {
+    try {
+      const o = JSON.parse(m[0]);
+      if (o && typeof o.score !== "undefined") return o;
+    } catch (e) {}
+  }
+  const sm = String(txt).match(/score["'\s:]*([0-9]+(?:\.[0-9]+)?)/i);
+  if (sm) return { score: Number(sm[1]), comment: String(txt).slice(0, 500) };
+  return { score: null, comment: String(txt).slice(0, 500) };
+}
+function normAI(o) {
+  const out = { score: clamp(Math.round(Number(o.score) || 0), 0, 15), comment: o.comment || "" };
+  if (Array.isArray(o.strengths)) out.strengths = o.strengths.slice(0, 4);
+  if (Array.isArray(o.weaknesses)) out.weaknesses = o.weaknesses.slice(0, 4);
+  return out;
+}
+
+async function gradeWritingAI(text, cfg) {
+  const sys = "你是一位资深的大学英语四级（CET-4）写作阅卷老师，熟悉官方评分标准（内容切题、语言准确、篇章结构，满分 15 分）。你的评分必须严格、中肯，并给出具体可执行的建议。";
+  const usr = "【作文题目】\n" + cfg.prompt + "\n\n【学生作文】\n" + text +
+    "\n\n请严格按 CET-4 的 15 分制评分，只返回一个 JSON 对象，不要输出任何多余文字：\n" +
+    '{"score": 0到15的整数, "comment": "总体点评（120字以内，中文）", "strengths": ["优点1","优点2"], "weaknesses": ["问题1","问题2"]}';
+  const out = await callAI([{ role: "system", content: sys }, { role: "user", content: usr }], { temperature: 0.3 });
+  return normAI(parseScoreJSON(out));
+}
+
+async function gradeTranslationAI(text, cfg) {
+  const sys = "你是一位资深的大学英语四级（CET-4）翻译阅卷老师，熟悉官方评分标准（信息完整、语言准确、表达地道，满分 15 分）。评分要严格、中肯。";
+  const usr = "【汉语原文】\n" + cfg.prompt + "\n\n【参考译文】\n" + cfg.reference + "\n\n【学生译文】\n" + text +
+    "\n\n请严格按 CET-4 的 15 分制评分，只返回一个 JSON 对象，不要输出任何多余文字：\n" +
+    '{"score": 0到15的整数, "comment": "总体点评（120字以内，中文）", "strengths": ["优点1","优点2"], "weaknesses": ["问题1","问题2"]}';
+  const out = await callAI([{ role: "system", content: sys }, { role: "user", content: usr }], { temperature: 0.3 });
+  return normAI(parseScoreJSON(out));
+}
+
+async function submitDiagnostic() {
+  if (diagTimer) { clearInterval(diagTimer); diagTimer = null; }
+  stopSpeak();
+  const v = $("#v-diag");
+  v.innerHTML = '<div class="card pad-lg center" style="padding:60px 20px">' +
+    '<div style="font-size:30px">📊</div><h3 style="margin:12px 0 6px">正在评分…</h3>' +
+    '<p class="small muted">正在分析你的作答' + (hasAI() ? "，AI 将为主观题提供细致点评" : "（当前使用本地规则估算，配置 AI 后点评更细致）") + "</p></div>";
+
+  const elapsed = Math.floor((Date.now() - D.t0) / 1000);
+  const modules = {};
+  const detail = {};
+
+  // ---- 客观题 ----
+  ["listening", "reading"].forEach(mod => {
+    let correct = 0, total = 0;
+    DIAG[mod].groups.forEach((g, gi) => {
+      g.questions.forEach((q, qi) => {
+        total++;
+        const k = mod + "-" + gi + "-" + qi;
+        const picked = D.answers[k];
+        if (picked === q.ans) correct++;
+        else S.wrong.push({
+          id: uid(), mod: mod, stem: q.stem, opts: q.opts.slice(), ans: q.ans,
+          picked: picked == null ? -1 : picked, exp: q.exp, from: "诊断", date: today()
+        });
+      });
+    });
+    const ratio = total ? correct / total : 0;
+    modules[mod] = round1(ratio * DIAG[mod].weight);
+    detail[mod] = { correct: correct, total: total, ratio: ratio };
+  });
+
+  // ---- 主观题 ----
+  try {
+    if (hasAI() && D.essay.trim()) {
+      try {
+        const r = await gradeWritingAI(D.essay, DIAG.writing);
+        detail.writing = { score15: r.score, notes: [r.comment].filter(Boolean), ai: true, strengths: r.strengths || [], weaknesses: r.weaknesses || [] };
+      } catch (e) {
+        const r = gradeWritingRule(D.essay, DIAG.writing);
+        detail.writing = { score15: r.score, notes: r.notes, ai: false, aiError: e.message };
+      }
+    } else {
+      const r = gradeWritingRule(D.essay, DIAG.writing);
+      detail.writing = { score15: r.score, notes: r.notes, ai: false };
+    }
+    if (hasAI() && D.trans.trim()) {
+      try {
+        const r = await gradeTranslationAI(D.trans, DIAG.translation);
+        detail.translation = { score15: r.score, notes: [r.comment].filter(Boolean), ai: true, strengths: r.strengths || [], weaknesses: r.weaknesses || [] };
+      } catch (e) {
+        const r = gradeTranslationRule(D.trans, DIAG.translation);
+        detail.translation = { score15: r.score, notes: r.notes, ai: false, aiError: e.message };
+      }
+    } else {
+      const r = gradeTranslationRule(D.trans, DIAG.translation);
+      detail.translation = { score15: r.score, notes: r.notes, ai: false };
+    }
+  } catch (e) {
+    detail.writing = detail.writing || { score15: 0, notes: ["评分异常：" + e.message], ai: false };
+    detail.translation = detail.translation || { score15: 0, notes: ["评分异常：" + e.message], ai: false };
+  }
+  modules.writing = round1(detail.writing.score15 / 15 * DIAG.writing.weight);
+  modules.translation = round1(detail.translation.score15 / 15 * DIAG.translation.weight);
+
+  const total = round1(modules.listening + modules.reading + modules.writing + modules.translation);
+  const cefr = cefrOf(total);
+
+  const diag = {
+    date: today(), ts: Date.now(), minutes: Math.round(elapsed / 60),
+    modules: modules, total: total, level: cefr.c, cefrDesc: cefr.d,
+    target: S.settings.targetScore || suggestTarget(total),
+    detail: detail,
+    raw: { answers: D.answers, essay: D.essay, trans: D.trans }
+  };
+
+  S.diagnostic = diag;
+  if (!S.settings.targetScore) S.settings.targetScore = diag.target;
+  S.history.push({ date: diag.date, total: total, level: cefr.c });
+
+  // 统计
+  let answered = 0, correctAll = 0;
+  ["listening", "reading"].forEach(m => { answered += detail[m].total; correctAll += detail[m].correct; });
+  S.stats.sessions += 1;
+  S.stats.answered += answered + 2;
+  S.stats.correct += correctAll;
+  S.stats.minutes += Math.round(elapsed / 60);
+
+  // 首次诊断自动生成计划
+  let planCreated = false;
+  if (!S.plan) { S.plan = buildPlan(diag); planCreated = true; }
+
+  save();
+  D = null;
+  go("result");
+  toast(planCreated ? "诊断完成，已为你生成备考计划 🎉" : "诊断完成，画像已更新 🎉", 3200);
+}
+/* ---------------------------------------------------------------
+   14. 视图渲染 · 能力画像（结果页 + 雷达图）
+   --------------------------------------------------------------- */
+function hexA(hex, a) {
+  hex = String(hex).trim();
+  if (hex.indexOf("rgb") === 0) return hex.replace("rgb(", "rgba(").replace(")", "," + a + ")");
+  hex = hex.replace("#", "");
+  if (hex.length === 3) hex = hex.split("").map(c => c + c).join("");
+  const r = parseInt(hex.slice(0, 2), 16), g = parseInt(hex.slice(2, 4), 16), b = parseInt(hex.slice(4, 6), 16);
+  return "rgba(" + r + "," + g + "," + b + "," + a + ")";
+}
+
+function drawRadar(cv, ratios, labels) {
+  if (!cv) return;
+  const dpr = window.devicePixelRatio || 1;
+  const W = cv.clientWidth || 340, H = cv.clientHeight || 300;
+  cv.width = W * dpr; cv.height = H * dpr;
+  const ctx = cv.getContext("2d");
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, W, H);
+
+  const css = getComputedStyle(document.documentElement);
+  const gridColor = css.getPropertyValue("--line-2").trim() || "#eef0f5";
+  const lineColor = css.getPropertyValue("--line").trim() || "#e6e8ef";
+  const textColor = css.getPropertyValue("--text-2").trim() || "#5b6372";
+  const brand = css.getPropertyValue("--brand").trim() || "#4f46e5";
+
+  const n = ratios.length;
+  const cx = W / 2, cy = H / 2, R = Math.min(W, H) / 2 - 46;
+  const angle = i => -Math.PI / 2 + i * 2 * Math.PI / n;
+
+  for (let ring = 1; ring <= 4; ring++) {
+    ctx.beginPath();
+    for (let i = 0; i < n; i++) {
+      const a = angle(i), r = R * ring / 4;
+      const x = cx + Math.cos(a) * r, y = cy + Math.sin(a) * r;
+      i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = ring === 4 ? lineColor : gridColor;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+  for (let i = 0; i < n; i++) {
+    const a = angle(i);
+    ctx.beginPath(); ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + Math.cos(a) * R, cy + Math.sin(a) * R);
+    ctx.strokeStyle = gridColor; ctx.stroke();
+  }
+
+  ctx.beginPath();
+  ratios.forEach((v, i) => {
+    const a = angle(i), r = R * clamp(v, 0.02, 1);
+    const x = cx + Math.cos(a) * r, y = cy + Math.sin(a) * r;
+    i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+  });
+  ctx.closePath();
+  ctx.fillStyle = hexA(brand, 0.2); ctx.fill();
+  ctx.strokeStyle = brand; ctx.lineWidth = 2.4; ctx.stroke();
+
+  ratios.forEach((v, i) => {
+    const a = angle(i), r = R * clamp(v, 0.02, 1);
+    const x = cx + Math.cos(a) * r, y = cy + Math.sin(a) * r;
+    ctx.beginPath(); ctx.arc(x, y, 3.6, 0, Math.PI * 2);
+    ctx.fillStyle = brand; ctx.fill();
+    ctx.strokeStyle = css.getPropertyValue("--card").trim() || "#fff"; ctx.lineWidth = 1.6; ctx.stroke();
+  });
+
+  ctx.font = "700 12.5px " + (css.getPropertyValue("--font").trim() || "sans-serif");
+  ctx.textAlign = "center"; ctx.textBaseline = "middle";
+  ratios.forEach((v, i) => {
+    const a = angle(i), r = R + 25;
+    ctx.fillStyle = textColor;
+    ctx.fillText(labels[i] + " " + Math.round(v * 100) + "%", cx + Math.cos(a) * r, cy + Math.sin(a) * r);
+  });
+}
+
+function drawRadarNow() {
+  const cv = $("#radar");
+  if (!cv || !S.diagnostic) return;
+  const ratios = MODULES.map(k => S.diagnostic.modules[k] / DIAG[k].weight);
+  drawRadar(cv, ratios, MODULES.map(k => MOD_LABEL[k]));
+}
+
+function renderResult() {
+  const v = $("#v-result");
+  if (!S.diagnostic) {
+    v.innerHTML = '<div class="empty card"><div class="big">📭</div><p>还没有诊断数据，先完成一次水平诊断吧。</p>' +
+      '<div class="mt"><button class="btn primary" data-go="diag">开始诊断</button></div></div>';
+    bindGo(v); return;
+  }
+  const d = S.diagnostic;
+  const cefr = cefrOf(d.total);
+  const target = S.settings.targetScore || d.target;
+  const gap = target - d.total;
+
+  const objTotal = (d.detail.listening ? d.detail.listening.total : 0) + (d.detail.reading ? d.detail.reading.total : 0);
+
+  let h = pageHead({
+    id: "result",
+    title: "能力画像",
+    desc: "基于最近一次诊断的四维得分、总分估算与主观题点评。",
+    kpis: [
+      { k: "诊断日期", v: esc(d.date) },
+      { k: "目标分", v: target },
+      { k: "差距", v: gap > 0 ? "+" + Math.round(gap) : "已达标" }
+    ],
+    actions: '<button class="btn sm" data-go="diag">重新诊断</button>'
+  }) +
+    '<div class="score-hero"><div>' +
+    '<div class="tiny" style="opacity:.85">估算总分（满分 710）</div>' +
+    '<div class="big-score">' + Math.round(d.total) + '<small>/710</small></div>' +
+    '<div class="mt-s"><span class="level-tag">CEFR ' + esc(d.level) + "</span></div>" +
+    '<p class="small" style="opacity:.94;margin-top:10px;max-width:430px">' + esc(cefr.d) + "</p></div>" +
+    '<div class="grow"></div>' +
+    '<div style="min-width:132px">' +
+    '<div class="tiny" style="opacity:.85">作答用时</div><div style="font-weight:800;font-size:18px">' + d.minutes + " 分钟</div>" +
+    '<div class="tiny mt" style="opacity:.85">客观题</div><div style="font-weight:800;font-size:18px">' + objTotal + " 题</div>" +
+    "</div></div>";
+
+  // 雷达图 + 模块条
+  h += '<div class="grid g2 mt-l" style="grid-template-columns:minmax(300px,1fr) minmax(300px,1fr)">' +
+    '<div class="card"><div class="card-title">🕸 能力雷达图</div><canvas id="radar" style="width:100%;height:300px"></canvas></div>' +
+    '<div class="card"><div class="card-title">📊 各模块得分</div>';
+  MODULES.forEach(k => {
+    const pct = Math.round(d.modules[k] / DIAG[k].weight * 100);
+    h += '<div class="row mid mb" style="gap:10px">' +
+      '<span class="small" style="width:44px;font-weight:700">' + MOD_LABEL[k] + "</span>" +
+      '<div class="bar grow"><i style="width:' + pct + "%;background:" + MOD_COLOR[k] + '"></i></div>' +
+      '<span class="small mono dim" style="width:96px;text-align:right">' + d.modules[k] + " / " + DIAG[k].weight + "</span></div>";
+  });
+  h += '<hr class="sep"><p class="small muted">等级说明：425 分为四级常见合格线，560 分以上属于优秀区间。分数为标准分估算值，仅供参考。</p></div></div>';
+
+  // 客观题明细
+  const objCorrect = (d.detail.listening ? d.detail.listening.correct : 0) + (d.detail.reading ? d.detail.reading.correct : 0);
+  h += '<div class="card mt"><div class="card-title">🎯 客观题正确率</div><div class="grid gauto-sm">' +
+    objStat("听力", d.detail.listening, "🎧") + objStat("阅读", d.detail.reading, "📖") +
+    '<div class="kpi"><div class="k">合计</div><div class="v">' +
+    (objTotal ? Math.round(objCorrect / objTotal * 100) : 0) + '%</div>' +
+    '<div class="d">' + objCorrect + " / " + objTotal + " 题</div></div>" +
+    "</div></div>";
+
+  // 主观题点评（默认折叠，减少首屏信息噪音）
+  h += '<div class="card mt"><div class="card-title">📝 写作与翻译点评 ' +
+    (hasAI() ? '<span class="pill">AI 评分</span>' : '<span class="pill plain">本地规则估算</span>') + "</div>" +
+    '<div>' +
+    subjRow("写作", d.detail.writing, DIAG.writing.weight, d.raw.essay, "essay") +
+    subjRow("翻译", d.detail.translation, DIAG.translation.weight, d.raw.trans, "trans") +
+    "</div>" +
+    (d.detail.writing && d.detail.writing.aiError ? '<p class="tiny" style="color:var(--warn);margin-top:8px">AI 评分失败，已降级为规则估算：' + esc(d.detail.writing.aiError) + "</p>" : "") +
+    "</div>";
+
+  // 目标分设置
+  h += '<div class="card mt"><div class="card-title">🎯 设定目标分</div>' +
+    '<p class="small muted">系统根据你的当前水平建议目标为 <b>' + d.target + '</b> 分。' +
+    (gap > 0 ? '当前距离目标还差 <b>' + Math.round(gap) + '</b> 分。' : '你已经达到或超过建议目标，可以挑战更高分数！') + "</p>" +
+    '<div class="row mid mt"><input class="input" id="targetInput" type="number" min="0" max="710" step="5" value="' + target + '" style="max-width:130px">' +
+    '<button class="btn primary" id="saveTarget">保存目标分</button>' +
+    '<button class="btn" id="regenPlan">依据本次诊断生成计划</button>' +
+    '<button class="btn ghost" data-go="diag">重新诊断</button></div></div>';
+
+  v.innerHTML = h;
+  bindGo(v);
+
+  setTimeout(drawRadarNow, 30);
+  window.addEventListener("resize", drawRadarNow);
+
+  $("#saveTarget").addEventListener("click", () => {
+    let n = parseInt($("#targetInput").value, 10);
+    if (isNaN(n)) { toast("请输入有效分数"); return; }
+    n = clamp(n, 0, 710);
+    S.settings.targetScore = n;
+    S.diagnostic.target = n;
+    if (S.plan) S.plan.target = n;
+    save(); renderResult(); toast("目标分已更新为 " + n);
+  });
+  $("#regenPlan").addEventListener("click", () => {
+    openModal('<h3 style="margin:0 0 10px">重新生成备考计划？</h3><p class="small muted">将依据本次诊断的强弱项重新生成四阶段计划，现有打卡进度会被重置。</p>' +
+      '<div class="row mt-l"><button class="btn primary grow" id="rpYes">确认生成</button><button class="btn ghost grow" onclick="closeModal()">取消</button></div>');
+    $("#rpYes").addEventListener("click", () => {
+      S.plan = buildPlan(S.diagnostic);
+      S.plan.target = S.settings.targetScore || S.diagnostic.target;
+      save(); closeModal(); toast("备考计划已重新生成");
+      go("plan");
+    });
+  });
+}
+
+function objStat(name, det, icon) {
+  const pct = det ? Math.round(det.ratio * 100) : 0;
+  return '<div class="kpi"><div class="k">' + icon + " " + name + "</div>" +
+    '<div class="v">' + (det ? det.correct : 0) + '<small>/ ' + (det ? det.total : 0) + " 题</small></div>" +
+    '<div class="bar mt-s"><i style="width:' + pct + '%;background:var(--ok)"></i></div>' +
+    '<div class="d">正确率 ' + pct + "%</div></div>";
+}
+
+/* 主观题：折叠行 + 展开后完整点评 */
+function subjRow(name, det, weight, text, key) {
+  if (!det) return "";
+  const s15 = det.score15;
+  const score = round1(s15 / 15 * weight);
+  return '<details class="fold"><summary>' +
+    '<span class="fold-t">' + name + "</span>" +
+    '<span class="fold-tag">' + s15 + " / 15 档 · 折算 " + score + " / " + weight + ' 分</span></summary>' +
+    '<div class="fold-b">' + subjBody(det, text, key) + "</div></details>";
+}
+function subjBody(det, text, key) {
+  let h = "";
+  if (det.notes && det.notes.length) h += '<p class="small mt-s">' + det.notes.map(n => esc(n)).join("</p><p class='small'>") + "</p>";
+  if (det.strengths && det.strengths.length) h += '<div class="explain"><b>亮点：</b>' + det.strengths.map(esc).join("；") + "</div>";
+  if (det.weaknesses && det.weaknesses.length) h += '<div class="explain" style="background:var(--warn-soft);border-color:var(--warn)"><b style="color:var(--warn)">待改进：</b>' + det.weaknesses.map(esc).join("；") + "</div>";
+  if (text) h += '<details class="mt-s"><summary class="small muted" style="cursor:pointer">查看我的作答</summary><div class="tool-out mt-s">' + esc(text) + "</div></details>";
+  h += '<details class="mt-s"><summary class="small muted" style="cursor:pointer">查看参考范文/译文</summary><div class="tool-out mt-s">' + esc(key === "essay" ? DIAG.writing.sample : DIAG.translation.reference) + "</div></details>";
+  return h;
+}
+/* ---------------------------------------------------------------
+   15. 视图渲染 · 备考计划
+   --------------------------------------------------------------- */
+function renderPlan() {
+  const v = $("#v-plan");
+  if (!S.plan) {
+    v.innerHTML = '<div class="empty card"><div class="big">🗺️</div><p>还没有备考计划。完成一次水平诊断后，系统会自动依据你的强弱项生成 3 个月四阶段计划。</p>' +
+      '<div class="mt"><button class="btn primary" data-go="diag">去做诊断</button></div></div>';
+    bindGo(v); return;
+  }
+  const p = S.plan, pp = planProgress();
+  const weakNames = (p.weak || []).map(k => MOD_LABEL[k]).join("、");
+
+  let h = pageHead({
+    id: "plan",
+    title: "备考计划",
+    desc: "按 3 个月四阶段推进；勾选任务即自动保存，可随时调整开始与考试日期。",
+    kpis: [
+      { k: "目标分", v: p.target },
+      { k: "完成度", v: pp.pct + "%" },
+      { k: "任务", v: pp.done + " / " + pp.total }
+    ],
+    actions: '<button class="btn sm" id="resetPlan">重新生成</button>'
+  });
+
+  h += '<div class="card"><div class="row mid" style="gap:12px;flex-wrap:wrap">' +
+    '<div class="progress grow" style="min-width:140px"><i style="width:' + pp.pct + '%"></i></div>' +
+    '<span class="small mono">' + pp.done + " / " + pp.total + "</span>" +
+    (weakNames ? '<span class="pill warn">重点：' + esc(weakNames) + "</span>" : "") +
+    '<span class="small muted" id="examCountdown"></span>' +
+    '<details class="inline-fold"><summary class="btn sm">日期设置</summary>' +
+    '<div class="grid gauto-sm mt-s" style="--gmin:150px">' +
+    '<label class="small muted" style="display:flex;flex-direction:column;gap:4px">计划开始' +
+    '<input class="input" type="date" id="planStart" value="' + esc(p.createdAt) + '"></label>' +
+    '<label class="small muted" style="display:flex;flex-direction:column;gap:4px">考试日期' +
+    '<input class="input" type="date" id="examDate" value="' + esc(S.settings.examDate || "") + '"></label>' +
+    "</div></details></div></div>";
+
+  h += '<div class="stage-nav mt">' + p.stages.map((st, i) =>
+    '<a data-stage-go="stage-' + st.id + '">' + (i + 1) + ". " + esc(st.title) + "</a>").join("") + "</div>";
+
+  h += '<div class="grid gauto mt" style="--gmin:400px">';
+  p.stages.forEach((st, i) => {
+    const done = st.tasks.filter(t => t.done).length;
+    const all = done === st.tasks.length && st.tasks.length > 0;
+    h += '<div class="stage' + (all ? " done" : "") + '" id="stage-' + st.id + '">' +
+      '<div class="dot">' + (all ? "✓" : (i + 1)) + "</div>" +
+      '<div class="card">' +
+      '<div class="row mid between wrap">' +
+      '<div><div class="card-title" style="margin:0">' + esc(st.title) + "</div>" +
+      '<div class="tiny dim">' + esc(st.weeks) + " · " + esc(st.goal) + "</div></div>" +
+      '<span class="pill ' + (all ? "ok" : "plain") + '">' + done + " / " + st.tasks.length + "</span></div>" +
+      '<div class="mt-s">' + st.tasks.map(t =>
+        '<div class="task' + (t.done ? " done" : "") + '" data-stage="' + st.id + '" data-task="' + t.id + '">' +
+        '<input type="checkbox" ' + (t.done ? "checked" : "") + ' tabindex="-1">' +
+        '<span class="txt">' + esc(t.t) + "</span></div>"
+      ).join("") + "</div></div></div>";
+  });
+  h += "</div>";
+
+  h += '<div class="card mt"><div class="card-title">📌 使用建议</div>' +
+    '<p class="small muted">计划按 3 个月（12 周）通用模板生成，可根据你的实际考试日期调整节奏。每天完成后勾选任务，进度会自动保存；建议每周固定回顾一次完成情况。若重新诊断，可在「能力画像」页一键依据新结果重排计划。</p></div>';
+
+  v.innerHTML = h;
+  bindGo(v);
+  bindStageNav(v);
+
+  $$(".task", v).forEach(el => el.addEventListener("click", e => {
+    e.preventDefault();
+    const st = p.stages.find(x => x.id === el.dataset.stage);
+    if (!st) return;
+    const t = st.tasks.find(x => x.id === el.dataset.task);
+    if (!t) return;
+    t.done = !t.done;
+    save();
+    renderPlan();
+    const np = planProgress();
+    if (np.pct === 100) toast("太棒了！所有任务已全部完成 🎉", 3200);
+  }));
+
+  $("#planStart").addEventListener("change", e => { p.createdAt = e.target.value || p.createdAt; save(); renderPlan(); });
+  $("#examDate").addEventListener("change", e => { S.settings.examDate = e.target.value; save(); renderPlan(); });
+  $("#resetPlan").addEventListener("click", () => {
+    if (!S.diagnostic) { toast("请先完成诊断"); return; }
+    openModal('<h3 style="margin:0 0 10px">重新生成计划？</h3><p class="small muted">将依据最近一次诊断结果重新生成四阶段计划，当前打卡进度会被重置。</p>' +
+      '<div class="row mt-l"><button class="btn primary grow" id="rpYes2">确认生成</button><button class="btn ghost grow" onclick="closeModal()">取消</button></div>');
+    $("#rpYes2").addEventListener("click", () => {
+      S.plan = buildPlan(S.diagnostic);
+      S.plan.target = S.settings.targetScore || S.diagnostic.target;
+      save(); closeModal(); renderPlan(); toast("计划已重新生成");
+    });
+  });
+
+  updateExamCountdown();
+}
+
+function updateExamCountdown() {
+  const el = $("#examCountdown");
+  if (!el) return;
+  const d = S.settings.examDate;
+  if (!d) { el.textContent = ""; return; }
+  const diff = Math.ceil((new Date(d + "T00:00:00") - new Date(today() + "T00:00:00")) / 86400000);
+  if (diff > 0) el.textContent = "距离考试还有 " + diff + " 天";
+  else if (diff === 0) el.textContent = "就是今天，加油！";
+  else el.textContent = "考试日期已过，请更新";
+}
+/* ---------------------------------------------------------------
+   16. 视图渲染 · 练习中心
+   --------------------------------------------------------------- */
+const BANK_LABEL = { listening: "听力", reading: "阅读", vocabulary: "词汇", writing: "写作", translation: "翻译", mock: "限时模考" };
+const PRACTICE_TABS = [
+  { id: "train", label: "专项练习" },
+  { id: "mock", label: "限时模考" },
+  { id: "aibank", label: "AI 题库" },
+  { id: "words", label: "词汇速记" },
+  { id: "wrong", label: "错题本" },
+  { id: "stats", label: "学习记录" }
+];
+const MOCK_MINUTES = 30;
+let P = null;
+let PTab = "train";
+let SET_TAB = "setSkin";
+let mockTimer = null;
+
+// 练习中心子标签（含 AI 题库题数，单独抽出便于局部刷新）
+function practiceTabButtonsHTML() {
+  const aiQ = aiBankStats().questions;
+  return PRACTICE_TABS.map(t =>
+    '<button class="chip ' + (PTab === t.id ? "on" : "") + '" data-ptab="' + t.id + '" aria-selected="' + (PTab === t.id) + '">' + t.label +
+    (t.id === "wrong" && S.wrong.length ? " (" + S.wrong.length + ")" : "") +
+    (t.id === "aibank" && aiQ ? " (" + aiQ + ")" : "") + "</button>").join("");
+}
+function bindPracticeTabs(el) {
+  $$("[data-ptab]", el).forEach(b => b.addEventListener("click", () => {
+    PTab = b.dataset.ptab;
+    setRouteHash("practice", PTab === "train" ? "" : PTab);
+    renderPractice();
+  }));
+}
+
+function renderPractice() {
+  const v = $("#v-practice");
+  if (P) { renderPracticeSession(); return; }
+  const st = S.stats || {};
+  let h = pageHead({
+    id: "practice",
+    title: "练习中心",
+    desc: "按模块专项训练、限时模考，或让 AI 扩充题库；错题与学习记录都在这里。",
+    kpis: [
+      { k: "累计作答", v: st.answered || 0 },
+      { k: "正确率", v: (st.answered ? Math.round(st.correct / st.answered * 100) : 0) + "%" },
+      { k: "错题", v: S.wrong.length }
+    ]
+  });
+  const curTab = PRACTICE_TABS.find(t => t.id === PTab) || PRACTICE_TABS[0];
+  h += '<div class="seg-stick"><div class="seg-bar"><div class="segmented" id="ptTabs" role="tablist" aria-label="练习分类">' +
+    practiceTabButtonsHTML() + '</div><span class="seg-now">练习中心 <i>›</i> <b>' + curTab.label + "</b></span></div></div>";
+  h += '<div id="ptBody" role="tabpanel"></div>';
+  v.innerHTML = h;
+  bindGo(v);
+  bindPracticeTabs(v);
+  renderPracticeBody();
+}
+
+function renderPracticeBody() {
+  const el = $("#ptBody");
+  if (!el) return;
+  let h = "";
+  if (PTab === "train") h = renderTrainList();
+  else if (PTab === "mock") h = renderMockIntro();
+  else if (PTab === "aibank") h = renderAIBank();
+  else if (PTab === "words") h = renderWords();
+  else if (PTab === "wrong") h = renderWrong();
+  else h = renderStats();
+  el.innerHTML = h;
+
+  $$("[data-start]", el).forEach(b => b.addEventListener("click", () => startPractice(b.dataset.start)));
+  const mb = $("#mockStart", el);
+  if (mb) mb.addEventListener("click", startMock);
+  bindGo(el);
+  bindWords(el);
+  bindWrong(el);
+  bindAIBank(el);
+}
+
+function mockItems() {
+  return buildPracticeItems("listening")
+    .concat(buildPracticeItems("reading"), buildPracticeItems("vocabulary"));
+}
+
+function renderMockIntro() {
+  const items = mockItems();
+  const count = k => items.filter(x => x.mod === k).length;
+  return '<div class="grid g2">' +
+    '<div class="card"><div class="card-title">⏱ 限时模考</div>' +
+    '<p class="small muted">按考试节奏连续作答，提交后不能回看上一题，时间到自动交卷。答错的题会自动进入错题本。</p>' +
+    '<div class="explain mt"><b>共 ' + items.length + " 题 · 限时 " + MOCK_MINUTES +
+    ' 分钟。</b>听力题由浏览器朗读音频，建议佩戴耳机；阅读题请先通读原文再作答。</div>' +
+    '<div class="row mt-l"><button class="btn primary lg" id="mockStart">开始模考</button>' +
+    '<span class="tiny dim" style="align-self:center">开始后计时立即启动</span></div></div>' +
+    '<div class="card"><div class="card-title">📦 本次题量</div><div class="grid gauto-sm">' +
+    kpiCell("听力", count("listening") + " 题", "浏览器朗读") +
+    kpiCell("阅读", count("reading") + " 题", "仔细阅读") +
+    kpiCell("词汇", count("vocabulary") + " 题", "高频词") +
+    kpiCell("总计", items.length + " 题", "限时 " + MOCK_MINUTES + " 分钟") +
+    "</div></div></div>";
+}
+
+function startMock() {
+  const items = mockItems();
+  if (!items.length) { toast("题库内容不足，暂时无法模考"); return; }
+  P = {
+    mod: "mock", kind: "obj", items: items, idx: 0, picked: null, revealed: false,
+    correct: 0, answered: 0, mock: true, deadline: Date.now() + MOCK_MINUTES * 60 * 1000
+  };
+  renderPractice();
+}
+
+function renderTrainList() {
+  const cfg = [
+    { mod: "listening", icon: "🎧", name: "听力", desc: "短对话 / 短篇新闻，浏览器朗读" },
+    { mod: "reading", icon: "📖", name: "阅读", desc: "仔细阅读，限时训练" },
+    { mod: "vocabulary", icon: "🔤", name: "词汇选择", desc: "高频词用法与搭配" },
+    { mod: "writing", icon: "✍️", name: "写作", desc: "限时作文 + 智能评分" },
+    { mod: "translation", icon: "🔄", name: "翻译", desc: "汉译英 + 逐句点评" }
+  ];
+  let total = 0;
+  let h = '<div class="grid gauto" style="--gmin:226px">';
+  cfg.forEach(c => {
+    const arr = bankOf(c.mod);
+    const n = countQ(c.mod, arr);
+    const aiN = countQ(c.mod, aiBankArr(c.mod));
+    total += n;
+    h += '<div class="card" style="padding:14px">' +
+      '<div class="row mid between"><div class="row mid" style="gap:8px">' +
+      '<span style="font-size:19px">' + c.icon + "</span>" +
+      '<span style="font-weight:700;font-size:var(--fs-14)">' + c.name + "</span></div>" +
+      '<span class="pill plain">' + n + " 题" + (aiN ? " · AI " + aiN : "") + "</span></div>" +
+      '<p class="tiny dim" style="margin:8px 0 12px;min-height:32px">' + c.desc + "</p>" +
+      '<button class="btn sm primary" data-start="' + c.mod + '" style="width:100%">开始练习</button></div>';
+  });
+  h += "</div>";
+  h += '<div class="card mt"><div class="card-title">💡 说明</div><p class="small muted">专项练习共 ' + total +
+    " 题，其中含 AI 生成题 " + aiBankStats().questions +
+    ' 题（可在「AI 题库」中让 AI 继续扩充）。答错的客观题会自动进入错题本，方便日后复盘。所有练习数据只保存在本机浏览器中。</p></div>';
+  return h;
+}
+
+function buildPracticeItems(mod) {
+  const items = [];
+  bankOf(mod).forEach((g, gi) => {
+    if (g && g.questions) g.questions.forEach((q, qi) => items.push({ mod: mod, gi: gi, qi: qi, q: q, g: g }));
+    else if (g && g.stem) items.push({ mod: mod, gi: gi, qi: 0, q: g, g: {} });
+  });
+  return items;
+}
+
+function startPractice(mod) {
+  if (mod === "writing" || mod === "translation") {
+    const pool = bankOf(mod).filter(g => g && g.prompt);
+    if (!pool.length) { toast("暂无该模块练习题"); return; }
+    const cfg = pool[Math.floor(Math.random() * pool.length)];
+    P = { mod: mod, kind: mod, cfg: cfg, text: "", result: null };
+    renderPractice(); return;
+  }
+  const items = buildPracticeItems(mod);
+  if (!items.length) { toast("暂无该模块练习题"); return; }
+  P = { mod: mod, kind: "obj", items: items, idx: 0, picked: null, revealed: false, correct: 0, answered: 0 };
+  renderPractice();
+}
+
+function renderPracticeSession() {
+  const v = $("#v-practice");
+  if (P.kind === "writing" || P.kind === "translation") { renderSubjPractice(v); return; }
+  if (mockTimer) { clearInterval(mockTimer); mockTimer = null; }
+  if (P.done) { renderPracticeDone(v); return; }
+
+  const total = P.items.length;
+  const it = P.items[P.idx];
+  const q = it.q, g = it.g || {}, chosen = P.picked;
+  const mod = it.mod || P.mod;
+
+  let h = '<div class="diag-head">' +
+    '<span class="pill info">' + esc(BANK_LABEL[mod] || "练习") + "</span>" +
+    '<span class="small muted">第 ' + (P.idx + 1) + " / " + total + " 题</span>" +
+    '<div class="progress"><i style="width:' + Math.round(P.idx / total * 100) + '%"></i></div>' +
+    '<span class="pill plain">正确 ' + P.correct + " / " + P.answered + "</span>" +
+    (P.mock ? '<div class="timer" id="mockTimer">' + fmtSec((P.deadline - Date.now()) / 1000) + "</div>" : "") +
+    '<button class="btn sm ghost" id="pExit">' + (P.mock ? "放弃模考" : "退出练习") + "</button></div>";
+
+  h += '<div class="card pad-lg">';
+  if (mod === "listening" && g.script) {
+    h += '<div class="card-title">🎧 ' + esc(g.title) + "</div>" +
+      '<div class="audioplay mb"><div class="wave" id="wave"><i></i><i></i><i></i><i></i><i></i><i></i></div>' +
+      '<button class="btn primary sm" id="pPlay">▶ 播放音频</button>' +
+      '<button class="btn sm" id="pStop">停止</button></div>';
+  } else if (mod === "reading" && g.passage) {
+    h += '<div class="card-title">📖 ' + esc(g.title) + '</div><div class="passage mb">' + nl2br(g.passage) + "</div>";
+  }
+  h += '<div class="qtext' + (mod === "reading" || mod === "listening" ? " en" : "") + '"><b>' + (P.idx + 1) + ".</b> " + esc(q.stem) + "</div>";
+  h += q.opts.map((o, oi) => {
+    let cls = "opt";
+    if (P.revealed) { if (oi === q.ans) cls += " right"; else if (oi === chosen) cls += " wrong"; }
+    else if (oi === chosen) cls += " sel";
+    return '<div class="' + cls + '" data-oi="' + oi + '"><span class="key">' + String.fromCharCode(65 + oi) + '</span><span class="txt">' + esc(o) + "</span></div>";
+  }).join("");
+  if (P.revealed) {
+    h += '<div class="explain"><b>解析：</b>' + esc(qExp(q)) + "</div>";
+    if (chosen == null || chosen !== q.ans) h += '<p class="tiny" style="color:var(--bad);margin-top:8px">本题已加入错题本。</p>';
+  }
+  h += '<div class="row mt-l"><div class="grow"></div>' +
+    (P.revealed
+      ? (P.idx < total - 1 ? '<button class="btn primary" id="pNext">下一题 →</button>' : '<button class="btn primary" id="pFinish">查看结果</button>')
+      : '<button class="btn primary" id="pSubmit">提交答案</button>') +
+    "</div></div>";
+  v.innerHTML = h;
+
+  if (mod === "listening" && g.script) {
+    setTimeout(() => {
+      const parts = [g.script];
+      parts.push("Question. " + q.stem);
+      q.opts.forEach((o, j) => parts.push(String.fromCharCode(65 + j) + ". " + o));
+      const pb = $("#pPlay"); if (pb) pb.addEventListener("click", () => speakParts(parts));
+      const sb = $("#pStop"); if (sb) sb.addEventListener("click", stopSpeak);
+    }, 0);
+  }
+
+  $$(".opt", v).forEach(op => op.addEventListener("click", () => {
+    if (P.revealed) return;
+    P.picked = Number(op.dataset.oi);
+    renderPracticeSession();
+  }));
+  const sb = $("#pSubmit");
+  if (sb) sb.addEventListener("click", () => {
+    if (P.picked == null) { toast("请先选择一个答案"); return; }
+    P.revealed = true;
+    P.answered++;
+    if (P.picked === q.ans) P.correct++;
+    else S.wrong.push({
+      id: uid(), mod: mod, stem: q.stem, opts: q.opts.slice(), ans: q.ans,
+      picked: P.picked, exp: q.exp, from: P.mock ? "限时模考" : "专项练习", date: today()
+    });
+    S.stats.answered++;
+    if (P.picked === q.ans) S.stats.correct++;
+    save();
+    renderPracticeSession();
+  });
+  const nb = $("#pNext");
+  if (nb) nb.addEventListener("click", () => { P.idx++; P.picked = null; P.revealed = false; renderPracticeSession(); });
+  const fb = $("#pFinish");
+  if (fb) fb.addEventListener("click", () => { stopSpeak(); P.done = true; renderPracticeSession(); });
+  const eb = $("#pExit");
+  if (eb) eb.addEventListener("click", () => {
+    if (mockTimer) { clearInterval(mockTimer); mockTimer = null; }
+    stopSpeak(); P = null; renderPractice();
+  });
+
+  if (P.mock) startMockTimer();
+}
+
+function startMockTimer() {
+  if (mockTimer) clearInterval(mockTimer);
+  const tick = () => {
+    const el = $("#mockTimer");
+    if (!el || !P || !P.mock) { clearInterval(mockTimer); mockTimer = null; return; }
+    const left = Math.max(0, Math.round((P.deadline - Date.now()) / 1000));
+    el.textContent = fmtSec(left);
+    el.classList.toggle("hot", left <= 300);
+    if (left <= 0) {
+      clearInterval(mockTimer); mockTimer = null;
+      stopSpeak();
+      P.done = true;
+      toast("时间到，已自动交卷");
+      renderPracticeSession();
+    }
+  };
+  tick();
+  mockTimer = setInterval(tick, 1000);
+}
+
+function renderPracticeDone(v) {
+  const mock = !!P.mock;
+  const mod = mock ? ((P.items[0] && P.items[0].mod) || "listening") : P.mod;
+  const rate = P.answered ? Math.round(P.correct / P.answered * 100) : 0;
+  const title = mock ? "⏱ 限时模考完成" : esc(BANK_LABEL[mod]) + " 练习完成";
+  v.innerHTML = '<div class="card pad-lg center" style="padding:48px 24px">' +
+    '<div style="font-size:40px">' + (rate >= 80 ? "🎉" : rate >= 60 ? "👍" : "💪") + "</div>" +
+    '<h2 style="margin:12px 0 6px">' + title + "</h2>" +
+    '<p class="muted">答对 <b>' + P.correct + "</b> / " + P.answered + " 题，正确率 <b>" + rate + "%</b></p>" +
+    (mock ? '<p class="tiny dim">答错的题目已自动加入错题本，建议当天复盘。</p>' : "") +
+    '<div class="row mt-l" style="justify-content:center;flex-wrap:wrap">' +
+    '<button class="btn primary" id="pAgain">' + (mock ? "再来一次模考" : "再练一次") + "</button>" +
+    '<button class="btn" id="pBack">返回练习中心</button>' +
+    '<button class="btn ghost" id="pPlan">回到计划</button></div></div>';
+  $("#pAgain").addEventListener("click", () => {
+    const again = mock;
+    P = null;
+    if (again) startMock(); else startPractice(mod);
+  });
+  $("#pBack").addEventListener("click", () => { P = null; renderPractice(); });
+  $("#pPlan").addEventListener("click", () => { P = null; go("plan"); });
+}
+/* ---------------------------------------------------------------
+   16.1 写作 / 翻译专项练习
+   --------------------------------------------------------------- */
+function renderSubjPractice(v) {
+  const isW = P.kind === "writing";
+  const cfg = P.cfg;
+  let h = '<div class="diag-head"><span class="pill info">' + (isW ? "写作练习" : "翻译练习") + "</span>" +
+    '<span class="small muted">' + (isW ? "建议限时 30 分钟" : "建议限时 15 分钟") + "</span>" +
+    '<div class="grow"></div><button class="btn sm ghost" id="sExit">退出练习</button></div>';
+  h += '<div class="card pad-lg"><div class="card-title">' + (isW ? "✍️ 作文题目" : "🔄 翻译题目") + "</div>";
+  h += '<div class="' + (isW ? "qtext en" : "passage") + '">' + esc(cfg.prompt) + "</div>";
+  if (isW) h += '<p class="tiny dim">要求：' + cfg.minWords + "–" + cfg.maxWords + " 词。</p>";
+  h += '<textarea class="input mt-s" id="sText" style="min-height:' + (isW ? 220 : 160) + 'px" placeholder="在此输入你的英文' + (isW ? "作文" : "译文") + '……">' + esc(P.text || "") + "</textarea>";
+  h += '<div class="hint" id="sCount"></div>';
+  h += '<div class="row mt"><button class="btn primary" id="sGrade">提交并评分</button>' +
+    '<button class="btn ghost" id="sSample">' + (isW ? "查看参考范文" : "查看参考译文") + "</button>" +
+    '<span class="tiny dim" style="align-self:center">' + (hasAI() ? "将调用 AI 评分（约 5–15 秒）" : "未配置 AI，将使用本地规则估算") + "</span></div>";
+  h += '<div id="sResult" class="mt">' + subjResultHTML() + "</div></div>";
+  v.innerHTML = h;
+
+  const ta = $("#sText");
+  const upd = () => {
+    P.text = ta.value;
+    const el = $("#sCount");
+    if (el) el.textContent = isW ? countHint(P.text, cfg, true) : countHint(P.text, cfg, false);
+  };
+  ta.addEventListener("input", upd);
+  upd();
+  $("#sExit").addEventListener("click", () => { P = null; renderPractice(); });
+  $("#sGrade").addEventListener("click", gradeSubjPractice);
+  $("#sSample").addEventListener("click", () => {
+    const body = isW ? cfg.sample : cfg.reference;
+    const extra = (!isW && cfg.keyPoints)
+      ? '<div class="mt-s"><b class="small">参考要点</b><ul class="small muted">' + cfg.keyPoints.map(k => "<li>" + esc(k) + "</li>").join("") + "</ul></div>"
+      : (isW && cfg.tips ? '<div class="mt-s"><b class="small">写作提示</b><ul class="small muted">' + cfg.tips.map(k => "<li>" + esc(k) + "</li>").join("") + "</ul></div>" : "");
+    openModal("<h3>" + (isW ? "参考范文" : "参考译文") + "</h3>" +
+      '<div class="passage" style="white-space:pre-wrap">' + esc(body) + "</div>" + extra +
+      '<div class="row mt-l"><div class="grow"></div><button class="btn" id="mClose">关闭</button></div>');
+    $("#mClose").addEventListener("click", closeModal);
+  });
+}
+
+async function gradeSubjPractice() {
+  const isW = P.kind === "writing";
+  const text = ($("#sText").value || "").trim();
+  P.text = text;
+  if (!text) { toast("请先输入内容再评分"); return; }
+  const btn = $("#sGrade");
+  btn.disabled = true;
+  $("#sResult").innerHTML = '<div class="card center muted small" style="padding:26px">正在评分，请稍候…</div>';
+  try {
+    let r;
+    if (hasAI()) {
+      try {
+        const ai = isW ? await gradeWritingAI(text, P.cfg) : await gradeTranslationAI(text, P.cfg);
+        r = { score: ai.score, notes: [ai.comment].filter(Boolean), strengths: ai.strengths || [], weaknesses: ai.weaknesses || [], ai: true };
+      } catch (e) {
+        const rr = isW ? gradeWritingRule(text, P.cfg) : gradeTranslationRule(text, P.cfg);
+        r = { score: rr.score, notes: rr.notes, ai: false, aiError: e.message };
+      }
+    } else {
+      const rr = isW ? gradeWritingRule(text, P.cfg) : gradeTranslationRule(text, P.cfg);
+      r = { score: rr.score, notes: rr.notes, ai: false };
+    }
+    P.result = r;
+  } finally { btn.disabled = false; }
+  $("#sResult").innerHTML = subjResultHTML();
+}
+
+function subjResultHTML() {
+  const r = P.result;
+  if (!r) return "";
+  const isW = P.kind === "writing";
+  const full = isW ? 106.5 : 106.5;
+  const est = round1(r.score / 15 * full);
+  let h = '<div class="card"><div class="row between mid wrap">' +
+    "<div><b>本次评分：" + r.score + " / 15</b><div class=\"tiny dim\">折算四级得分约 " + est + " / " + full + "</div></div>" +
+    '<span class="pill ' + (r.ai ? "ok" : "plain") + '">' + (r.ai ? "AI 评分" : "本地规则估算") + "</span></div>";
+  if (r.aiError) h += '<p class="tiny" style="color:var(--warn);margin-top:8px">AI 调用失败，已回退本地规则：' + esc(r.aiError) + "</p>";
+  if (r.notes && r.notes.length) h += '<div class="explain mt-s">' + r.notes.map(n => esc(n)).join("<br>") + "</div>";
+  if (r.strengths && r.strengths.length) h += '<div class="mt-s small"><b style="color:var(--ok)">亮点</b><ul class="muted">' + r.strengths.map(x => "<li>" + esc(x) + "</li>").join("") + "</ul></div>";
+  if (r.weaknesses && r.weaknesses.length) h += '<div class="mt-s small"><b style="color:var(--bad)">待改进</b><ul class="muted">' + r.weaknesses.map(x => "<li>" + esc(x) + "</li>").join("") + "</ul></div>";
+  h += "</div>";
+  return h;
+}
+
+/* ---------------------------------------------------------------
+   16.2 词汇速记
+   --------------------------------------------------------------- */
+const WORD_PAGE_SIZE = 10;
+function renderWords() {
+  const total = Math.ceil(WORDS.length / WORD_PAGE_SIZE);
+  const cur = Math.min(Math.max(0, S.wordPage | 0), total - 1);
+  let h = '<div class="card"><div class="card-title">🔤 高频词速记 · 共 ' + WORDS.length + " 词</div>" +
+    '<div class="row wrap mt-s"><input class="input" id="wSearch" placeholder="搜索单词或中文释义…" style="max-width:280px">' +
+    '<button class="btn sm" id="wShuffle">随机抽 5 词测验</button>' +
+    '<span class="tiny dim" style="align-self:center">点击卡片可查看音标、英文释义与例句</span></div></div>';
+  h += '<div class="grid g2 mt" id="wGrid">' + WORDS.map((w, i) => wordCard(w, i)).join("") + "</div>";
+  h += '<div class="card mt empty" id="wNone" style="display:none">没有找到匹配的单词。</div>';
+  h += '<div class="row between mid mt-s" id="wPager">' +
+    '<span class="tiny dim">共 ' + total + ' 页 · 每页 ' + WORD_PAGE_SIZE + ' 词，第 <b id="wPageNo">' + (cur + 1) + "</b> 页</span>" +
+    '<span class="row" style="gap:8px">' +
+    '<button class="btn sm ghost" id="wPrev">← 上一页</button>' +
+    '<button class="btn sm ghost" id="wNext">下一页 →</button></span></div>';
+  return h;
+}
+
+function wordCard(w, i) {
+  return '<div class="card" data-wcard="' + i + '" data-page="' + Math.floor(i / WORD_PAGE_SIZE) + '" style="cursor:pointer">' +
+    '<div class="row between mid"><b style="font-size:16px">' + esc(w.w) + '</b>' +
+    '<button class="btn xs ghost" data-say="' + esc(w.w) + '">🔊</button></div>' +
+    '<div class="small muted" style="margin-top:2px">' + esc(w.zh) + "</div>" +
+    '<div class="tiny dim" data-extra="' + i + '" style="margin-top:6px"></div></div>';
+}
+
+function bindWords(el) {
+  const box = $("#wGrid", el);
+  if (!box) return;
+  const cards = $$("[data-wcard]", box);
+  const total = Math.ceil(WORDS.length / WORD_PAGE_SIZE);
+  const sp = $("#wSearch", el);
+  const prev = $("#wPrev", el), next = $("#wNext", el), no = $("#wPageNo", el), pager = $("#wPager", el);
+  const apply = () => {
+    const k = (sp ? sp.value : "").trim().toLowerCase();
+    const page = Math.min(Math.max(0, S.wordPage | 0), total - 1);
+    let shown = 0;
+    cards.forEach(c => {
+      const i = Number(c.dataset.wcard);
+      const hit = !k || WORDS[i].w.toLowerCase().includes(k) || WORDS[i].zh.includes(k);
+      const ok = hit && (k || Number(c.dataset.page) === page);
+      c.style.display = ok ? "" : "none";
+      if (ok) shown++;
+    });
+    const none = $("#wNone", el);
+    if (none) none.style.display = shown ? "none" : "";
+    if (pager) pager.style.display = k ? "none" : "";
+    if (no) no.textContent = page + 1;
+    if (prev) prev.disabled = page <= 0;
+    if (next) next.disabled = page >= total - 1;
+  };
+  cards.forEach(c => {
+    const i = Number(c.dataset.wcard);
+    const say = $("[data-say]", c);
+    if (say) say.addEventListener("click", ev => { ev.stopPropagation(); speakParts([WORDS[i].w]); });
+    c.addEventListener("click", () => loadWordDetail(i, c));
+  });
+  if (sp) sp.addEventListener("input", apply);
+  if (prev) prev.addEventListener("click", () => { S.wordPage = Math.max(0, (S.wordPage | 0) - 1); save(); apply(); });
+  if (next) next.addEventListener("click", () => { S.wordPage = Math.min(total - 1, (S.wordPage | 0) + 1); save(); apply(); });
+  apply();
+  const sh = $("#wShuffle", el);
+  if (sh) sh.addEventListener("click", quizWords);
+}
+
+async function loadWordDetail(i, card) {
+  const extra = $('[data-extra="' + i + '"]', card);
+  if (!extra) return;
+  if (extra.dataset.loaded === "1") { extra.innerHTML = ""; extra.dataset.loaded = ""; return; }
+  extra.innerHTML = '<span class="dim">正在查询网络词典…</span>';
+  try {
+    const data = await lookupDict(WORDS[i].w);
+    const e = data[0] || {};
+    const ph = e.phonetic || (e.phonetics || []).map(p => p.text).filter(Boolean)[0] || "";
+    const mean = (e.meanings || [])[0] || {};
+    const def = (mean.definitions || [])[0] || {};
+    let h = "";
+    if (ph) h += '<div><b>' + esc(ph) + "</b></div>";
+    if (mean.partOfSpeech) h += '<div>' + esc(mean.partOfSpeech) + ". " + esc(def.definition || "") + "</div>";
+    if (def.example) h += '<div class="dim" style="font-style:italic">e.g. ' + esc(def.example) + "</div>";
+    if (!h) h = '<span class="dim">词典未返回详情。</span>';
+    extra.innerHTML = h;
+    extra.dataset.loaded = "1";
+  } catch (err) {
+    extra.innerHTML = '<span style="color:var(--warn)">网络词典查询失败（' + esc(err.message) + '），请检查网络后重试。</span>';
+  }
+}
+
+function quizWords() {
+  const pool = WORDS.slice().sort(() => Math.random() - 0.5).slice(0, 5);
+  const qs = pool.map(p => {
+    const others = WORDS.filter(x => x.w !== p.w).sort(() => Math.random() - 0.5).slice(0, 3).map(x => x.zh);
+    const opts = others.concat([p.zh]).sort(() => Math.random() - 0.5);
+    return { stem: "单词 " + p.w + " 的意思是？", opts: opts, ans: opts.indexOf(p.zh) };
+  });
+  P = { mod: "vocabulary", kind: "obj", items: qs.map(q => ({ q: q, g: {} })), idx: 0, picked: null, revealed: false, correct: 0, answered: 0, quiz: true };
+  renderPractice();
+}
+
+/* ---------------------------------------------------------------
+   16.3 错题本
+   --------------------------------------------------------------- */
+function renderWrong() {
+  if (!S.wrong.length) {
+    return '<div class="card empty" style="padding:48px"><div style="font-size:30px">🎯</div>' +
+      '<p class="muted">错题本还是空的。完成诊断或专项练习后，答错的题会自动收集到这里。</p>' +
+      '<button class="btn primary" data-go="practice">去练习</button></div>';
+  }
+  let h = '<div class="card"><div class="row between mid wrap"><div class="card-title" style="margin:0">❌ 错题本 · ' + S.wrong.length + " 题</div>" +
+    '<div class="row"><button class="btn sm ghost" id="wbExport">导出为 TXT</button>' +
+    '<button class="btn sm danger" id="wbClear">清空错题本</button></div></div></div>';
+  h += '<div class="grid g2 mt">' + S.wrong.slice().reverse().map(wrongItem).join("") + "</div>";
+  return h;
+}
+
+function wrongItem(it) {
+  return '<div class="card">' +
+    '<div class="row between mid"><span class="pill plain">' + esc(BANK_LABEL[it.mod] || "题目") + "</span>" +
+    '<span class="tiny dim">' + esc(it.from || "") + (it.date ? " · " + esc(it.date) : "") + "</span></div>" +
+    '<div class="qtext en" style="margin-top:8px">' + esc(it.stem) + "</div>" +
+    (it.opts || []).map((o, oi) =>
+      '<div class="opt' + (oi === it.ans ? " right" : "") + '"><span class="key">' + String.fromCharCode(65 + oi) + '</span><span class="txt">' + esc(o) + "</span></div>").join("") +
+    '<div class="row wrap small mt-s"><span style="color:var(--bad)">你的作答：' + (it.picked >= 0 ? String.fromCharCode(65 + it.picked) : "未作答") + "</span>" +
+    '<span style="color:var(--ok)">正确答案：' + String.fromCharCode(65 + it.ans) + "</span></div>" +
+    '<div class="explain mt-s">' + esc(qExp(it)) + "</div>" +
+    '<div class="row mt-s"><div class="grow"></div><button class="btn xs ghost" data-del="' + it.id + '">移出错题本</button></div></div>';
+}
+
+function bindWrong(el) {
+  const cb = $("#wbClear", el);
+  if (cb) cb.addEventListener("click", () => {
+    if (!confirm("确定要清空错题本吗？此操作不可撤销。")) return;
+    S.wrong = []; save(); renderPractice();
+  });
+  const eb = $("#wbExport", el);
+  if (eb) eb.addEventListener("click", () => {
+    const lines = S.wrong.map((it, i) =>
+      "#" + (i + 1) + " [" + (BANK_LABEL[it.mod] || "") + " " + (it.from || "") + " " + (it.date || "") + "]\n" +
+      it.stem + "\n" + (it.opts || []).map((o, oi) => "  " + String.fromCharCode(65 + oi) + ". " + o).join("\n") +
+      "\n  你的答案：" + (it.picked >= 0 ? String.fromCharCode(65 + it.picked) : "未作答") +
+      "  正确答案：" + String.fromCharCode(it.ans) + "\n  解析：" + (it.exp || "") + "\n");
+    downloadText("CET4-错题本-" + today() + ".txt", lines.join("\n"));
+  });
+  $$("[data-del]", el).forEach(b => b.addEventListener("click", () => {
+    S.wrong = S.wrong.filter(x => x.id !== b.dataset.del);
+    save(); renderPractice();
+  }));
+}
+
+function downloadText(name, text, mime) {
+  const type = mime || "text/plain;charset=utf-8";
+  const head = type.indexOf("json") >= 0 ? "" : "\ufeff";
+  const blob = new Blob([head + text], { type: type });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+
+/* ---------------------------------------------------------------
+   16.4 学习记录
+   --------------------------------------------------------------- */
+function renderStats() {
+  const st = S.stats || {};
+  const acc = st.answered ? Math.round(st.correct / st.answered * 100) : 0;
+  const pp = planProgress();
+  let h = '<div class="grid g4">' +
+    statBox("练习次数", st.sessions || 0) +
+    statBox("累计题数", st.answered || 0) +
+    statBox("总体正确率", acc + "%") +
+    statBox("学习时长", (st.minutes || 0) + " 分钟") + "</div>";
+
+  h += '<div class="card mt"><div class="card-title">📌 计划完成度</div>';
+  if (S.plan) {
+    h += '<div class="row mid"><div class="progress grow"><i style="width:' + pp.pct + '%"></i></div>' +
+      '<span class="small">' + pp.done + " / " + pp.total + "（" + pp.pct + "%）</span></div>";
+  } else {
+    h += '<p class="small muted">尚未生成备考计划，完成诊断后会自动创建。</p>';
+  }
+  h += "</div>";
+
+  h += '<div class="card mt"><div class="card-title">📈 诊断历史</div>';
+  if (!S.history || !S.history.length) {
+    h += '<p class="small muted">还没有诊断记录，去「水平诊断」测一测吧。</p>';
+  } else {
+    h += '<table class="tbl"><thead><tr><th>日期</th><th>估算总分</th><th>水平</th><th>与目标差距</th></tr></thead><tbody>' +
+      S.history.slice().reverse().map(x => {
+        const tg = (S.settings.targetScore || (S.plan && S.plan.target) || 425);
+        const diff = Math.round(x.total - tg);
+        return "<tr><td>" + esc(x.date) + "</td><td>" + x.total + " / 710</td><td>" + esc(x.level || "-") + "</td>" +
+          '<td style="color:' + (diff >= 0 ? "var(--ok)" : "var(--bad)") + '">' + (diff >= 0 ? "已达标 +" + diff : diff) + "</td></tr>";
+      }).join("") + "</tbody></table>";
+  }
+  h += '<p class="tiny dim mt-s">提示：重新做一次诊断，会在这里留下新的对比记录，便于观察进步。</p></div>';
+  return h;
+}
+/* ---------------------------------------------------------------
+   17. 视图渲染 · 工具箱（查词 / 长难句解析 / 翻译润色）
+   --------------------------------------------------------------- */
+let TT = "dict";
+const TOOL_TABS = [
+  { id: "dict", label: "查词典" },
+  { id: "sentence", label: "长难句解析" },
+  { id: "polish", label: "翻译润色" }
+];
+
+function renderTools() {
+  const v = $("#v-tools");
+  let h = pageHead({
+    id: "tools",
+    title: "工具箱",
+    desc: "查词、长难句解析与翻译润色，写作卡壳时随取随用。",
+    kpis: [
+      { k: "AI", v: hasAI() ? "已连接" : "未配置" },
+      { k: "词典", v: "在线" }
+    ],
+    actions: hasAI() ? "" : '<button class="btn sm" data-go="settings">配置 AI</button>'
+  });
+  const curTool = TOOL_TABS.find(t => t.id === TT) || TOOL_TABS[0];
+  h += '<div class="seg-stick"><div class="seg-bar"><div class="segmented" id="toolTabs" role="tablist" aria-label="工具分类">' + TOOL_TABS.map(t =>
+    '<button class="chip ' + (TT === t.id ? "on" : "") + '" data-ttab="' + t.id + '" aria-selected="' + (TT === t.id) + '">' + t.label + "</button>").join("") +
+    '</div><span class="seg-now">工具箱 <i>›</i> <b>' + curTool.label + "</b></span></div></div>";
+  h += '<div class="session"><div class="session-main" id="toolBody">' + toolBodyHTML() + "</div>" +
+    '<aside class="session-side"><div class="card"><div class="card-title">💡 使用提示</div><div class="list">' +
+    listRow("🌐", "查词典需联网", "词典数据来自公开接口，离线时不可用。") +
+    listRow("🤖", "AI 功能需配置", hasAI() ? "当前已配置，可直接解析与润色。" : "到设置页填入 API Key 后可用。") +
+    listRow("🔊", "可朗读单词", "查词后可点「朗读」听发音。") +
+    "</div></div></aside></div>";
+  v.innerHTML = h;
+  bindGo(v);
+  $$("[data-ttab]", v).forEach(b => b.addEventListener("click", () => {
+    TT = b.dataset.ttab;
+    setRouteHash("tools", TT);
+    renderTools();
+  }));
+  bindTools(v);
+}
+
+function toolBodyHTML() {
+  if (TT === "dict") {
+    return '<div class="card pad-lg"><div class="card-title">🔍 查词典（在线 · dictionaryapi.dev）</div>' +
+      '<div class="row wrap"><input class="input" id="tWord" placeholder="输入英文单词，如 significant" style="max-width:280px">' +
+      '<button class="btn primary" id="tLook">查询</button>' +
+      '<button class="btn" id="tSay">🔊 朗读</button></div>' +
+      '<div id="tDictRes" class="mt"></div></div>';
+  }
+  if (TT === "sentence") {
+    return '<div class="card pad-lg"><div class="card-title">🧩 长难句解析（AI）</div>' +
+      '<p class="small muted">粘贴一句英文长难句，AI 会拆解句子主干、修饰成分与语法难点，并给出参考译文。</p>' +
+      '<textarea class="input mt-s" id="tSent" style="min-height:120px" placeholder="在此粘贴英文句子……"></textarea>' +
+      '<div class="row wrap mt"><button class="btn primary" id="tParse">解析句子</button>' +
+      '<span class="tiny dim" style="align-self:center">' + (hasAI() ? "已配置 AI，可直接使用" : "需要先在「设置」中配置 AI") + "</span></div>" +
+      '<div id="tSentRes" class="mt"></div></div>';
+  }
+  return '<div class="card pad-lg"><div class="card-title">✨ 翻译润色（AI）</div>' +
+    '<p class="small muted">输入中文或英文，AI 会给出更地道、更自然的英文表达，并逐条说明修改理由。</p>' +
+    '<textarea class="input mt-s" id="tPolish" style="min-height:140px" placeholder="在此输入中文或英文内容……"></textarea>' +
+    '<div class="row wrap mt"><button class="btn primary" id="tPolishBtn">开始润色</button>' +
+    '<span class="tiny dim" style="align-self:center">' + (hasAI() ? "已配置 AI，可直接使用" : "需要先在「设置」中配置 AI") + "</span></div>" +
+    '<div id="tPolishRes" class="mt"></div></div>';
+}
+
+function bindTools(v) {
+  const lk = $("#tLook", v);
+  if (lk) {
+    const run = () => toolLookup();
+    lk.addEventListener("click", run);
+    $("#tWord", v).addEventListener("keydown", ev => { if (ev.key === "Enter") run(); });
+    $("#tSay", v).addEventListener("click", () => {
+      const w = $("#tWord").value.trim();
+      if (!w) { toast("请先输入单词"); return; }
+      speakParts([w]);
+    });
+  }
+  const ps = $("#tParse", v);
+  if (ps) ps.addEventListener("click", toolParse);
+  const pb = $("#tPolishBtn", v);
+  if (pb) pb.addEventListener("click", toolPolish);
+}
+
+async function toolLookup() {
+  const box = $("#tDictRes");
+  const w = $("#tWord").value.trim();
+  if (!w) { toast("请输入要查询的单词"); return; }
+  box.innerHTML = '<div class="small muted">正在查询…</div>';
+  let h = "";
+  try {
+    const data = await lookupDict(w);
+    const e = data[0] || {};
+    const ph = e.phonetic || (e.phonetics || []).map(p => p.text).filter(Boolean)[0] || "";
+    h += '<div class="card"><div class="row between mid"><b style="font-size:18px">' + esc(e.word || w) + "</b>" +
+      '<span class="muted small">' + esc(ph) + "</span></div>";
+    (e.meanings || []).slice(0, 3).forEach(m => {
+      h += '<div class="mt-s"><span class="pill plain">' + esc(m.partOfSpeech || "") + "</span>";
+      h += "<ol class=\"small\" style=\"margin:6px 0 0 18px\">" +
+        (m.definitions || []).slice(0, 3).map(d =>
+          "<li>" + esc(d.definition || "") + (d.example ? '<div class="dim" style="font-style:italic">e.g. ' + esc(d.example) + "</div>" : "") + "</li>").join("") +
+        "</ol></div>";
+    });
+    h += "</div>";
+  } catch (err) {
+    h = '<div class="explain" style="color:var(--warn)">查询失败：' + esc(err.message) + "。请确认拼写正确且网络可用。</div>";
+  }
+  box.innerHTML = h;
+}
+
+function aiMissing(box) {
+  if (hasAI()) return false;
+  box.innerHTML = '<div class="explain" style="color:var(--warn)">该功能需要 AI 支持，请先到「设置」页填写 API Key（OpenAI 兼容接口）。<br>' +
+    '<button class="btn sm primary mt-s" data-go="settings">前往设置</button></div>';
+  bindGo(box);
+  return true;
+}
+
+async function toolParse() {
+  const box = $("#tSentRes");
+  const txt = $("#tSent").value.trim();
+  if (!txt) { toast("请输入要解析的英文句子"); return; }
+  if (aiMissing(box)) return;
+  box.innerHTML = '<div class="small muted">正在解析…</div>';
+  try {
+    const out = await callAI([
+      { role: "system", content: "你是一位大学英语老师，擅长拆解英文长难句。请用简体中文输出，按以下四部分组织：【句子主干】【修饰与从句】【关键语法点】【参考译文】，条理清晰，语言简洁。" },
+      { role: "user", content: txt }
+    ], { temperature: 0.3 });
+    box.innerHTML = '<div class="explain" style="white-space:pre-wrap">' + esc(out) + "</div>";
+  } catch (e) {
+    box.innerHTML = '<div class="explain" style="color:var(--bad)">解析失败：' + esc(e.message) + "</div>";
+  }
+}
+
+async function toolPolish() {
+  const box = $("#tPolishRes");
+  const txt = $("#tPolish").value.trim();
+  if (!txt) { toast("请输入需要润色的内容"); return; }
+  if (aiMissing(box)) return;
+  box.innerHTML = '<div class="small muted">正在润色…</div>';
+  try {
+    const out = await callAI([
+      { role: "system", content: "你是一位英文写作与翻译专家，长期从事 CET-4/6 教学。请用简体中文回答，按【润色后英文】【主要修改点】【更地道的替换表达】三部分输出。若用户输入的是中文，先给出地道英文译文再润色。" },
+      { role: "user", content: txt }
+    ], { temperature: 0.4 });
+    box.innerHTML = '<div class="explain" style="white-space:pre-wrap">' + esc(out) + "</div>";
+  } catch (e) {
+    box.innerHTML = '<div class="explain" style="color:var(--bad)">润色失败：' + esc(e.message) + "</div>";
+  }
+}
+
+/* ---------------------------------------------------------------
+   18. 视图渲染 · 设置
+   --------------------------------------------------------------- */
+const AI_PRESETS = [
+  { name: "DeepSeek", baseUrl: "https://api.deepseek.com/v1", model: "deepseek-chat" },
+  { name: "通义千问", baseUrl: "https://dashscope.aliyuncs.com/compatible-mode/v1", model: "qwen-plus" },
+  { name: "智谱 GLM", baseUrl: "https://open.bigmodel.cn/api/paas/v4", model: "glm-4-flash" },
+  { name: "OpenAI", baseUrl: "https://api.openai.com/v1", model: "gpt-4o-mini" }
+];
+
+function renderSettings() {
+  const v = $("#v-settings");
+  const st = S.settings || {};
+  const pp = planProgress();
+  let h = pageHead({
+    id: "settings",
+    title: "设置",
+    desc: "AI 服务、备考目标与数据管理；所有配置只保存在本机浏览器。",
+    kpis: [
+      { k: "当前风格", v: skinOf(S.skin).short },
+      { k: "AI 状态", v: hasAI() ? "已连接" : "未配置" },
+      { k: "目标分", v: st.targetScore || "—" }
+    ]
+  });
+  h += '<div class="set-grid"><nav class="set-nav">' +
+    '<a data-set-tab="setSkin" class="on">界面风格</a>' +
+    '<a data-set-tab="setAI">AI 服务</a>' +
+    '<a data-set-tab="setGoal">备考目标</a>' +
+    '<a data-set-tab="setData">数据管理</a>' +
+    '<a data-set-tab="setAccount">账号与安全</a>' +
+    ((CLOUD.me || {}).role === "admin" ? '<a data-set-tab="setInvite">邀请码管理</a>' : "") +
+    '<a data-set-tab="setAbout">关于应用</a>' +
+    '</nav><div class="set-main">';
+
+  h += '<div class="card set-pane" id="setSkin"><div class="card-title">🎨 界面风格</div>' +
+    '<p class="small muted">三套视觉语言，选择后立即生效并记住；也可点顶栏圆点，或按 Alt+1/2/3 直选。</p>' +
+    '<div class="skin-grid">' + SKINS.map(s =>
+      '<button class="skin-card" data-skin-pick="' + s.id + '" aria-pressed="' + (S.skin === s.id) + '">' +
+      '<span class="skin-preview sp-' + s.id + '"><i></i><i></i><i></i></span>' +
+      '<span class="sc-b"><b>' + s.name + '</b><span>' + s.desc + '</span></span></button>').join("") +
+    '</div></div>';
+
+  h += '<div class="card set-pane" id="setAI"><div class="card-title">🤖 AI 服务（可选）</div>' +
+    '<p class="small muted">配置后可用于：作文与翻译的智能评分、长难句解析、翻译润色。API Key 仅保存在你本机浏览器（localStorage），不会上传到任何服务器。</p>' +
+    '<div class="row wrap mt-s">' + AI_PRESETS.map(p =>
+      '<button class="chip" data-preset="' + esc(p.name) + '">' + esc(p.name) + "</button>").join("") + "</div>" +
+    '<label class="small" style="display:block;margin-top:12px">接口地址 Base URL</label>' +
+    '<input class="input" id="setBase" placeholder="https://api.deepseek.com/v1" value="' + esc(st.baseUrl || "") + '">' +
+    '<label class="small" style="display:block;margin-top:10px">API Key</label>' +
+    '<input class="input" id="setKey" type="password" placeholder="sk-xxxxxxxx" value="' + esc(st.apiKey || "") + '">' +
+    '<label class="small" style="display:block;margin-top:10px">模型名称</label>' +
+    '<input class="input" id="setModel" placeholder="deepseek-chat" value="' + esc(st.model || "") + '">' +
+    '<div class="row wrap mt"><button class="btn primary" id="setSaveAI">保存 AI 配置</button>' +
+    '<button class="btn" id="setTest">测试连接</button>' +
+    '<button class="btn ghost" id="setClearAI">清除 AI 配置</button></div>' +
+    '<div id="setTestRes" class="mt-s small"></div></div>';
+
+  h += '<div class="card set-pane" id="setGoal"><div class="card-title">🎯 备考目标</div>' +
+    '<label class="small" style="display:block">目标总分（满分 710，及格线 425）</label>' +
+    '<input class="input" id="setTarget" type="number" min="200" max="710" value="' + (st.targetScore || "") + '" placeholder="例如 500">' +
+    '<label class="small" style="display:block;margin-top:10px">考试日期（可选，用于倒计时）</label>' +
+    '<input class="input" id="setDate" type="date" value="' + esc(st.examDate || "") + '">' +
+    '<div class="row mt"><button class="btn primary" id="setSaveGoal">保存目标</button></div>' +
+    '<p class="tiny dim mt-s">' + (S.plan ? "已生成备考计划，目标分修改后将在下次诊断时同步更新。" : "完成水平诊断后会自动生成备考计划。") + "</p></div>";
+
+  h += '<div class="card set-pane" id="setData"><div class="card-title">💾 数据管理</div>' +
+    '<p class="small muted">学习数据会实时同步到你的账号（服务器与本机各存一份）。更换设备登录同一账号即可继续，也可导出 JSON 做额外备份。</p>' +
+    '<div class="row wrap mt-s"><button class="btn primary" id="setExport">导出全部数据（JSON）</button>' +
+    '<label class="btn" style="cursor:pointer">导入数据<input type="file" id="setImport" accept=".json,application/json" style="display:none"></label>' +
+    '<button class="btn danger" id="setWipe">清空全部数据</button></div>' +
+    '<div class="mt-s small muted">当前：诊断记录 ' + (S.history || []).length + " 次 · 错题 " + S.wrong.length +
+    " 道 · 计划进度 " + pp.pct + "%</div></div>";
+
+  const me = CLOUD.me || {};
+  h += '<div class="card set-pane" id="setAccount"><div class="card-title">👤 账号与安全</div>' +
+    '<div class="small" style="line-height:2">登录账号：<b>' + esc(me.username || "—") + '</b>' +
+    ' · 角色：' + (me.role === "admin" ? "管理员" : "普通用户") +
+    (me.email ? ' · 邮箱：' + esc(me.email) : "") + "</div>" +
+    '<p class="tiny dim" style="margin-top:4px">学习记录已开启云同步：每次修改会先存本机，再自动上传到服务器（' +
+    (CLOUD.lost ? '<span style="color:var(--warn)">当前登录已过期，请重新登录后继续同步</span>' : "同步正常") + "）。</p>" +
+    '<label class="small" style="display:block;margin-top:12px">原密码</label>' +
+    '<input class="input" id="pwdOld" type="password" autocomplete="current-password">' +
+    '<label class="small" style="display:block;margin-top:10px">新密码（至少 8 位，含字母与数字）</label>' +
+    '<input class="input" id="pwdNew" type="password" autocomplete="new-password">' +
+    '<label class="small" style="display:block;margin-top:10px">确认新密码</label>' +
+    '<input class="input" id="pwdNew2" type="password" autocomplete="new-password">' +
+    '<div class="row wrap mt"><button class="btn primary" id="pwdSave">修改密码</button>' +
+    '<button class="btn" id="btnRelogin">重新登录</button>' +
+    '<button class="btn danger" id="btnLogout">退出登录</button></div>' +
+    '<div id="pwdRes" class="mt-s small"></div>' +
+    '<p class="tiny dim mt-s">退出登录后本机学习记录仍会保留；换设备登录同一账号会自动恢复云端记录。</p></div>';
+
+  if (me.role === "admin") {
+    h += '<div class="card set-pane" id="setInvite"><div class="card-title">🎟️ 邀请码管理（管理员）</div>' +
+      '<p class="small muted">注册新账号需要邀请码。每个邀请码一次性使用，可设置有效期；生成后发给要邀请的人即可。</p>' +
+      '<div class="row wrap mt-s">' +
+      '<select class="input" id="invDays" style="width:auto"><option value="7">7 天内有效</option><option value="30" selected>30 天内有效</option><option value="">永久有效</option></select>' +
+      '<button class="btn primary" id="invGen">生成新邀请码</button>' +
+      '<button class="btn" id="invRefresh">刷新列表</button></div>' +
+      '<div id="invNew" class="mt-s" style="display:none"></div>' +
+      '<div id="invList" class="mt-s small muted">正在加载邀请码列表…</div>' +
+      '<p class="tiny dim mt-s">邀请码绑定你的管理员账号，谁使用过都有记录。</p></div>';
+  }
+
+  h += '<div class="card set-pane" id="setAbout"><div class="card-title">ℹ️ 关于本应用</div>' +
+    '<ul class="small muted" style="margin:6px 0 0 18px;line-height:1.9">' +
+    "<li>需要登录的私人学习站：账号由管理员发放邀请码注册，未登录无法访问任何学习内容。</li>" +
+    "<li>听力音频由浏览器语音合成（Web Speech API）朗读，建议使用 Chrome / Edge / Safari。</li>" +
+    "<li>词典释义来自公开接口 dictionaryapi.dev，需联网使用。</li>" +
+    "<li>AI 功能需自备 API Key，按调用量由服务商计费。</li>" +
+    "<li>评分口径参考四级官方分值：听力 248.5 / 阅读 248.5 / 写作 106.5 / 翻译 106.5，总分 710。</li>" +
+    "</ul>" +
+    '<p class="tiny dim mt-s">当前风格：' + skinOf(S.skin).name + ' · 版本 v1.0 · 数据键名 ' + STORE_KEY + "</p></div>";
+
+  h += "</div></div>";
+  v.innerHTML = h;
+  const setPanes = $$(".set-pane", v), setTabs = $$("[data-set-tab]", v);
+  const showPane = (sid, silent) => {
+    const id2 = $("#" + sid, v) ? sid : "setSkin";
+    SET_TAB = id2;
+    setPanes.forEach(p => p.classList.toggle("on", p.id === id2));
+    setTabs.forEach(t => t.classList.toggle("on", t.dataset.setTab === id2));
+    if (!silent) setRouteHash("settings", id2 === "setSkin" ? "" : id2);
+  };
+  setTabs.forEach(t => t.addEventListener("click", () => showPane(t.dataset.setTab)));
+  showPane(SET_TAB, true);
+  $$("[data-skin-pick]", v).forEach(b => b.addEventListener("click", () => setSkin(b.dataset.skinPick)));
+
+  $$("[data-preset]", v).forEach(b => b.addEventListener("click", () => {
+    const p = AI_PRESETS.find(x => x.name === b.dataset.preset);
+    if (!p) return;
+    $("#setBase").value = p.baseUrl;
+    $("#setModel").value = p.model;
+    toast("已填入 " + p.name + " 的接口地址与模型，请补充 API Key");
+  }));
+
+  $("#setSaveAI").addEventListener("click", () => {
+    st_apply({ baseUrl: $("#setBase").value.trim(), apiKey: $("#setKey").value.trim(), model: $("#setModel").value.trim() });
+    renderSettings();
+  });
+  $("#setClearAI").addEventListener("click", () => {
+    st_apply({ baseUrl: "", apiKey: "", model: "" });
+    renderSettings();
+  });
+  $("#setTest").addEventListener("click", testAI);
+  $("#setSaveGoal").addEventListener("click", () => {
+    st_apply({ targetScore: Number($("#setTarget").value) || null, examDate: $("#setDate").value || "" });
+    renderSettings();
+  });
+  $("#setExport").addEventListener("click", () => {
+    downloadText("CET4-学习数据-" + today() + ".json", JSON.stringify(S, null, 2), "application/json;charset=utf-8");
+    toast("已导出数据文件");
+  });
+  $("#setImport").addEventListener("change", ev => {
+    const f = ev.target.files && ev.target.files[0];
+    if (f) importAll(f);
+  });
+  $("#setWipe").addEventListener("click", () => {
+    if (!confirm("确定要清空全部本地数据吗？诊断记录、计划进度与错题本都会被删除，且无法恢复。")) return;
+    try { localStorage.removeItem(STORE_KEY); } catch (e) {}
+    S = clone(DEFAULT_STATE);
+    save(); applyTheme(); renderSettings(); buildNav();
+    toast("已清空全部本地数据");
+  });
+
+  $("#btnLogout").addEventListener("click", () => {
+    if (confirm("确认退出登录？本机学习记录会保留，下次登录可继续。")) doLogout();
+  });
+  $("#btnRelogin").addEventListener("click", () => {
+    saveLocal();
+    location.replace("login.html?next=" + encodeURIComponent(location.pathname + "#settings/setAccount"));
+  });
+  $("#pwdSave").addEventListener("click", async () => {
+    const o = $("#pwdOld").value, n = $("#pwdNew").value, n2 = $("#pwdNew2").value;
+    const box = $("#pwdRes");
+    const warn = m => { box.innerHTML = '<span style="color:var(--warn)">' + esc(m) + "</span>"; };
+    if (!o || !n) return warn("请填写原密码与新密码。");
+    if (n !== n2) return warn("两次输入的新密码不一致。");
+    if (n.length < 8 || !/[A-Za-z]/.test(n) || !/\d/.test(n)) return warn("新密码至少 8 位，且需同时包含字母和数字。");
+    if (n === o) return warn("新密码不能与原密码相同。");
+    box.innerHTML = '<span class="muted">正在提交…</span>';
+    const r = await api("/api/change-password", { method: "POST", body: { oldPassword: o, newPassword: n } });
+    if (r.status === 200) {
+      box.innerHTML = '<span style="color:var(--ok)">密码已修改，正在跳转重新登录…</span>';
+      CLOUD.lost = true;
+      saveLocal();
+      setTimeout(() => {
+        api("/api/logout", { method: "POST", body: {} }).finally(() => { setToken(""); location.replace("login.html?changed=1"); });
+      }, 800);
+    } else {
+      warn((r.data && r.data.message) || "修改失败，请稍后重试");
+    }
+  });
+
+  // 邀请码管理（仅 admin，面板存在时才绑定）
+  if ($("#invGen")) {
+    $("#invGen").addEventListener("click", async () => {
+      const btn = $("#invGen");
+      const days = Number($("#invDays").value);
+      const box = $("#invNew");
+      btn.disabled = true;
+      btn.textContent = "生成中…";
+      try {
+        const r = await api("/api/invite", { method: "POST", body: days > 0 ? { expiresIn: days } : {} });
+        if (r.status === 200 && r.data && r.data.data && r.data.data.code) {
+          const c = r.data.data.code;
+          const exp = r.data.data.expiresAt ? new Date(r.data.data.expiresAt).toLocaleString("zh-CN", { hour12: false }) : "永久";
+          box.style.display = "block";
+          box.innerHTML = '<div class="card" style="padding:12px 16px"><span class="small muted">新邀请码（' + esc(exp) + ' 前有效）：</span><br>' +
+            '<b style="font-size:1.25em;letter-spacing:1.5px;font-family:monospace">' + esc(c) + '</b> ' +
+            '<button class="btn ghost" id="invCopy" style="margin-left:8px">复制</button></div>';
+          $("#invCopy").addEventListener("click", function () {
+            const done = () => { this.textContent = "已复制"; };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(c).then(done).catch(() => fallbackCopy(c, done));
+            } else fallbackCopy(c, done);
+          });
+          loadInviteList();
+        } else {
+          box.style.display = "block";
+          box.innerHTML = '<span style="color:var(--warn)">' + esc((r.data && r.data.message) || "生成失败，请稍后重试") + "</span>";
+        }
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "生成新邀请码";
+      }
+    });
+    $("#invRefresh").addEventListener("click", () => loadInviteList());
+    loadInviteList();
+  }
+}
+
+/* 全局退出登录：顶栏按钮与设置页共用（存本机 -> 使 token 失效 -> 回登录页） */
+function doLogout() {
+  saveLocal();
+  setToken("");
+  api("/api/logout", { method: "POST", body: {} }).finally(() => location.replace("login.html"));
+}
+
+function fallbackCopy(text, done) {
+  const ta = document.createElement("textarea");
+  ta.value = text;
+  ta.style.position = "fixed";
+  ta.style.opacity = "0";
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand("copy"); } catch (e) { /* 忽略 */ }
+  ta.remove();
+  if (done) done();
+}
+
+async function loadInviteList() {
+  const box = $("#invList");
+  if (!box) return;
+  box.textContent = "正在加载邀请码列表…";
+  let r;
+  try {
+    r = await api("/api/invites");
+  } catch (e) {
+    box.textContent = "邀请码列表加载失败，请稍后重试。";
+    return;
+  }
+  if (r.status !== 200 || !r.data || !r.data.data) {
+    box.textContent = (r.data && r.data.message) || "邀请码列表加载失败。";
+    return;
+  }
+  const rows = r.data.data || [];
+  if (!rows.length) { box.textContent = "还没有任何邀请码，点上方按钮生成第一个。"; return; }
+  const LABEL = { active: "未使用", used: "已使用" };
+  const fmt = d => d ? new Date(d).toLocaleString("zh-CN", { hour12: false }) : "—";
+  box.innerHTML = '<table style="width:100%;border-collapse:collapse;font-size:12.5px">' +
+    '<tr style="text-align:left"><th style="padding:4px 8px">邀请码</th><th>状态</th><th>创建时间</th><th>有效期至</th><th>使用者</th></tr>' +
+    rows.map(x => {
+      const expired = x.status === "active" && x.expires_at && Date.parse(x.expires_at) < Date.now();
+      const s = expired ? "已过期" : (LABEL[x.status] || x.status);
+      return '<tr style="border-top:1px solid rgba(128,128,128,.25)">' +
+        '<td style="padding:4px 8px;font-family:monospace">' + esc(x.code) + "</td>" +
+        "<td>" + s + "</td><td>" + fmt(x.created_at) + "</td><td>" + fmt(x.expires_at) + "</td>" +
+        "<td>" + esc(x.used_by || "—") + "</td></tr>";
+    }).join("") + "</table>";
+}
+
+function st_apply(patch) {
+  S.settings = Object.assign({}, S.settings, patch);
+  save();
+  toast("已保存");
+}
+
+async function testAI() {
+  const box = $("#setTestRes");
+  st_apply({ baseUrl: $("#setBase").value.trim(), apiKey: $("#setKey").value.trim(), model: $("#setModel").value.trim() });
+  if (!hasAI()) { box.innerHTML = '<span style="color:var(--warn)">请先填写 API Key。</span>'; return; }
+  box.innerHTML = '<span class="muted">正在测试连接…</span>';
+  try {
+    const out = await callAI([{ role: "user", content: "请只回复：OK" }], { temperature: 0, timeout: 25000 });
+    box.innerHTML = '<span style="color:var(--ok)">连接成功，模型回复：' + esc(out.slice(0, 60)) + "</span>";
+  } catch (e) {
+    box.innerHTML = '<span style="color:var(--bad)">连接失败：' + esc(e.message) + "</span>";
+  }
+}
+
+function importAll(file) {
+  const fr = new FileReader();
+  fr.onload = () => {
+    try {
+      const o = JSON.parse(fr.result);
+      if (!o || typeof o !== "object") throw new Error("bad");
+      S = Object.assign(clone(DEFAULT_STATE), o, {
+        settings: Object.assign(clone(DEFAULT_STATE.settings), o.settings || {}),
+        stats: Object.assign(clone(DEFAULT_STATE.stats), o.stats || {}),
+        wrong: Array.isArray(o.wrong) ? o.wrong : [],
+        history: Array.isArray(o.history) ? o.history : [],
+        aiBank: normAIBank(o.aiBank),
+        aiNotes: normAINotes(o.aiNotes),
+        aiUpdates: Array.isArray(o.aiUpdates) ? o.aiUpdates : []
+      });
+      save(); applyTheme(); buildNav();
+      toast("数据导入成功 🎉");
+      go("home");
+    } catch (e) {
+      toast("导入失败：文件格式不正确");
+    }
+  };
+  fr.onerror = () => toast("读取文件失败");
+  fr.readAsText(file);
+}
+
+/* ---------------------------------------------------------------
+   18.5 AI 题库更新（调用已接入的 AI 接口扩充与完善题库）
+   --------------------------------------------------------------- */
+const AI_MODS = [
+  { id: "listening", name: "听力", icon: "🎧" },
+  { id: "reading", name: "阅读", icon: "📖" },
+  { id: "vocabulary", name: "词汇", icon: "🔤" },
+  { id: "writing", name: "写作", icon: "✍️" },
+  { id: "translation", name: "翻译", icon: "🔄" }
+];
+let AIMods = ["listening", "reading", "vocabulary"];
+let AICount = 2;
+let AIPolish = false;
+let AIRun = null;
+let aiBusy = false;
+
+function aiModName(id) {
+  if (id === "polish") return "解析优化";
+  const m = AI_MODS.find(x => x.id === id);
+  return m ? m.name : (BANK_LABEL[id] || "题目");
+}
+function aiBankArr(mod) { return (S && S.aiBank && S.aiBank[mod]) || []; }
+
+// 合并题库：内置题库 + AI 生成题库（AI 题追加在后）
+function bankOf(mod) { return (BANK[mod] || []).concat(aiBankArr(mod)); }
+
+// 统计“题目条数”：听力/阅读按小题计，词汇按题计，写作/翻译按题计
+function countQ(mod, arr) {
+  const subj = (mod === "writing" || mod === "translation");
+  return (arr || []).reduce((a, g) => a + (subj
+    ? (g && g.prompt ? 1 : 0)
+    : (g && g.questions ? g.questions.length : (g && g.stem ? 1 : 0))), 0);
+}
+function aiBankStats() {
+  const r = { groups: 0, questions: 0, byMod: {} };
+  AI_MODS.forEach(m => {
+    const arr = aiBankArr(m.id);
+    const q = countQ(m.id, arr);
+    r.byMod[m.id] = { groups: arr.length, questions: q };
+    r.groups += arr.length;
+    r.questions += q;
+  });
+  return r;
+}
+function aiNoteCount() { return Object.keys(S.aiNotes || {}).length; }
+
+// 题干归一化：用于查重与“AI 解析”匹配
+function normStem(s) {
+  return String(s == null ? "" : s).toLowerCase()
+    .replace(/_{2,}/g, " ")
+    .replace(/[^a-z0-9\u4e00-\u9fa5]+/g, " ")
+    .trim();
+}
+// 解析优先使用 AI 优化版本（更长者胜出）
+function qExp(q) {
+  if (!q) return "暂无解析";
+  const raw = String(q.exp || "").trim();
+  const ai = (S && S.aiNotes) ? S.aiNotes[normStem(q.stem)] : "";
+  if (ai && ai.length > raw.length) return ai;
+  return raw || "暂无解析";
+}
+
+/* ---------- 从模型输出中提取并严格校验 JSON ---------- */
+function extractJSON(text) {
+  let t = String(text || "").trim();
+  t = t.replace(/^```[a-zA-Z]*\s*/, "").replace(/```\s*$/, "").trim();
+  const s = t.indexOf("{"), e = t.lastIndexOf("}");
+  if (s < 0 || e <= s) throw new Error("返回内容不是 JSON 对象");
+  try { return JSON.parse(t.slice(s, e + 1)); }
+  catch (err) { throw new Error("JSON 解析失败：" + String(err.message).slice(0, 60)); }
+}
+
+function pickChoice(q, seen, existing) {
+  if (!q || typeof q !== "object") return null;
+  const stem = String(q.stem || "").trim();
+  if (stem.length < 8) return null;
+  const opts = (Array.isArray(q.opts) ? q.opts : []).map(o => String(o == null ? "" : o).trim());
+  if (opts.length < 3 || opts.some(o => !o)) return null;
+  if (new Set(opts.map(o => o.toLowerCase())).size !== opts.length) return null;
+  const ans = Number(q.ans);
+  if (!Number.isInteger(ans) || ans < 0 || ans >= opts.length) return null;
+  const key = normStem(stem);
+  if (!key || seen.has(key) || existing.has(key)) return null;
+  seen.add(key);
+  return { stem: stem, opts: opts.slice(0, 6), ans: ans, exp: String(q.exp || "").trim(), ai: true };
+}
+
+function pickGroup(mod, g, seen, existing) {
+  if (!g || typeof g !== "object") return null;
+  if (mod === "listening") {
+    const script = String(g.script || "").trim();
+    if (script.split(/\s+/).filter(Boolean).length < 40) return null;
+    const qs = (Array.isArray(g.questions) ? g.questions : []).map(q => pickChoice(q, seen, existing)).filter(Boolean);
+    if (qs.length < 2) return null;
+    return { title: String(g.title || "AI 生成 · 听力训练").trim().slice(0, 60), script: script, questions: qs, ai: true };
+  }
+  if (mod === "reading") {
+    const passage = String(g.passage || "").trim();
+    if (passage.split(/\s+/).filter(Boolean).length < 90) return null;
+    const qs = (Array.isArray(g.questions) ? g.questions : []).map(q => pickChoice(q, seen, existing)).filter(Boolean);
+    if (qs.length < 2) return null;
+    return { title: String(g.title || "AI 生成 · 仔细阅读").trim().slice(0, 60), passage: passage, questions: qs, ai: true };
+  }
+  if (mod === "writing") {
+    const prompt = String(g.prompt || "").trim();
+    const sample = String(g.sample || "").trim();
+    if (prompt.length < 40) return null;
+    if (sample.split(/\s+/).filter(Boolean).length < 60) return null;
+    const key = normStem(prompt).slice(0, 80);
+    if (!key || seen.has(key) || existing.has(key)) return null;
+    seen.add(key);
+    let minW = Number(g.minWords) || 120, maxW = Number(g.maxWords) || 180;
+    if (!(minW > 0) || !(maxW > minW)) { minW = 120; maxW = 180; }
+    return {
+      prompt: prompt, minWords: Math.round(minW), maxWords: Math.round(maxW), sample: sample,
+      tips: (Array.isArray(g.tips) ? g.tips : []).map(t => String(t).trim()).filter(Boolean).slice(0, 6), ai: true
+    };
+  }
+  if (mod === "translation") {
+    const prompt = String(g.prompt || "").trim();
+    const reference = String(g.reference || "").trim();
+    if (prompt.replace(/[^\u4e00-\u9fa5]/g, "").length < 30) return null;
+    if (reference.split(/\s+/).filter(Boolean).length < 40) return null;
+    const key = normStem(prompt).slice(0, 80);
+    if (!key || seen.has(key) || existing.has(key)) return null;
+    seen.add(key);
+    return {
+      prompt: prompt, reference: reference,
+      keyPoints: (Array.isArray(g.keyPoints) ? g.keyPoints : []).map(t => String(t).trim()).filter(Boolean).slice(0, 6), ai: true
+    };
+  }
+  return null;
+}
+
+// 已有题库的去重键（题干 / 作文题目 / 翻译原文）
+function existingKeys(mod) {
+  const set = new Set();
+  bankOf(mod).forEach(g => {
+    if (!g) return;
+    if (g.questions) g.questions.forEach(q => { const k = normStem(q.stem); if (k) set.add(k); });
+    else if (g.stem) { const k = normStem(g.stem); if (k) set.add(k); }
+    else if (g.prompt) { const k = normStem(g.prompt).slice(0, 80); if (k) set.add(k); }
+  });
+  return set;
+}
+
+function validateAIItems(mod, list) {
+  const seen = new Set();
+  const existing = existingKeys(mod);
+  const items = [];
+  let skipped = 0;
+  (Array.isArray(list) ? list : []).forEach(raw => {
+    const ok = (mod === "vocabulary") ? pickChoice(raw, seen, existing) : pickGroup(mod, raw, seen, existing);
+    if (ok) items.push(ok); else skipped++;
+  });
+  return { items: items, skipped: skipped };
+}
+
+/* ---------- 提示词构造 ---------- */
+function avoidText(mod, n) {
+  const keys = Array.from(existingKeys(mod)).slice(0, n || 30);
+  return keys.map(k => "- " + k.slice(0, 70)).join("\n");
+}
+
+function aiUpdateMessages(mod, count) {
+  let need = "", schema = "";
+  if (mod === "listening") {
+    need = "请生成 " + count + " 组全新的大学英语四级听力训练材料（短对话或短篇新闻），每组 2 道题。";
+    schema = '{"items":[{"title":"组的标题（中文）","script":"80–130 词的英文听力原文","questions":[{"stem":"英文题干","opts":["选项A","选项B","选项C","选项D"],"ans":0,"exp":"中文解析，并引用原文关键句"}]}]}';
+  } else if (mod === "reading") {
+    need = "请生成 " + count + " 篇全新的四级仔细阅读材料，每篇 3 道题。";
+    schema = '{"items":[{"title":"篇的标题（中文）","passage":"180–260 词的英文短文","questions":[{"stem":"英文题干","opts":["选项A","选项B","选项C","选项D"],"ans":0,"exp":"中文解析，并引用原文依据"}]}]}';
+  } else if (mod === "vocabulary") {
+    need = "请生成 " + count + " 道全新的四级词汇与固定搭配选择题。";
+    schema = '{"items":[{"stem":"题干，用 ___ 表示空格","opts":["选项A","选项B","选项C","选项D"],"ans":0,"exp":"中文解析：正确词义与搭配，并说明其他选项为何不合适"}]}';
+  } else if (mod === "writing") {
+    need = "请生成 " + count + " 道全新的四级写作题目（附参考范文与中文写作提示）。";
+    schema = '{"items":[{"prompt":"Directions: 英文作文题目，含字数要求","minWords":120,"maxWords":180,"sample":"140–170 词的英文参考范文","tips":["中文写作提示 1","中文写作提示 2"]}]}';
+  } else {
+    need = "请生成 " + count + " 道全新的四级汉译英题目（附参考译文与要点）。";
+    schema = '{"items":[{"prompt":"一段 120–160 字的中文段落（文化/社会/科技主题）","reference":"对应的英文参考译文","keyPoints":["中文要点：英文表达"]}]}';
+  }
+  const rules = [
+    "只输出一个 JSON 对象，不要 Markdown 代码块、不要解释、不要任何多余文字。",
+    "结构必须严格为：" + schema,
+    "客观题每题 4 个选项、只有 1 个正确答案，ans 为正确选项下标（0 表示第一个选项）。",
+    "干扰项必须与题干相关但不能也正确；同一题内选项不得重复。",
+    "语言难度贴近四级真题，用词常见，避免生僻词与超纲内容。",
+    "解析用中文，写得具体（说明依据、搭配或干扰项问题）。"
+  ].join("\n");
+  const avoid = avoidText(mod);
+  return [
+    { role: "system", content: "你是大学英语四级（CET-4）资深命题专家，只输出严格合法的 JSON。" },
+    {
+      role: "user",
+      content: need + "\n输出要求：\n" + rules +
+        (avoid ? "\n注意：不要与下列已有题目重复（题干或话题）：\n" + avoid : "")
+    }
+  ];
+}
+
+function polishMessages(batch) {
+  const payload = batch.map((x, i) => ({
+    n: i + 1, mod: aiModName(x.mod), stem: x.q.stem,
+    opts: x.q.opts || [], ans: x.q.ans, oldExp: String(x.q.exp || "")
+  }));
+  return [
+    { role: "system", content: "你是大学英语四级（CET-4）英语教师，只输出严格合法的 JSON。" },
+    {
+      role: "user",
+      content: "下面给出若干道四级客观题。请为每题重写一段更详细、更有教学价值的中文解析。" +
+        "\n要求：1) 说明正确答案的依据（听力/阅读要点出原文关键句或信息，词汇题说明词义与搭配）；" +
+        "2) 扼要说明主要干扰项为何不对；3) 每题解析 60–160 字；4) stem 必须与输入原文完全一致，不要改写。" +
+        '\n只输出 JSON：{"notes":[{"stem":"原题干原文","exp":"新的中文解析"}]}' +
+        "\n\n题目：" + JSON.stringify(payload)
+    }
+  ];
+}
+/* ---------- 更新流程 ---------- */
+async function runBankUpdate() {
+  if (aiBusy) return;
+  if (!hasAI()) { toast("请先在「设置」中配置 AI 接口与 API Key"); go("settings"); return; }
+  const mods = AIMods.slice();
+  if (!mods.length) { toast("请至少选择一个更新范围"); return; }
+  const count = clamp(Number(AICount) || 1, 1, 5);
+  const polish = AIPolish;
+
+  aiBusy = true;
+  AIRun = { running: true, total: mods.length, index: 0, currentMod: mods[0], log: [], note: "" };
+  rerenderAIBank();
+
+  let addedQ = 0, addedG = 0, failed = 0;
+  for (let i = 0; i < mods.length; i++) {
+    const mod = mods[i];
+    AIRun.index = i; AIRun.currentMod = mod; AIRun.note = "";
+    rerenderAIBank();
+    try {
+      const txt = await callAI(aiUpdateMessages(mod, count), { temperature: 0.7, timeout: 180000 });
+      const raw = extractJSON(txt);
+      const list = Array.isArray(raw) ? raw : (Array.isArray(raw.items) ? raw.items : []);
+      const res = validateAIItems(mod, list);
+      if (!res.items.length) throw new Error("生成内容未通过校验（结构不合法、选项无效或与现有题目重复）");
+      S.aiBank[mod] = aiBankArr(mod).concat(res.items);
+      const q = countQ(mod, res.items);
+      addedQ += q; addedG += res.items.length;
+      AIRun.log.push({ mod: mod, ok: true, added: q, groups: res.items.length, skipped: res.skipped });
+      save();
+    } catch (e) {
+      failed++;
+      AIRun.log.push({ mod: mod, ok: false, msg: (e && e.message) || String(e) });
+    }
+    rerenderAIBank();
+  }
+
+  if (polish) {
+    AIRun.note = "准备优化解析…";
+    rerenderAIBank();
+    try {
+      AIRun.polished = await runPolish(mods);
+    } catch (e) {
+      AIRun.log.push({ mod: "polish", ok: false, msg: (e && e.message) || String(e) });
+    }
+  }
+
+  AIRun.running = false;
+  AIRun.note = "";
+  aiBusy = false;
+  S.aiUpdates.unshift({
+    date: today(), time: new Date().toTimeString().slice(0, 5),
+    mods: mods.slice(), added: addedQ, groups: addedG, failed: failed, polished: AIRun.polished || 0
+  });
+  S.aiUpdates = S.aiUpdates.slice(0, 20);
+  save();
+  rerenderAIBank();
+  toast(addedQ
+    ? "题库已更新：新增 " + addedQ + " 道题" + (AIRun.polished ? "，优化 " + AIRun.polished + " 条解析" : "")
+    : "本次未新增题目，请查看更新日志");
+}
+
+// 用 AI 重写现有题目解析（更详细），写入 S.aiNotes 而不改动内置题库
+async function runPolish(mods) {
+  const targets = [];
+  mods.forEach(mod => {
+    bankOf(mod).forEach(g => {
+      if (g && g.questions) g.questions.forEach(q => targets.push({ mod: mod, q: q }));
+      else if (g && g.stem) targets.push({ mod: mod, q: g });
+    });
+  });
+  const picked = targets.filter(x => {
+    const cur = (S.aiNotes && S.aiNotes[normStem(x.q.stem)]) || "";
+    return cur.length < String(x.q.exp || "").length + 20;
+  }).slice(0, 24);
+  if (!picked.length) {
+    AIRun.log.push({ mod: "polish", ok: true, added: 0, note: "现有题目解析已足够详细，无需重写" });
+    rerenderAIBank();
+    return 0;
+  }
+  let total = 0;
+  for (let i = 0; i < picked.length; i += 6) {
+    const batch = picked.slice(i, i + 6);
+    AIRun.note = "正在优化解析（" + Math.min(i + 6, picked.length) + "/" + picked.length + "）";
+    rerenderAIBank();
+    const txt = await callAI(polishMessages(batch), { temperature: 0.4, timeout: 120000 });
+    const raw = extractJSON(txt);
+    const notes = Array.isArray(raw.notes) ? raw.notes : [];
+    let hit = 0;
+    notes.forEach(nt => {
+      const k = normStem(nt && nt.stem);
+      const v = String((nt && nt.exp) || "").trim();
+      if (k && v.length >= 20) { S.aiNotes[k] = v; hit++; }
+    });
+    total += hit;
+    save();
+    AIRun.log.push({ mod: "polish", ok: true, added: 0, note: "解析优化成功 " + hit + "/" + batch.length + " 题" });
+    rerenderAIBank();
+  }
+  return total;
+}
+
+function clearAIExtras() {
+  const st = aiBankStats();
+  const notes = aiNoteCount();
+  if (!st.questions && !notes) { toast("当前没有 AI 生成的内容"); return; }
+  if (!confirm("确定清空全部 AI 生成内容吗？\n将删除 " + st.questions + " 道 AI 题目与 " + notes + " 条 AI 优化解析，内置题库不受影响。")) return;
+  S.aiBank = clone(DEFAULT_STATE.aiBank);
+  S.aiNotes = {};
+  save();
+  rerenderAIBank();
+  toast("已清空 AI 生成内容");
+}
+
+/* ---------- 面板渲染 ---------- */
+function aiUnitHint() {
+  return "1 份 = 听力 1 组（2 题）/ 阅读 1 篇（3 题）/ 词汇、写作、翻译 1 题。每个模块一次请求，通常 10–40 秒。";
+}
+
+function renderAIBank() {
+  const st = aiBankStats();
+  let h = '<div class="card"><div class="row between mid wrap"><div class="card-title" style="margin:0">🤖 AI 题库更新</div>' +
+    '<span class="pill ' + (hasAI() ? "ok" : "warn") + '">' +
+    (hasAI() ? "已接入：" + esc(S.settings.model || "默认模型") : "未配置 AI") + "</span></div>" +
+    '<p class="small muted mt-s">用已接入的 AI 接口按四级真题风格出题。生成内容会先经过结构校验与去重，通过后自动并入<b>专项练习</b>与<b>限时模考</b>；也可让 AI 把现有题目的解析改写得更有教学价值。</p>' +
+    '<div class="explain mt"><b>当前 AI 题库：</b>' + st.questions + " 道题（" + st.groups + " 组/篇），AI 优化解析 " +
+    aiNoteCount() + " 条。内置题库不会被打乱，AI 内容可随时一键清空。</div>";
+
+  if (!hasAI()) {
+    h += '<div class="hint mt">尚未配置 AI 接口。请到「设置 → AI 服务」填写接口地址、模型与 API Key（支持 DeepSeek / 通义千问 / 智谱 GLM 等 OpenAI 兼容服务）。</div>' +
+      '<div class="row mt-l"><button class="btn primary" data-go="settings">前往设置</button></div></div>';
+    return h + aiBankPreviewHTML() + aiUpdateHistoryHTML();
+  }
+
+  h += '<div class="mt"><b class="small">① 更新范围（可多选）</b><div class="row wrap mt-s">' +
+    AI_MODS.map(m => '<button class="chip ' + (AIMods.indexOf(m.id) >= 0 ? "on" : "") + '" data-aimod="' + m.id + '">' +
+      m.icon + " " + m.name + (aiBankArr(m.id).length ? " · AI " + countQ(m.id, aiBankArr(m.id)) : "") + "</button>").join("") +
+    "</div></div>";
+
+  h += '<div class="mt"><b class="small">② 每个模块生成数量</b><div class="row wrap mt-s">' +
+    [1, 2, 3, 4, 5].map(n => '<button class="chip ' + (AICount === n ? "on" : "") + '" data-aicount="' + n + '">' + n + " 份</button>").join("") +
+    '</div><p class="tiny dim" style="margin-top:6px">' + aiUnitHint() + "</p></div>";
+
+  h += '<div class="mt"><b class="small">③ 附加选项</b>' +
+    '<label class="row mid mt-s" style="gap:8px;cursor:pointer;align-items:flex-start">' +
+    '<input type="checkbox" id="aiPolish"' + (AIPolish ? " checked" : "") + ">" +
+    '<span class="small">同时用 AI 重写现有题目的解析（更详细，会额外消耗调用额度；内置题原文不受影响）</span></label></div>';
+
+  h += '<div class="row wrap mt-l"><button class="btn primary lg" id="aiUpdate"' + (aiBusy ? " disabled" : "") + ">" +
+    (aiBusy ? '<span class="loader"></span> 正在更新题库…' : "🔄 更新并完善题库") + "</button>" +
+    '<button class="btn danger" id="aiClear">清空 AI 生成内容</button></div>';
+
+  h += '<div id="aiStatus" class="mt">' + aiStatusHTML() + "</div></div>";
+  return h + aiBankPreviewHTML() + aiUpdateHistoryHTML();
+}
+
+function aiStatusHTML() {
+  if (!AIRun || (!AIRun.log.length && !AIRun.running)) return "";
+  const head = AIRun.running
+    ? "正在进行：" + esc(aiModName(AIRun.currentMod)) + "（第 " + (AIRun.index + 1) + "/" + AIRun.total + " 个模块）" +
+      (AIRun.note ? " · " + esc(AIRun.note) : "")
+    : "上次更新结果";
+  const rows = AIRun.log.map(x => x.ok
+    ? '<div class="logitem ok">' + esc(aiModName(x.mod)) + "：" +
+      (x.added ? "新增 " + x.added + " 道题" + (x.groups ? "（" + x.groups + " 组/篇）" : "") : "未新增") +
+      (x.skipped ? "，跳过 " + x.skipped + " 条无效或重复内容" : "") + (x.note ? "，" + esc(x.note) : "") + "</div>"
+    : '<div class="logitem bad">' + esc(aiModName(x.mod)) + "：失败 —— " + esc(x.msg) + "</div>").join("");
+  return '<div class="card" style="padding:14px 16px"><div class="small"><b>' + head + "</b></div>" + rows + "</div>";
+}
+
+function aiBankPreviewHTML() {
+  if (!aiBankStats().questions) return "";
+  let h = '<div class="card mt"><div class="card-title">📚 AI 生成内容预览</div>' +
+    '<p class="tiny dim">点击展开查看题目、答案与解析。这些题目已可用在专项练习中。</p>';
+  AI_MODS.forEach(m => {
+    const arr = aiBankArr(m.id);
+    if (!arr.length) return;
+    h += '<details class="mt-s"><summary class="small"><b>' + m.icon + " " + m.name + "</b>（" +
+      countQ(m.id, arr) + " 题 / " + arr.length + " 组·篇）</summary>";
+    arr.forEach((g, gi) => {
+      if (m.id === "writing" || m.id === "translation") {
+        h += '<div class="explain mt-s"><b>' + (gi + 1) + ". </b>" + esc(g.prompt || "") + "</div>";
+      } else if (g.questions) {
+        if (g.title) h += '<div class="tiny dim mt-s">' + esc(g.title) + "</div>";
+        g.questions.forEach((q, qi) => {
+          h += '<div class="explain mt-s"><b>' + (qi + 1) + ". " + esc(q.stem) + "</b>" +
+            '<div class="small muted mt-s">' + q.opts.map((o, oi) => String.fromCharCode(65 + oi) + ". " + esc(o)).join("　") + "</div>" +
+            '<div class="tiny" style="margin-top:4px">答案：' + String.fromCharCode(65 + q.ans) + "　" + esc(qExp(q)) + "</div></div>";
+        });
+      } else {
+        h += '<div class="explain mt-s"><b>' + esc(g.stem || "") + "</b>" +
+          '<div class="small muted mt-s">' + (g.opts || []).map((o, oi) => String.fromCharCode(65 + oi) + ". " + esc(o)).join("　") + "</div>" +
+          '<div class="tiny" style="margin-top:4px">答案：' + String.fromCharCode(65 + (g.ans || 0)) + "　" + esc(qExp(g)) + "</div></div>";
+      }
+    });
+    h += "</details>";
+  });
+  return h + "</div>";
+}
+
+function aiUpdateHistoryHTML() {
+  const list = (S.aiUpdates || []).slice(0, 8);
+  if (!list.length) return "";
+  let h = '<div class="card mt"><div class="card-title">🕘 更新历史</div>' +
+    '<table class="tbl"><thead><tr><th>时间</th><th>范围</th><th>新增</th><th>解析优化</th><th>失败</th></tr></thead><tbody>';
+  list.forEach(u => {
+    h += "<tr><td>" + esc(u.date || "") + " " + esc(u.time || "") + "</td><td>" +
+      esc((u.mods || []).map(aiModName).join("、")) + "</td><td>" + (u.added || 0) + " 题</td><td>" +
+      (u.polished || 0) + " 条</td><td>" + (u.failed || 0) + "</td></tr>";
+  });
+  return h + "</tbody></table>" +
+    '<p class="tiny dim" style="margin-top:8px">每次更新最多保留最近 20 条记录。学术诚信提示：AI 生成题目仅用于自测练习，请以真题与教材为准。</p></div>';
+}
+
+function rerenderAIBank() {
+  const tabs = $("#ptTabs");
+  if (tabs) { tabs.innerHTML = practiceTabButtonsHTML(); bindPracticeTabs(tabs); }
+  const el = $("#ptBody");
+  if (!el) return;
+  el.innerHTML = renderAIBank();
+  bindAIBank(el);
+}
+
+function bindAIBank(el) {
+  $$("[data-aimod]", el).forEach(b => b.addEventListener("click", () => {
+    if (aiBusy) return;
+    const id = b.dataset.aimod;
+    const i = AIMods.indexOf(id);
+    if (i >= 0) AIMods.splice(i, 1); else AIMods.push(id);
+    rerenderAIBank();
+  }));
+  $$("[data-aicount]", el).forEach(b => b.addEventListener("click", () => {
+    if (aiBusy) return;
+    AICount = clamp(Number(b.dataset.aicount) || 1, 1, 5);
+    rerenderAIBank();
+  }));
+  const cb = $("#aiPolish", el);
+  if (cb) cb.addEventListener("change", () => { AIPolish = cb.checked; });
+  const ub = $("#aiUpdate", el);
+  if (ub) ub.addEventListener("click", runBankUpdate);
+  const cl = $("#aiClear", el);
+  if (cl) cl.addEventListener("click", clearAIExtras);
+}
+
+/* ---------------------------------------------------------------
+   19. 视图注册与启动
+   --------------------------------------------------------------- */
+const RENDER = {
+  home: renderHome,
+  diag: renderDiag,
+  result: renderResult,
+  plan: renderPlan,
+  practice: renderPractice,
+  tools: renderTools,
+  settings: renderSettings
+};
+
+/* 题库后置加载：登录后按需取，成功即缓存，之后离线可用 */
+async function loadBankData() {
+  let b = null;
+  try { b = JSON.parse(localStorage.getItem(BANK_CACHE_KEY) || "null"); } catch (e) { b = null; }
+  if (!b || !b.diag || !b.practice || !Array.isArray(b.words)) {
+    const r = await api("/api/bank");
+    if (r.status === 200 && r.data && r.data.data) {
+      b = r.data.data;
+      try { localStorage.setItem(BANK_CACHE_KEY, JSON.stringify(b)); } catch (e) { /* 忽略 */ }
+    }
+  }
+  if (!b) return false;
+  DIAG = b.diag || {};
+  WORDS = Array.isArray(b.words) ? b.words : [];
+  BANK = b.practice || {};
+  return !!(DIAG.listening && DIAG.reading && DIAG.writing && DIAG.translation && WORDS.length);
+}
+
+function configErrorScreen() {
+  document.body.innerHTML =
+    '<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif;padding:24px;background:#f6f7f8">' +
+    '<div style="max-width:460px;text-align:left;background:#fff;border:1px solid #e6e7ea;border-radius:16px;padding:26px 28px">' +
+    '<h2 style="font-size:18px;margin:0 0 10px;color:#18181b">还差一步：配置后端地址</h2>' +
+    '<p style="color:#52525b;font-size:14px;line-height:1.8;margin:0 0 12px">' +
+    '本页部署在 GitHub Pages，需要连接你自己的后端 API。请编辑同目录下的 <code>config.js</code>：</p>' +
+    '<pre style="background:#f6f7f8;border:1px solid #e6e7ea;border-radius:10px;padding:12px;font-size:12.5px;overflow:auto;color:#0f766e">window.CET4_CONFIG = {\n  API_BASE: "https://你的隧道地址.trycloudflare.com"\n};</pre>' +
+    '<p style="color:#8b8f98;font-size:12.5px;line-height:1.7;margin:12px 0 0">保存后刷新本页。具体步骤见仓库根目录的 README.md。</p>' +
+    '</div></div>';
+}
+
+function bankErrorScreen() {
+  document.body.innerHTML =
+    '<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif;padding:24px">' +
+    '<div style="max-width:420px;text-align:center">' +
+    '<h2 style="font-size:18px;margin:0 0 10px">题库加载失败</h2>' +
+    '<p style="color:#64748b;font-size:14px;line-height:1.8">可能是网络中断或登录状态已失效。本机已保存的学习记录不会丢失。</p>' +
+    '<button onclick="location.reload()" style="margin-top:8px;padding:10px 22px;border:0;border-radius:10px;background:#0f766e;color:#fff;font-size:14px;cursor:pointer">重新加载</button>' +
+    '<div style="margin-top:14px"><a href="login.html" style="color:#0f766e;font-size:13px">重新登录</a></div>' +
+    '</div></div>';
+}
+
+async function bootstrapAuth() {
+  const v = await api("/api/verify");
+  if (v.status === 401) { gotoLogin(); return false; }
+  if (v.status !== 200) return false;
+  const u = await api("/api/user");
+  if (u.status === 401) { gotoLogin(); return false; }
+  if (u.status === 200 && u.data && u.data.data) CLOUD.me = u.data.data;
+  // 初始密码未修改：服务端会拒绝一切业务数据，前端直接进强制改密
+  if (CLOUD.me && CLOUD.me.mustChangePassword) return "mustChange";
+  await pullState();
+  return true;
+}
+
+async function pullState() {
+  const local = loadState();
+  const r = await api("/api/state");
+  if (r.status === 401) { gotoLogin(); return; }
+  const d = (r.data && r.data.data) || {};
+  CLOUD.version = d.version || 0;
+  const hasServer = !!(d.payload && Object.keys(d.payload).length);
+  if (!hasServer) {
+    S = local;
+    if (local.__hasLocal) cloudPush(true);
+    return;
+  }
+  const server = normalizeState(d.payload);
+  const localTs = local.__hasLocal ? (local.savedAt || 0) : 0;
+  const serverTs = Date.parse(d.updatedAt || "") || 0;
+  if (localTs && localTs > serverTs + 1500) {
+    S = local;
+    CLOUD.conflict = { version: CLOUD.version, payload: d.payload };
+    return;
+  }
+  S = server;
+  // API Key 只留在本机，云端为空时用本地补齐
+  if (!S.settings.apiKey && local.settings && local.settings.apiKey) S.settings.apiKey = local.settings.apiKey;
+  saveLocal();
+}
+
+function mustChangePasswordScreen() {
+  const name = esc((CLOUD.me && CLOUD.me.username) || "");
+  const inputStyle = "width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid #cbd5e1;border-radius:10px;font-size:14px;margin-bottom:14px;outline:none";
+  document.body.innerHTML =
+    '<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0f172a;font-family:system-ui,-apple-system,sans-serif;padding:24px">' +
+      '<form id="forcePwdForm" style="width:100%;max-width:380px;background:#fff;border-radius:16px;padding:28px;box-shadow:0 20px 50px rgba(0,0,0,.35)">' +
+        '<h2 style="margin:0 0 8px;font-size:19px;color:#0f172a">请先修改初始密码</h2>' +
+        '<p style="margin:0 0 18px;font-size:13px;line-height:1.7;color:#64748b">账号 <b>' + name + '</b> 仍在使用初始密码。修改后才能使用其他功能，修改后需重新登录。</p>' +
+        '<label style="display:block;font-size:13px;color:#334155;margin-bottom:6px">当前密码</label>' +
+        '<input id="fpOld" type="password" autocomplete="current-password" style="' + inputStyle + '">' +
+        '<label style="display:block;font-size:13px;color:#334155;margin-bottom:6px">新密码（至少 8 位，含字母和数字）</label>' +
+        '<input id="fpNew" type="password" autocomplete="new-password" style="' + inputStyle + '">' +
+        '<label style="display:block;font-size:13px;color:#334155;margin-bottom:6px">确认新密码</label>' +
+        '<input id="fpNew2" type="password" autocomplete="new-password" style="' + inputStyle + '">' +
+        '<div id="fpMsg" style="min-height:20px;font-size:13px;color:#dc2626;margin-bottom:10px"></div>' +
+        '<button type="submit" id="fpBtn" style="width:100%;padding:11px;border:0;border-radius:10px;background:#0f766e;color:#fff;font-size:14px;cursor:pointer">修改并重新登录</button>' +
+      '</form>' +
+    '</div>';
+
+  const $f = document.getElementById("forcePwdForm");
+  const msg = document.getElementById("fpMsg");
+  $f.addEventListener("submit", async ev => {
+    ev.preventDefault();
+    const oldPwd = document.getElementById("fpOld").value;
+    const newPwd = document.getElementById("fpNew").value;
+    const again = document.getElementById("fpNew2").value;
+    msg.style.color = "#dc2626";
+    if (!oldPwd || !newPwd) { msg.textContent = "请填写当前密码与新密码"; return; }
+    if (newPwd.length < 8) { msg.textContent = "新密码至少 8 位"; return; }
+    if (!/[A-Za-z]/.test(newPwd) || !/\d/.test(newPwd)) { msg.textContent = "新密码需同时包含字母和数字"; return; }
+    if (newPwd !== again) { msg.textContent = "两次输入的新密码不一致"; return; }
+    if (newPwd === oldPwd) { msg.textContent = "新密码不能与当前密码相同"; return; }
+
+    const btn = document.getElementById("fpBtn");
+    btn.disabled = true; btn.textContent = "提交中…";
+    let r;
+    try {
+      r = await api("/api/change-password", { method: "POST", body: { oldPassword: oldPwd, newPassword: newPwd } });
+    } catch (e) {
+      r = { status: 0, data: null };
+    }
+    if (r.status === 200) {
+      setToken("");
+      location.replace("login.html?changed=1");
+      return;
+    }
+    btn.disabled = false; btn.textContent = "修改并重新登录";
+    const m = (r.data && r.data.message) || "";
+    if (m.indexOf("原密码") >= 0) { msg.textContent = "当前密码不正确"; return; }
+    if (r.status === 401) { location.replace("login.html?next=" + encodeURIComponent(location.pathname)); return; }
+    msg.textContent = m || "修改失败，请稍后重试";
+  });
+}
+
+async function init() {
+  if (!CONFIG_READY) { configErrorScreen(); return; }
+  let ok = false;
+  try { ok = await bootstrapAuth(); } catch (e) { ok = false; }
+  if (ok === "mustChange") { mustChangePasswordScreen(); return; }
+  if (!ok) { bankErrorScreen(); return; }
+
+  if (!(await loadBankData())) { bankErrorScreen(); return; }
+
+  S = S || loadState();
+  S.skin = normalizeSkin(S);
+  buildNav();
+  applySkin();
+  $("#modal").addEventListener("click", ev => { if (ev.target.id === "modal") closeModal(); });
+  document.addEventListener("keydown", ev => {
+    if (ev.key === "Escape") closeModal();
+    if (ev.altKey && !ev.ctrlKey && !ev.metaKey && /^[1-3]$/.test(ev.key)) {
+      ev.preventDefault();
+      setSkin(SKINS[Number(ev.key) - 1].id);
+    }
+  });
+  go((location.hash || "").replace("#", "") || "home");
+  window.addEventListener("hashchange", () => {
+    const h = (location.hash || "").replace("#", "");
+    if (ROUTES.some(r => r.id === parseRoute(h).id)) go(h);
+  });
+  setSyncBadge("saved");
+  if (CLOUD.conflict) askConflict();
+}
+document.addEventListener("DOMContentLoaded", init);
+</script>
+</body>
+</html>
